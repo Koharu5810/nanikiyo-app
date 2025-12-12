@@ -113,13 +113,20 @@ body {
 .tab:hover {
   background: #f7f7f7;
   border-radius: 0;
+  border-bottom: 3px solid #F2B705;
 }
 .tab.active {
   color: #222;
   font-weight: 600;
   border-bottom: 3px solid #B7B1A6;
 }
-
+.tab:focus {
+  outline: none;
+}
+.tab:focus-visible {
+  outline: 2px solid #F2B705;
+  outline-offset: 2px;
+}
 
 /* ===== Tab Content ===== */
 

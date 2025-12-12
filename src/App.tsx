@@ -2,6 +2,7 @@ import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
+import './styles/sanitize.css'
 import './styles/global.css'
 
 function App() {
@@ -16,11 +17,11 @@ function App() {
 
           {/* サンプルカラー テスト表示用 */}
           <div className='color-wrapper'>
-            <p className='color-sample main-color'></p>
-            <p className='color-sample sub-color'></p>
-            <p className='color-sample sunny'></p>
-            <p className='color-sample cloud'></p>
-            <p className='color-sample rain'></p>
+            <span className='color-sample main-color'></span>
+            <span className='color-sample sub-color'></span>
+            <span className='color-sample sunny'></span>
+            <span className='color-sample cloud'></span>
+            <span className='color-sample rain'></span>
           </div>
         </header>
 
