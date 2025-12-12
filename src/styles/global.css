@@ -25,13 +25,37 @@ body {
 }
 .app-inner {
   width: 100%;
-  max-width: 720px;
+  max-width: 560px;
   min-width: 320px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
 }
 
+.color-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+.color-sample{
+  width: 30px;
+  height: 30px;
+}
+.main-color {
+  background: #B7B1A6;
+}
+.sub-color {
+  background: #F7F6F4;
+}
+.sunny {
+  background: #F2B705;
+}
+.cloud {
+  background: #9DA3A6;
+}
+.rain {
+  background: #7FAFC9;
+}
 
 /* ===== Header ===== */
 
@@ -93,7 +117,7 @@ body {
 .tab.active {
   color: #222;
   font-weight: 600;
-  border-bottom: 3px solid #4caf50;
+  border-bottom: 3px solid #B7B1A6;
 }
 
 
@@ -123,7 +147,7 @@ body {
   padding: 10px;
   border-radius: 8px;
   border: none;
-  background: #4caf50;
+  background: #B7B1A6;
   color: #fff;
   font-size: 14px;
   cursor: pointer;
