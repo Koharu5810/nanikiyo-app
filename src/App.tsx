@@ -6,21 +6,6 @@ import './styles/sanitize.css'
 import './styles/global.css'
 
 function App() {
-  type OpenWeatherResponse = {
-    name: string;
-    weather: {
-      description: string;
-      icon: string;
-    }[];
-    main: {
-      temp: number;
-      feels_like: number;
-      humidity: number;
-    };
-    wind: {
-      speed: number;
-    };
-  };
 
   type GeoLocation = {
     name: string;
@@ -42,9 +27,6 @@ function App() {
   };
 
   const [place, setPlace] = useState('');
-  const [weather, setWeather] = useState<OpenWeatherResponse | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
   const [candidates, setCandidates] = useState<GeoLocation[]>([]);
   const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
 
@@ -62,8 +44,6 @@ function App() {
 
     return Array.from(map.values());
   };
-
-  const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
   // 現在地の緯度・経度を取得
   const getCurrentLocation = () => {
@@ -165,26 +145,6 @@ function App() {
     }
   };
 
-  const fetchWeatherByCoords = async (lat: number, lon: number) => {
-    try {
-      const weatherRes = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ja`
-      );
-
-      if (!weatherRes.ok) {
-        throw new Error();
-      }
-
-      const weatherData: OpenWeatherResponse = await weatherRes.json();
-      setWeather(weatherData);
-      setSelectedLocationLabel("現在地");
-    } catch (err) {
-      console.log(err);
-      setError("天気の取得中にエラーが発生しました");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const [activeTab, setActiveTab] = useState<"current" | "custom">("current");
 
