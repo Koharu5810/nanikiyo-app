@@ -37,26 +37,22 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [candidates, setCandidates] = useState<GeoLocation[]>([]);
+  const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
+
+  const uniqueLocations = (locations: GeoLocation[]) => {
+    const map = new Map<string, GeoLocation>();
+
+    locations.forEach((loc) => {
+      const key = `${loc.name}_${loc.state ?? ''}`;
+      if (!map.has(key)) {
+        map.set(key, loc);
+      }
+    });
+
+    return Array.from(map.values());
+  };
 
   const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
-
-  const PREF_MAP: Record<string, string> = {
-    Hokkaido: "北海道",
-    Aomori: "青森県",
-    Tokyo: "東京都",
-    Kanagawa: "神奈川県",
-    Aichi: "愛知県",
-    Osaka: "大阪府",
-  };
-
-  const formatLocationLabel = (loc: GeoLocation) => {
-    const name = loc.local_names?.ja ?? loc.name;
-    const prefecture = loc.state
-      ? PREF_MAP[loc.state] ?? loc.state
-      : '';
-
-    return prefecture ? `${name} (${prefecture}) ` : name;
-  };
 
   // 地名検索（候補取得）
   const searchLocations = async () => {
@@ -90,14 +86,14 @@ function App() {
         return;
       }
 
-      setCandidates(
-        geoData.results.map((r: any) => ({
-          name: r.name,
-          state: r.admin1,
-          lat: r.latitude,
-          lon: r.longitude,
-        }))
-      );
+      const locations = geoData.results.map((r: any) => ({
+        name: r.name,
+        state: r.admin1,
+        lat: r.latitude,
+        lon: r.longitude,
+      }));
+
+      setCandidates(uniqueLocations(locations));
 
     } catch (err) {
       console.log(err);
@@ -113,6 +109,8 @@ function App() {
       setLoading(true);
       setError("");
       setWeather(null);
+
+      setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
 
       // 2）緯度経度→天気取得
       const weatherRes = await fetch(
@@ -218,7 +216,7 @@ function App() {
 
                   {weather && (
                     <div style={{ marginTop: "12px" }}>
-                      <p>📍 {weather.name}</p>
+                      <p>📍 {selectedLocationLabel}</p>
                       <p>
                         🌡️ {Math.round(weather.main.temp)}{"\u00b0"}C (体感{' '}
                         {Math.round(weather.main.feels_like)}{'\u00b0'}C)
