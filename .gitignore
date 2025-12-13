@@ -22,3 +22,29 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Laravel関連
+vendor
+node_modules
+.env
+.env.*
+/src/.env
+/src/.env.testing
+/src/.env.*
+!/src/.env.example
+/src/.phpunit.result.cache
+/src/.phpunit.cache
+
+# storage
+/src/storage/*.log
+!/src/storage/app/public
+!/src/storage/app/public/.gitkeep
+
+/src/storage/*.key
+/src/storage/framework/cache/*
+/src/storage/framework/sessions/*
+/src/storage/framework/views/*
+/src/storage/logs/*
+
+/src/.vscode
