@@ -22,13 +22,19 @@ function App() {
     };
   };
 
+  type GeoLocation = {
+    name: string;
+    lat: number;
+    lon: number;
+    state?: string;
+  };
+
   const [place, setPlace] = useState('');
   const [weather, setWeather] = useState<OpenWeatherResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // あとで.envに記述
-  const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+  const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
   const fetchWeatherByCity = async () => {
     if (!place.trim()) {
@@ -38,23 +44,44 @@ function App() {
 
     try {
       setLoading(true);
-      setError('');
+      setError("");
       setWeather(null);
 
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-          place
-        )}&appid=${API_KEY}&units=metric&lang=ja`
+      // openWeatherは city name 直指定だと日本語で不安定のため、Geocoding API を挟んで緯度経度ベースで取得
+      // 1）地名→緯度経度（Geocoding API）
+      const geoRes = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+          `${place},JP`
+        )}&limit=5&appid=${API_KEY}`
       );
 
-      if (!res.ok) {
-        throw new Error('天気情報の取得に失敗しました');
+      if (!geoRes.ok) {
+        throw new Error("位置情報の取得に失敗しました");
       }
 
-      const data: OpenWeatherResponse = await res.json();
-      setWeather(data);
+      const geoData = await geoRes.json();
+
+      const { lat, lon, name } = geoData[0];
+
+      const label = [
+        loc.name,
+        loc.state ? `（${loc.state}）` : '',
+      ].join('');
+
+      // 2）緯度経度→天気取得
+      const weatherRes = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ja`
+      );
+
+      if (!weatherRes.ok) {
+        throw new Error("天気情報の取得に失敗しました");
+      }
+
+      const weatherData: OpenWeatherResponse = await weatherRes.json();
+      setWeather(weatherData);
     } catch (err) {
-      setError('天気の取得中にエラーが発生しました');
+      console.log(err);
+      setError("天気の取得中にエラーが発生しました");
     } finally {
       setLoading(false);
     }
@@ -126,7 +153,7 @@ function App() {
                   </button>
 
                   {loading && <p>取得中...</p>}
-                  {error && <p style={{ color: "red" }}>{error}</p>}
+                  {error && <p style={{ color: "red" ,fontSize: "12px" }}>{error}</p>}
 
                   {weather && (
                     <div style={{ marginTop: "12px" }}>
