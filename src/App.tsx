@@ -188,6 +188,15 @@ function App() {
 
   const [activeTab, setActiveTab] = useState<"current" | "custom">("current");
 
+  // 現在地タブ用
+  useEffect(() => {
+    if (activeTab !== 'current') return;
+
+    getCurrentLocation();
+  }, [activeTab]);
+
+
+  // 地域検索タブ用 複数候補検索用
   useEffect(() => {
     if (!place.trim()) {
       setCandidates([]);
@@ -209,6 +218,13 @@ function App() {
       }
     };
   }, [place]);
+
+  // タブ切替時に表示をリセット
+  useEffect(() => {
+    setWeather(null);
+    setError("");
+    setCandidates([]);
+  }, [activeTab]);
 
   return (
     <div className="app">
@@ -250,12 +266,12 @@ function App() {
             <div className="tab-content">
               {activeTab === "current" && (
                 <div>
-                  <button
+                  {/* <button
                     className="search-button"
                     onClick={getCurrentLocation}
                   >
                     現在地の天気を取得
-                  </button>
+                  </button> */}
 
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
@@ -269,7 +285,7 @@ function App() {
                         {"\u00b0"}C)
                         {/* ℃のユニコードu2103を利用するより組み合わせたほうが文字化けに強いらしい */}
                       </p>
-                      <p>☁️{weather.weather[0].description}</p>
+                      <p>☁️ {weather.weather[0].description}</p>
                       <p>💨 風速 {weather.wind.speed} m/s</p>
                       <p>💧 湿度 {weather.main.humidity}%</p>
                     </div>
@@ -321,7 +337,7 @@ function App() {
                         {"\u00b0"}C (体感 {Math.round(weather.main.feels_like)}
                         {"\u00b0"}C)
                       </p>
-                      <p>☁️{weather.weather[0].description}</p>
+                      <p>☁️ {weather.weather[0].description}</p>
                       <p>💨 風速 {weather.wind.speed} m/s</p>
                       <p>💧 湿度 {weather.main.humidity}%</p>
                     </div>
