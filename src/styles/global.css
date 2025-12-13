@@ -39,7 +39,7 @@ body {
 }
 .color-sample{
   width: 30px;
-  height: 30px;
+  height: 15px;
 }
 .main-color {
   background: #B7B1A6;
@@ -163,6 +163,24 @@ body {
   opacity: 0.9;
 }
 
+.candidate-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.candidate-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.candidate-item:hover {
+  background: #f0f0f0;
+  font-weight: 600;
+}
 
 /* ===== Footer ===== */
 
