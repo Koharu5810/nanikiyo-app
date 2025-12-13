@@ -32,6 +32,15 @@ function App() {
     };
   };
 
+  type GeoApiResponse = {
+    results?: {
+      name: string;
+      admin1?: string;
+      latitude: number;
+      longitude: number;
+    }[];
+  };
+
   const [place, setPlace] = useState('');
   const [weather, setWeather] = useState<OpenWeatherResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -55,6 +64,28 @@ function App() {
   };
 
   const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
+
+  // 現在地の緯度・経度を取得
+  const getCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      setError("現在地を取得できません");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        fetchWeatherByCoords(latitude, longitude);
+      },
+      () => {
+        setLoading(false);
+        setError("位置情報の取得が許可されませんでした");
+      }
+    );
+  };
 
   // 地名検索（候補取得）
   const searchLocations = async () => {
@@ -81,14 +112,14 @@ function App() {
         throw new Error("位置情報の取得に失敗しました");
       }
 
-      const geoData = await geoRes.json();
+      const geoData: GeoApiResponse = await geoRes.json();
 
       if (!geoData.results || geoData.results.length === 0) {
         setError("地名が見つかりませんでした");
         return;
       }
 
-      const locations = geoData.results.map((r: any) => ({
+      const locations:GeoLocation[] = geoData.results.map((r) => ({
         name: r.name,
         state: r.admin1,
         lat: r.latitude,
@@ -126,6 +157,27 @@ function App() {
       const weatherData: OpenWeatherResponse = await weatherRes.json();
       setWeather(weatherData);
       setCandidates([]);  // 他候補は消す
+    } catch (err) {
+      console.log(err);
+      setError("天気の取得中にエラーが発生しました");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchWeatherByCoords = async (lat: number, lon: number) => {
+    try {
+      const weatherRes = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ja`
+      );
+
+      if (!weatherRes.ok) {
+        throw new Error();
+      }
+
+      const weatherData: OpenWeatherResponse = await weatherRes.json();
+      setWeather(weatherData);
+      setSelectedLocationLabel("現在地");
     } catch (err) {
       console.log(err);
       setError("天気の取得中にエラーが発生しました");
@@ -198,9 +250,30 @@ function App() {
             <div className="tab-content">
               {activeTab === "current" && (
                 <div>
-                  <p className="label">現在地の天気</p>
-                  <p>⛅️ 晴れ / 17{"\u00b0"}C</p>
-                  {/* ℃のユニコードu2103を利用するより組み合わせたほうが文字化けに強いらしい */}
+                  <button
+                    className="search-button"
+                    onClick={getCurrentLocation}
+                  >
+                    現在地の天気を取得
+                  </button>
+
+                  {loading && <p className="helper-text">取得中...</p>}
+                  {error && <p className="helper-text error">{error}</p>}
+
+                  {weather && (
+                    <div style={{ marginTop: "12px" }}>
+                      <p>📍 現在地</p>
+                      <p>
+                        🌡️ {Math.round(weather.main.temp)}
+                        {"\u00b0"}C (体感 {Math.round(weather.main.feels_like)}
+                        {"\u00b0"}C)
+                        {/* ℃のユニコードu2103を利用するより組み合わせたほうが文字化けに強いらしい */}
+                      </p>
+                      <p>☁️{weather.weather[0].description}</p>
+                      <p>💨 風速 {weather.wind.speed} m/s</p>
+                      <p>💧 湿度 {weather.main.humidity}%</p>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -216,7 +289,7 @@ function App() {
                       onChange={(e) => setPlace(e.target.value)}
                       onFocus={() => {
                         if (place.trim()) {
-                          searchLocations(place); // オートコンプリート用
+                          searchLocations(); // オートコンプリート用
                         }
                       }}
                     />
