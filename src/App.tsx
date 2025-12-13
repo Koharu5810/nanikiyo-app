@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
@@ -38,6 +38,8 @@ function App() {
   const [error, setError] = useState('');
   const [candidates, setCandidates] = useState<GeoLocation[]>([]);
   const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
+
+  const debounceTimerRef = useRef<number | null>(null); // debounce（打つたびにAPIを叩かないための必須技術）用
 
   const uniqueLocations = (locations: GeoLocation[]) => {
     const map = new Map<string, GeoLocation>();
@@ -134,6 +136,28 @@ function App() {
 
   const [activeTab, setActiveTab] = useState<"current" | "custom">("current");
 
+  useEffect(() => {
+    if (!place.trim()) {
+      setCandidates([]);
+      return;
+    }
+
+    // 既存のタイマーをクリア
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = window.setTimeout(() => {
+      searchLocations();
+    }, 300);
+
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [place]);
+
   return (
     <div className="app">
       <div className="app-inner">
@@ -166,7 +190,7 @@ function App() {
                 className={`tab ${activeTab === "custom" ? "active" : ""}`}
                 onClick={() => setActiveTab("custom")}
               >
-                任意の地名
+                地域検索
               </button>
             </div>
 
@@ -182,44 +206,47 @@ function App() {
 
               {activeTab === "custom" && (
                 <div>
-                  <p className="label">場所を指定</p>
-                  <input
-                    type="text"
-                    placeholder="例：東京"
-                    className="input"
-                    value={place}
-                    onChange={(e) => setPlace(e.target.value)}
-                  />
-                  <button
-                    className="search-button"
-                    onClick={searchLocations}
-                  >
-                    検索
-                  </button>
+                  <p className="label">地域を入力</p>
+                  <div className="search-wrapper">
+                    <input
+                      type="text"
+                      placeholder="例：東京"
+                      className="input"
+                      value={place}
+                      onChange={(e) => setPlace(e.target.value)}
+                      onFocus={() => {
+                        if (place.trim()) {
+                          searchLocations(place); // オートコンプリート用
+                        }
+                      }}
+                    />
 
-                  {loading && <p>取得中...</p>}
-                  {error && <p style={{ color: "red", fontSize: "12px" }}>{error}</p>}
+                    {candidates.length > 0 && (
+                      <ul className="candidate-list">
+                        {candidates.map((loc, index) => (
+                          <li
+                            key={`${loc.lat}-${loc.lon}-${index}`}
+                            // className="candidate-item"
+                            className="autocomplete-item"
+                            onClick={() => fetchWeatherByLocation(loc)}
+                          >
+                            {loc.name} （{loc.state}）
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
 
-                  {candidates.length > 0 && (
-                    <ul className='candidate-list'>
-                      {candidates.map((loc, index) => (
-                        <li
-                          key={`${loc.lat}-${loc.lon}-${index}`}
-                          className='candidate-item'
-                          onClick={() => fetchWeatherByLocation(loc)}
-                        >
-                          {loc.name} （{loc.state}）
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  {loading && <p className="helper-text">取得中...</p>}
+                  {error && <p className="helper-text error">{error}</p>}
 
                   {weather && (
                     <div style={{ marginTop: "12px" }}>
                       <p>📍 {selectedLocationLabel}</p>
                       <p>
-                        🌡️ {Math.round(weather.main.temp)}{"\u00b0"}C (体感{' '}
-                        {Math.round(weather.main.feels_like)}{'\u00b0'}C)
+                        🌡️ {Math.round(weather.main.temp)}
+                        {"\u00b0"}C (体感 {Math.round(weather.main.feels_like)}
+                        {"\u00b0"}C)
                       </p>
                       <p>☁️{weather.weather[0].description}</p>
                       <p>💨 風速 {weather.wind.speed} m/s</p>
