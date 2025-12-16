@@ -6,31 +6,25 @@ import './styles/sanitize.css'
 import './styles/global.css'
 
 function App() {
+  const {
+    weather,
+    loading,
+    error,
+    fetchByCoords,
+    setWeather,
+    setError
+  } = useWeather();
+  
+  const {
+    candidates,
+    setCandidates,
+    searchLocations,
+    debounceTimerRef
+  } = useLocationSearch();
 
-  type GeoLocation = {
-    name: string;
-    lat: number;
-    lon: number;
-    state?: string;
-    local_names?: {
-      ja?: string;
-    };
-  };
-
-  type GeoApiResponse = {
-    results?: {
-      name: string;
-      admin1?: string;
-      latitude: number;
-      longitude: number;
-    }[];
-  };
 
   const [place, setPlace] = useState('');
-  const [candidates, setCandidates] = useState<GeoLocation[]>([]);
   const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
-
-  const debounceTimerRef = useRef<number | null>(null); // debounce（打つたびにAPIを叩かないための必須技術）用
 
   const uniqueLocations = (locations: GeoLocation[]) => {
     const map = new Map<string, GeoLocation>();
@@ -65,55 +59,6 @@ function App() {
         setError("位置情報の取得が許可されませんでした");
       }
     );
-  };
-
-  // 地名検索（候補取得）
-  const searchLocations = async () => {
-    if (!place.trim()) {
-      setError("地名を入力してください");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError("");
-      setWeather(null);
-      setCandidates([]);
-
-      // openWeatherは city name 直指定だと日本語で不安定のため、Geocoding API を挟んで緯度経度ベースで取得
-      // 1）地名→緯度経度（Geocoding API）
-      const geoRes = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
-          place
-        )}&count=5&language=ja`
-      );
-
-      if (!geoRes.ok) {
-        throw new Error("位置情報の取得に失敗しました");
-      }
-
-      const geoData: GeoApiResponse = await geoRes.json();
-
-      if (!geoData.results || geoData.results.length === 0) {
-        setError("地名が見つかりませんでした");
-        return;
-      }
-
-      const locations:GeoLocation[] = geoData.results.map((r) => ({
-        name: r.name,
-        state: r.admin1,
-        lat: r.latitude,
-        lon: r.longitude,
-      }));
-
-      setCandidates(uniqueLocations(locations));
-
-    } catch (err) {
-      console.log(err);
-      setError('位置情報の取得中にエラーが発生しました')
-    } finally {
-      setLoading(false);
-    }
   };
 
   // 地名候補クリック→天気取得
