@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
 // 地域検索（geocoding）
+import { useRef, useState } from "react";
 
 export type GeoLocation = {
   name: string;
@@ -29,7 +29,7 @@ export function useLocationSearch() {
     const map = new Map<string, GeoLocation>();
 
     locations.forEach((loc) => {
-      const key = `${loc.name}_${loc.state ?? ''}`;
+      const key = `${loc.name}_${loc.state ?? ""}`;
       if (!map.has(key)) {
         map.set(key, loc);
       }
@@ -84,4 +84,4 @@ export function useLocationSearch() {
     searchLocations,
     debounceTimerRef,
   };
-};
+}

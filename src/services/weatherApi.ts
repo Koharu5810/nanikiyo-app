@@ -17,5 +17,6 @@ export async function getCurrentWeatherApi(
     throw new Error(`天気APIエラー: ${res.status}`);
   }
 
-  return await res.json();
+  const json: WeatherData = await res.json();
+  return json;
 }

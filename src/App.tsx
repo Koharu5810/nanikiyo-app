@@ -38,11 +38,7 @@ function App() {
       (position) => {
         const { latitude, longitude } = position.coords;
         fetchByCoords(latitude, longitude);
-      },
-      () => {
-        // setError("位置情報の取得が許可されませんでした");
-      }
-    );
+      });
   };
 
   // 地名候補クリック→天気取得

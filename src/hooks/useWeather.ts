@@ -1,22 +1,8 @@
+// 天気取得
+
 import { useState } from "react";
 import { getCurrentWeatherApi } from "../services/weatherApi";
-
-// 天気取得ロジック
-export type WeatherData = {
-  name: string;
-  weather: {
-    description: string;
-    icon: string;
-  }[];
-  main: {
-    temp: number;
-    feels_like: number;
-    humidity: number;
-  };
-  wind: {
-    speed: number;
-  };
-};
+import type { WeatherData } from "../types/weather";
 
 export function useWeather() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -28,7 +14,7 @@ export function useWeather() {
       setLoading(true);
       setError("");
 
-      const data = await getCurrentWeatherApi(lat, lon);
+      const data: WeatherData = await getCurrentWeatherApi(lat, lon);
 
       setWeather(data);
     } catch (err) {
