@@ -17,9 +17,9 @@ function App() {
 
   const {
     candidates,
-    clearCandidates,
+    debounceTimerRef,
+    selectLocation,
     searchLocations,
-    debounceTimerRef
   } = useLocationSearch();
 
   const {
@@ -32,9 +32,10 @@ function App() {
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
     resetWeather();
+    selectLocation();
+    setPlace('');
 
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
-
     fetchByCoords(loc.lat, loc.lon);
   };
 
@@ -50,7 +51,7 @@ function App() {
   // 地域検索タブ用 複数候補検索用
   useEffect(() => {
     if (!place.trim()) {
-      clearCandidates();
+      selectLocation();
       return;
     }
 
@@ -73,7 +74,7 @@ function App() {
   // タブ切替時に表示をリセット
   useEffect(() => {
     resetWeather();
-    clearCandidates();
+    selectLocation();
   }, [activeTab]);
 
   return (

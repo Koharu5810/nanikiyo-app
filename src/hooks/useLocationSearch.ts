@@ -9,7 +9,11 @@ export function useLocationSearch() {
 
   const clearCandidates = () => {
     setCandidates([]);
-  }
+  };
+  // 選択した地名以外の候補を削除
+  const selectLocation = () => {
+    clearCandidates();
+  };
 
   const uniqueLocations = (locations: GeoLocation[]) => {
     const map = new Map<string, GeoLocation>();
@@ -66,8 +70,8 @@ export function useLocationSearch() {
 
   return {
     candidates,
-    clearCandidates,
-    searchLocations,
     debounceTimerRef,
+    selectLocation,
+    searchLocations,
   };
 }
