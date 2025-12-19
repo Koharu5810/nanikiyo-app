@@ -39,3 +39,26 @@ export type ForecastItem = {
 export type ForecastResponce = {
   list: ForecastItem[];
 };
+
+// 3日間表示用
+export type DailyForecast = {
+  date: string;
+  temp: number;
+  icon: string;
+  description: string;
+}
+
+// APIレスポンス
+export type ForecastApiResponce = {
+  list: {
+    dt: number;
+    dt_txt: string;
+    main: {
+      temp: number;
+    };
+    weather: {
+      icon: string;
+      description: string;
+    }[];
+  }[];
+};
