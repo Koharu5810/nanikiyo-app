@@ -61,13 +61,11 @@ export function useLocationSearch() {
     } catch (err) {
       console.log(err);
       clearCandidates();
-      // setCandidates([]);
     }
   };
 
   return {
     candidates,
-    // setCandidates,
     clearCandidates,
     searchLocations,
     debounceTimerRef,

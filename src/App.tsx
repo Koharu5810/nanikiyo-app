@@ -4,6 +4,7 @@ import './styles/global.css'
 import { useWeather } from './hooks/useWeather';
 import { useLocationSearch } from './hooks/useLocationSearch';
 import type { GeoLocation } from "./types/location";
+import { useCurrentLocation } from './hooks/useCurrentLocation';
 
 function App() {
   const {
@@ -21,22 +22,12 @@ function App() {
     debounceTimerRef
   } = useLocationSearch();
 
+  const {
+    getCurrentLocation
+  } = useCurrentLocation(fetchByCoords);
 
   const [place, setPlace] = useState('');
   const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
-
-  // 現在地の緯度・経度を取得
-  const getCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        fetchByCoords(latitude, longitude);
-      });
-  };
 
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
