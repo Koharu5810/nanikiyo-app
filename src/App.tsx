@@ -20,25 +20,23 @@ function App() {
     resetWeather,
   } = useWeather();
 
-  const {
-    candidates,
-    selectLocation,
-    searchLocationsDebounced,
-  } = useLocationSearch();
+  const { candidates, selectLocation, searchLocationsDebounced } =
+    useLocationSearch();
 
   const { getCurrentLocation } = useCurrentLocation(
     fetchByCoords,
-    fetchForecastByCoords,
+    fetchForecastByCoords
   );
 
-  const [place, setPlace] = useState('');
-  const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
+  const [place, setPlace] = useState("");
+  const [selectedLocationLabel, setSelectedLocationLabel] =
+    useState<string>("");
 
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
     resetWeather();
     selectLocation();
-    setPlace('');
+    setPlace("");
 
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
     fetchByCoords(loc.lat, loc.lon);
@@ -48,8 +46,19 @@ function App() {
   // タブ選択
   const { activeTab, setActiveTab } = useWeatherTabs();
   const hasFetchedCurrentRef = useRef(false);
+  const currentLocationLabelRef = useRef<string>("現在地");
 
-  // 現在地タブ用
+  // タブのラベル
+  const weatherLabel =
+    activeTab === "current" ? "現在地" : selectedLocationLabel;
+
+  // eslint-disable-next-line react-hooks/refs
+  const currentLocationLabel = currentLocationLabelRef.current;
+
+  /* ====================
+    現在地点取得ロジック
+  ==================== */
+  // 現在地の初回取得
   useEffect(() => {
     if (activeTab !== "current") return;
     if (hasFetchedCurrentRef.current) return;
@@ -58,7 +67,19 @@ function App() {
     hasFetchedCurrentRef.current = true;
   }, [activeTab, getCurrentLocation]);
 
-  // 地域検索タブ用 複数候補検索用
+  // 現在地タブのラベル更新
+  useEffect(() => {
+    if (!weather) return;
+
+    if (!hasFetchedCurrentRef.current) return;
+
+    currentLocationLabelRef.current = weather.name ?? "現在地";
+  }, [weather, activeTab]);
+
+
+  /* =========================
+    地域検索タブ用 複数候補検索用
+  ========================= */
   useEffect(() => {
     if (!place.trim()) {
       selectLocation();
@@ -67,10 +88,6 @@ function App() {
 
     searchLocationsDebounced(place);
   }, [place, selectLocation, searchLocationsDebounced]);
-
-  // タブのラベル
-  const weatherLabel =
-    activeTab === 'current' ? '現在地' : selectedLocationLabel;
 
   return (
     <div className="app">
@@ -97,7 +114,7 @@ function App() {
                 className={`tab ${activeTab === "current" ? "active" : ""}`}
                 onClick={() => setActiveTab("current")}
               >
-                現在地
+                {currentLocationLabel}
               </button>
 
               <button
@@ -113,18 +130,14 @@ function App() {
               {/* 現在地タブ */}
               {activeTab === "current" && (
                 <div>
-
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {activeTab === "current" && weather && (
-                    <WeatherInfo
-                      weather={weather}
-                      label={weatherLabel}
-                    />
+                  {weather && (
+                    <WeatherInfo weather={weather} label={weatherLabel} />
                   )}
 
-                  {activeTab === "current" && forecast && forecast.length > 0 && (
+                  {forecast && forecast.length > 0 && (
                     <WeatherForecast daily={forecast} />
                   )}
                 </div>
@@ -167,14 +180,11 @@ function App() {
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {activeTab === "custom" && weather && selectedLocationLabel && (
-                    <WeatherInfo
-                      weather={weather}
-                      label={weatherLabel}
-                    />
+                  {weather && selectedLocationLabel && (
+                    <WeatherInfo weather={weather} label={weatherLabel} />
                   )}
 
-                  {activeTab === "custom" && forecast && forecast.length > 0 && selectedLocationLabel && (
+                  {forecast && forecast.length > 0 && selectedLocationLabel && (
                     <WeatherForecast daily={forecast} />
                   )}
                 </div>
