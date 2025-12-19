@@ -74,7 +74,7 @@ export function useWeather() {
       }
     });
 
-    return Array.from(dailyMap.values()).slice(0, 3);
+    return Array.from(dailyMap.values()).slice(0, 2);
   };
 
   const resetWeather = () => {
