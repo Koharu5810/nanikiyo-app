@@ -1,6 +1,7 @@
 // APIを叩く関数（ゆくゆくLaravelに移行）
 
 // import type { WeatherData } from "../types/weather";
+import type { WeatherForecast } from "../types/weather";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
