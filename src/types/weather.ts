@@ -36,7 +36,7 @@ export type ForecastItem = {
 };
 
 // APIレスポンス全体
-export type ForecastResponce = {
+export type ForecastResponse = {
   list: ForecastItem[];
 };
 
@@ -49,7 +49,7 @@ export type DailyForecast = {
 }
 
 // APIレスポンス
-export type ForecastApiResponce = {
+export type ForecastApiResponse = {
   list: {
     dt: number;
     dt_txt: string;

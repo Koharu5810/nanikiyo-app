@@ -4,7 +4,11 @@ import { useState } from "react";
 // import { getCurrentWeatherApi } from "../services/weatherApi";
 import { get5DayForecastApi } from "../services/weatherApi";
 // import type { WeatherData } from "../types/weather";
-import type { ForecastResponce } from "../types/weather";
+import type { ForecastResponse } from "../types/weather";
+import type {
+  ForecastApiResponse,
+  DailyForecast,
+} from "../types/weather";
 
 export function useWeather() {
   // const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -29,15 +33,19 @@ export function useWeather() {
 // };
 
   const fetchForecastByCoords = async (lat: number, lon: number) => {
-    console.log("🌤 fetchForecastByCoords", lat, lon);
-
     try {
       setLoading(true);
       setError("");
 
-      const data: ForecastResponce = await get5DayForecastApi(lat, lon);
+      const rawData = await get5DayForecastApi(lat, lon);
 
-      setForecast(data);
+      console.log("📦 forecast raw:", rawData);
+
+      const daily = extract3DaysForecast(rawData);
+
+      console.log("📅 daily forecast:", daily);
+
+      setForecast(daily);
     } catch (err) {
       console.error(err);
       setError("天気の取得中にエラーが発生しました");
@@ -46,11 +54,36 @@ export function useWeather() {
     }
   };
 
+  // 5日間3時間毎の天気の加工
+  const extract3DaysForecast = (
+    apiData: ForecastApiResponse
+  ): DailyForecast[] => {
+    const dailyMap = new Map<string, DailyForecast>();
+
+    apiData.list.forEach((item) => {
+      const date = item.dt_txt.split(" ")[0];
+      const hour = item.dt_txt.split(" ")[1];
+
+      // 12:00のデータを優先
+      if (hour === "12:00:00" && !dailyMap.has(date)) {
+        dailyMap.set(date, {
+          date,
+          temp: item.main.temp,
+          icon: item.weather[0].icon,
+          description: item.weather[0].description,
+        });
+      }
+    });
+
+    return Array.from(dailyMap.values()).slice(0, 3);
+  };
+
   const resetWeather = () => {
     // setWeather(null);
     setForecast(null);
     setError("");
   };
+
 
   return {
     // weather,
