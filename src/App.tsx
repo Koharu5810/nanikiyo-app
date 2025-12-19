@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
 import './styles/sanitize.css'
 import './styles/global.css'
 import { useWeather } from './hooks/useWeather';
@@ -19,7 +16,7 @@ function App() {
 
   const {
     candidates,
-    setCandidates,
+    clearCandidates,
     searchLocations,
     debounceTimerRef
   } = useLocationSearch();
@@ -46,7 +43,6 @@ function App() {
     resetWeather();
 
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
-    setCandidates([]);  // 他候補は消す
 
     fetchByCoords(loc.lat, loc.lon);
   };
@@ -63,7 +59,7 @@ function App() {
   // 地域検索タブ用 複数候補検索用
   useEffect(() => {
     if (!place.trim()) {
-      setCandidates([]);
+      clearCandidates();
       return;
     }
 
@@ -86,7 +82,7 @@ function App() {
   // タブ切替時に表示をリセット
   useEffect(() => {
     resetWeather();
-    setCandidates([]);
+    clearCandidates();
   }, [activeTab]);
 
   return (

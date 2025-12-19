@@ -7,6 +7,10 @@ export function useLocationSearch() {
   // debounce（打つたびにAPIを叩かないための必須技術）用
   const debounceTimerRef = useRef<number | null>(null);
 
+  const clearCandidates = () => {
+    setCandidates([]);
+  }
+
   const uniqueLocations = (locations: GeoLocation[]) => {
     const map = new Map<string, GeoLocation>();
 
@@ -56,13 +60,15 @@ export function useLocationSearch() {
       setCandidates(uniqueLocations(locations));
     } catch (err) {
       console.log(err);
-      setCandidates([]);
+      clearCandidates();
+      // setCandidates([]);
     }
   };
 
   return {
     candidates,
-    setCandidates,
+    // setCandidates,
+    clearCandidates,
     searchLocations,
     debounceTimerRef,
   };
