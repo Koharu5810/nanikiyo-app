@@ -14,7 +14,7 @@ function App() {
     setWeather,
     setError
   } = useWeather();
-  
+
   const {
     candidates,
     setCandidates,
@@ -46,48 +46,50 @@ function App() {
       return;
     }
 
-    setLoading(true);
+    // setLoading(true);
     setError("");
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        fetchWeatherByCoords(latitude, longitude);
+        fetchByCoords(latitude, longitude);
       },
       () => {
-        setLoading(false);
+        // setLoading(false);
         setError("位置情報の取得が許可されませんでした");
       }
     );
   };
 
   // 地名候補クリック→天気取得
-  const fetchWeatherByLocation = async (loc: GeoLocation) => {
-    try {
-      setLoading(true);
+  const fetchWeatherByLocation = (loc: GeoLocation) => {
+  // const fetchWeatherByLocation = async (loc: GeoLocation) => {
+    // try {
+      // setLoading(true);
       setError("");
       setWeather(null);
 
       setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
 
       // 2）緯度経度→天気取得
-      const weatherRes = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&appid=${API_KEY}&units=metric&lang=ja`
-      );
+      // const weatherRes = await fetch(
+      //   `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&appid=${API_KEY}&units=metric&lang=ja`
+      // );
 
-      if (!weatherRes.ok) {
-        throw new Error("天気情報の取得に失敗しました");
-      }
+      // if (!weatherRes.ok) {
+      //   throw new Error("天気情報の取得に失敗しました");
+      // }
 
-      const weatherData: OpenWeatherResponse = await weatherRes.json();
-      setWeather(weatherData);
+      // const weatherData: OpenWeatherResponse = await weatherRes.json();
+      // setWeather(weatherData);
       setCandidates([]);  // 他候補は消す
-    } catch (err) {
-      console.log(err);
-      setError("天気の取得中にエラーが発生しました");
-    } finally {
-      setLoading(false);
-    }
+    // } catch (err) {
+    //   console.log(err);
+    //   setError("天気の取得中にエラーが発生しました");
+    // } finally {
+    //   setLoading(false);
+    // }
+    fetchByCoords(loc.lat, loc.lon);
   };
 
 

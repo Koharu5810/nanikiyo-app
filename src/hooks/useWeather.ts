@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 // 天気取得ロジック
 export type OpenWeatherResponse = {
@@ -29,6 +29,7 @@ export function useWeather() {
       setLoading(true);
       setError("");
 
+      // 緯度経度→天気取得
       const res = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ja`
       );
