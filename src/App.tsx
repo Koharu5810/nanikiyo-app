@@ -14,8 +14,6 @@ function App() {
     loading,
     error,
     fetchByCoords,
-    // setWeather,
-    // setError
     resetWeather,
   } = useWeather();
 
@@ -33,11 +31,8 @@ function App() {
   // 現在地の緯度・経度を取得
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
-      // setError("現在地を取得できません");
       return;
     }
-
-    // setError("");
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -53,8 +48,6 @@ function App() {
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
     resetWeather();
-    // setError("");
-    // setWeather(null);
 
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
     setCandidates([]);  // 他候補は消す
@@ -96,8 +89,6 @@ function App() {
 
   // タブ切替時に表示をリセット
   useEffect(() => {
-    // setWeather(null);
-    // setError("");
     resetWeather();
     setCandidates([]);
   }, [activeTab]);

@@ -28,18 +28,8 @@ export function useWeather() {
       setLoading(true);
       setError("");
 
-      // 緯度経度→天気取得
-      // const res = await fetch(
-      //   `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ja`
-      // );
-
-      // if (!res.ok) {
-      //   throw new Error();
-      // }
-
       const data = await getCurrentWeatherApi(lat, lon);
 
-      // const data: OpenWeatherResponse = await res.json();
       setWeather(data);
     } catch (err) {
       console.error(err);
@@ -59,8 +49,6 @@ export function useWeather() {
     loading,
     error,
     fetchByCoords,
-    // setWeather,
-    // setError,
     resetWeather,
   };
 }
