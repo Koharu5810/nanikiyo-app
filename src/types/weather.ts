@@ -21,3 +21,21 @@ export type WeatherData = {
     speed: number;
   };
 };
+
+// 1日分の予報（One Call の daily[] の要素）
+export type DailyWeather = {
+  dt: number;
+  temp: {
+    min: number;
+    max: number;
+  };
+  weather: {
+    description: string;
+    icon: string;
+  }[];
+};
+
+// 予報レスポンス（One Call の返り値のうち使う部分だけ）
+export type WeatherForecast = {
+  daily: DailyWeather[];
+};
