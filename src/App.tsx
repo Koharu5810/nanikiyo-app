@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './styles/sanitize.css'
 import './styles/global.css'
 import { useWeather } from './hooks/useWeather';
@@ -48,15 +48,16 @@ function App() {
 
   // タブ選択
   const { activeTab, setActiveTab } = useWeatherTabs();
-  const [hasFetchedCurrent, setHasFetchedCurrent] = useState(false);
+  const hasFetchedCurrentRef = useRef(false);
 
   // 現在地タブ用
   useEffect(() => {
-    if (activeTab !== 'current' || hasFetchedCurrent) return;
+    if (activeTab !== "current") return;
+    if (hasFetchedCurrentRef.current) return;
 
     getCurrentLocation();
-    setHasFetchedCurrent(true);
-  }, [activeTab, hasFetchedCurrent]);
+    hasFetchedCurrentRef.current = true;
+  }, [activeTab]);
 
   // 地域検索タブ用 複数候補検索用
   useEffect(() => {
