@@ -7,7 +7,8 @@ import { getDailyForecastApi } from "../services/weatherApi";
 import type { WeatherForecast } from "../types/weather";
 
 export function useWeather() {
-  const [weather, setWeather] = useState<WeatherData | null>(null);
+  // const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [forecast, setForecast] = useState<WeatherForecast | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -32,9 +33,9 @@ export function useWeather() {
       setLoading(true);
       setError("");
 
-      const data: WeatherData = await getDailyForecastApi(lat, lon);
+      const data: WeatherForecast = await getDailyForecastApi(lat, lon);
 
-      setWeather(data);
+      setForecast(data);
     } catch (err) {
       console.error(err);
       setError("天気の取得中にエラーが発生しました");
@@ -44,12 +45,14 @@ export function useWeather() {
   };
 
   const resetWeather = () => {
-    setWeather(null);
+    // setWeather(null);
+    setForecast(null);
     setError("");
   };
 
   return {
-    weather,
+    // weather,
+    forecast,
     loading,
     error,
     // fetchByCoords,
