@@ -7,13 +7,16 @@ import { useLocationSearch } from './hooks/useLocationSearch';
 import { useWeatherTabs } from './hooks/useWeatherTabs';
 import type { GeoLocation } from "./types/location";
 import { WeatherInfo } from './components/WeatherInfo';
+import { WeatherForecast } from './components/WeatherForecast';
 
 function App() {
   const {
-    weather,
+    // weather,
+    forecast,
     loading,
     error,
-    fetchByCoords,
+    // fetchByCoords,
+    fetchForecastByCoords,
     resetWeather,
   } = useWeather();
 
@@ -24,9 +27,9 @@ function App() {
     searchLocations,
   } = useLocationSearch();
 
-  const {
-    getCurrentLocation
-  } = useCurrentLocation(fetchByCoords);
+  const { getCurrentLocation
+    } = useCurrentLocation(fetchForecastByCoords);
+  // } = useCurrentLocation(fetchByCoords);
 
   const [place, setPlace] = useState('');
   const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
@@ -38,7 +41,8 @@ function App() {
     setPlace('');
 
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
-    fetchByCoords(loc.lat, loc.lon);
+    // fetchByCoords(loc.lat, loc.lon);
+    fetchForecastByCoords(loc.lat, loc.lon);
   };
 
   // タブ選択
@@ -118,6 +122,7 @@ function App() {
 
             {/* コンテンツ */}
             <div className="tab-content">
+              {/* 現在地タブ */}
               {activeTab === "current" && (
                 <div>
                   {/* <button
@@ -130,15 +135,21 @@ function App() {
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {weather && (
+                  {/* {weather && (
                     <WeatherInfo
                       weather={weather}
                       label={weatherLabel}
                     />
+                  )} */}
+
+                  {forecast?.list && (
+                    // <WeatherForecast daily={forecast.daily} />
+                    <div>予報データ取得成功</div>
                   )}
                 </div>
               )}
 
+              {/* 任意地点タブ */}
               {activeTab === "custom" && (
                 <div>
                   <p className="label">地域を入力</p>
@@ -175,12 +186,12 @@ function App() {
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {weather && (
+                  {/* {weather && (
                     <WeatherInfo
                       weather={weather}
                       label={weatherLabel}
                     />
-                  )}
+                  )} */}
                 </div>
               )}
             </div>

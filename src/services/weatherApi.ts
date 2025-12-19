@@ -1,7 +1,7 @@
 // APIを叩く関数（ゆくゆくLaravelに移行）
 
 // import type { WeatherData } from "../types/weather";
-import type { WeatherForecast } from "../types/weather";
+import type { ForecastResponce } from "../types/weather";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
@@ -22,23 +22,26 @@ const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 //   return json;
 // }
 
-// 3日間の天気を取得
-export async function getDailyForecastApi (
+// 5日間（3時間ごと）予報を取得
+export async function get5DayForecastApi (
   lat: number,
   lon: number
-): Promise < WeatherForecast > {
+): Promise<ForecastResponce> {
+    console.log("🔥 get5DayForecastApi called", lat, lon);
+
   const res = await fetch(
-    `https://api.openweathermap.org/data/3.0/onecall` +
+    `https://api.openweathermap.org/data/2.5/forecast` +
       `?lat=${lat}` +
       `&lon=${lon}` +
-      `&exclude=minutely,hourly,alerts` + // 使わないデータを削る（通信量・理解コスト削減）
-      `&units=metric` +                   // 摂氏
+      `&units=metric` + // 摂氏
       `&lang=ja` +
       `&appid=${API_KEY}`
   );
 
+  console.log("🔥 fetch done", res.status);
+
   if (!res.ok) {
-    throw new Error('天気予報APIエラー');
+    throw new Error("forecast api error");
   }
 
   return await res.json();

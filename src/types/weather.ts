@@ -22,12 +22,12 @@ export type WeatherData = {
   };
 };
 
-// 1日分の予報（One Call の daily[] の要素）
-export type DailyWeather = {
-  dt: number;
-  temp: {
-    min: number;
-    max: number;
+// 3時間ごとの予報1件
+export type ForecastItem = {
+  dt: number;       // Unix time（秒）
+  dt_tet: string;   // "2025-01-01 12:00:00"
+  main: {
+    temp: number;
   };
   weather: {
     description: string;
@@ -35,7 +35,7 @@ export type DailyWeather = {
   }[];
 };
 
-// 予報レスポンス（One Call の返り値のうち使う部分だけ）
-export type WeatherForecast = {
-  daily: DailyWeather[];
+// APIレスポンス全体
+export type ForecastResponce = {
+  list: ForecastItem[];
 };

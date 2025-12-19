@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 // import { getCurrentWeatherApi } from "../services/weatherApi";
-import { getDailyForecastApi } from "../services/weatherApi";
+import { get5DayForecastApi } from "../services/weatherApi";
 // import type { WeatherData } from "../types/weather";
-import type { WeatherForecast } from "../types/weather";
+import type { ForecastResponce } from "../types/weather";
 
 export function useWeather() {
   // const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -29,11 +29,13 @@ export function useWeather() {
 // };
 
   const fetchForecastByCoords = async (lat: number, lon: number) => {
+    console.log("🌤 fetchForecastByCoords", lat, lon);
+
     try {
       setLoading(true);
       setError("");
 
-      const data: WeatherForecast = await getDailyForecastApi(lat, lon);
+      const data: ForecastResponce = await get5DayForecastApi(lat, lon);
 
       setForecast(data);
     } catch (err) {
