@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 // import './App.css'
 import './styles/sanitize.css'
 import './styles/global.css'
+import { useWeather } from './hooks/useWeather';
+import { useLocationSearch } from './hooks/useLocationSearch';
 
 function App() {
   const {
@@ -26,18 +28,18 @@ function App() {
   const [place, setPlace] = useState('');
   const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
 
-  const uniqueLocations = (locations: GeoLocation[]) => {
-    const map = new Map<string, GeoLocation>();
+  // const uniqueLocations = (locations: GeoLocation[]) => {
+  //   const map = new Map<string, GeoLocation>();
 
-    locations.forEach((loc) => {
-      const key = `${loc.name}_${loc.state ?? ''}`;
-      if (!map.has(key)) {
-        map.set(key, loc);
-      }
-    });
+  //   locations.forEach((loc) => {
+  //     const key = `${loc.name}_${loc.state ?? ''}`;
+  //     if (!map.has(key)) {
+  //       map.set(key, loc);
+  //     }
+  //   });
 
-    return Array.from(map.values());
-  };
+    // return Array.from(map.values());
+  // };
 
   // 現在地の緯度・経度を取得
   const getCurrentLocation = () => {
@@ -116,7 +118,7 @@ function App() {
     }
 
     debounceTimerRef.current = window.setTimeout(() => {
-      searchLocations();
+      searchLocations(place);
     }, 300);
 
     return () => {
@@ -212,7 +214,7 @@ function App() {
                       onChange={(e) => setPlace(e.target.value)}
                       onFocus={() => {
                         if (place.trim()) {
-                          searchLocations(); // オートコンプリート用
+                          searchLocations(place); // オートコンプリート用
                         }
                       }}
                     />

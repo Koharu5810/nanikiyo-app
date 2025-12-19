@@ -26,8 +26,21 @@ export function useLocationSearch() {
   // debounce（打つたびにAPIを叩かないための必須技術）用
   const debounceTimerRef = useRef<number | null>(null);
 
+  const uniqueLocations = (locations: GeoLocation[]) => {
+    const map = new Map<string, GeoLocation>();
+
+    locations.forEach((loc) => {
+      const key = `${loc.name}_${loc.state ?? ''}`;
+      if (!map.has(key)) {
+        map.set(key, loc);
+      }
+    });
+
+    return Array.from(map.values());
+  };
+
   // 地名検索（候補取得）
-  const search = async (place: string) => {
+  const searchLocations = async (place: string) => {
     if (!place.trim()) {
       setCandidates([]);
       // setError("地名を入力してください");
@@ -35,31 +48,32 @@ export function useLocationSearch() {
     }
 
     try {
-      setLoading(true);
-      setError("");
-      setWeather(null);
-      setCandidates([]);
+      // setLoading(true);
+      // setError("");
+      // setWeather(null);
+      // setCandidates([]);
 
       // openWeatherは city name 直指定だと日本語で不安定のため、Geocoding API を挟んで緯度経度ベースで取得
       // 1）地名→緯度経度（Geocoding API）
-      const geoRes = await fetch(
+      const res = await fetch(
         `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
           place
         )}&count=5&language=ja`
       );
 
-      if (!geoRes.ok) {
+      if (!res.ok) {
         throw new Error("位置情報の取得に失敗しました");
       }
 
-      const geoData: GeoApiResponse = await geoRes.json();
+      const data: GeoApiResponse = await res.json();
 
-      if (!geoData.results || geoData.results.length === 0) {
-        setError("地名が見つかりませんでした");
+      if (!data.results || data.results.length === 0) {
+        setCandidates([]);
+        // setError("地名が見つかりませんでした");
         return;
       }
 
-      const locations:GeoLocation[] = geoData.results.map((r) => ({
+      const locations: GeoLocation[] = data.results.map((r) => ({
         name: r.name,
         state: r.admin1,
         lat: r.latitude,
@@ -67,12 +81,12 @@ export function useLocationSearch() {
       }));
 
       setCandidates(uniqueLocations(locations));
-
     } catch (err) {
       console.log(err);
-      setError('位置情報の取得中にエラーが発生しました')
-    } finally {
-      setLoading(false);
+      // setError("位置情報の取得中にエラーが発生しました");
+      setCandidates([]);
+    // } finally {
+    //   setLoading(false);
     }
   };
 
