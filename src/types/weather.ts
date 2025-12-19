@@ -1,11 +1,12 @@
-type WeatherLocation = {
+export type WeatherLocation = {
   name: string;
   state?: string;
   country?: string;
   lat: number;
   lon: number;
 };
-type WeatherData = {
+
+export type WeatherData = {
   temp: number;
   feels_like?: number;
   temp_min?: number;
