@@ -6,15 +6,16 @@ import { useCurrentLocation } from "./hooks/useCurrentLocation";
 import { useLocationSearch } from './hooks/useLocationSearch';
 import { useWeatherTabs } from './hooks/useWeatherTabs';
 import type { GeoLocation } from "./types/location";
+import { WeatherInfo } from "./components/WeatherInfo";
 import { WeatherForecast } from './components/WeatherForecast';
 
 function App() {
   const {
-    // weather,
+    weather,
     forecast,
     loading,
     error,
-    // fetchByCoords,
+    fetchByCoords,
     fetchForecastByCoords,
     resetWeather,
   } = useWeather();
@@ -26,9 +27,10 @@ function App() {
     searchLocations,
   } = useLocationSearch();
 
-  const { getCurrentLocation
-    } = useCurrentLocation(fetchForecastByCoords);
-  // } = useCurrentLocation(fetchByCoords);
+  const { getCurrentLocation } = useCurrentLocation(
+    fetchByCoords,
+    fetchForecastByCoords,
+  );
 
   const [place, setPlace] = useState('');
   const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
@@ -134,12 +136,12 @@ function App() {
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {/* {weather && (
+                  {weather && (
                     <WeatherInfo
                       weather={weather}
                       label={weatherLabel}
                     />
-                  )} */}
+                  )}
 
                   {forecast && forecast.length > 0 && (
                     <WeatherForecast daily={forecast} />
@@ -184,12 +186,12 @@ function App() {
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {/* {weather && (
+                  {weather && (
                     <WeatherInfo
                       weather={weather}
                       label={weatherLabel}
                     />
-                  )} */}
+                  )}
 
                   {forecast && forecast.length > 0 && (
                     <WeatherForecast daily={forecast} />
