@@ -57,7 +57,7 @@ function App() {
 
     getCurrentLocation();
     hasFetchedCurrentRef.current = true;
-  }, [activeTab]);
+  }, [activeTab, getCurrentLocation]);
 
   // 地域検索タブ用 複数候補検索用
   useEffect(() => {

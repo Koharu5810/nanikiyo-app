@@ -1,9 +1,13 @@
 // 現在地の緯度・経度を取得
+
+import { useCallback } from "react";
+
 export function useCurrentLocation(
-  fetchWeather: (lat: number, lon: number) => void,
-  fetchForecast: (lat: number, lon: number) => void
+  fetchByCoords: (lat: number, lon: number) => void,
+  fetchForecastByCoords: (lat: number, lon: number) => void
 ) {
-  const getCurrentLocation = () => {
+  // const getCurrentLocation = () => {
+  const getCurrentLocation = useCallback(() => {
     console.log("📍 getCurrentLocation called");
 
     if (!navigator.geolocation) {
@@ -13,10 +17,10 @@ export function useCurrentLocation(
     navigator.geolocation.getCurrentPosition((position) => {
       console.log("📍 position success", position);
       const { latitude, longitude } = position.coords;
-      fetchWeather(latitude, longitude);
-      fetchForecast(latitude, longitude);
+      fetchByCoords(latitude, longitude);
+      fetchForecastByCoords(latitude, longitude);
     });
-  };
+  }, [fetchByCoords, fetchForecastByCoords]);
 
   return { getCurrentLocation };
 }
