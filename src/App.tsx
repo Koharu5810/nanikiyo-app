@@ -6,6 +6,7 @@ import { useCurrentLocation } from "./hooks/useCurrentLocation";
 import { useLocationSearch } from './hooks/useLocationSearch';
 import { useWeatherTabs } from './hooks/useWeatherTabs';
 import type { GeoLocation } from "./types/location";
+import { WeatherInfo } from './components/WeatherInfo';
 
 function App() {
   const {
@@ -75,6 +76,9 @@ function App() {
     };
   }, [place]);
 
+  // タブのラベル
+  const weatherLabel =
+    activeTab === 'current' ? '現在地' : selectedLocationLabel;
 
   return (
     <div className="app">
@@ -127,18 +131,10 @@ function App() {
                   {error && <p className="helper-text error">{error}</p>}
 
                   {weather && (
-                    <div style={{ marginTop: "12px" }}>
-                      <p>📍 現在地</p>
-                      <p>
-                        🌡️ {Math.round(weather.main.temp)}
-                        {"\u00b0"}C (体感 {Math.round(weather.main.feels_like)}
-                        {"\u00b0"}C)
-                        {/* ℃のユニコードu2103を利用するより組み合わせたほうが文字化けに強いらしい */}
-                      </p>
-                      <p>☁️ {weather.weather[0].description}</p>
-                      <p>💨 風速 {weather.wind.speed} m/s</p>
-                      <p>💧 湿度 {weather.main.humidity}%</p>
-                    </div>
+                    <WeatherInfo
+                      weather={weather}
+                      label={weatherLabel}
+                    />
                   )}
                 </div>
               )}
@@ -180,17 +176,10 @@ function App() {
                   {error && <p className="helper-text error">{error}</p>}
 
                   {weather && (
-                    <div style={{ marginTop: "12px" }}>
-                      <p>📍 {selectedLocationLabel}</p>
-                      <p>
-                        🌡️ {Math.round(weather.main.temp)}
-                        {"\u00b0"}C (体感 {Math.round(weather.main.feels_like)}
-                        {"\u00b0"}C)
-                      </p>
-                      <p>☁️ {weather.weather[0].description}</p>
-                      <p>💨 風速 {weather.wind.speed} m/s</p>
-                      <p>💧 湿度 {weather.main.humidity}%</p>
-                    </div>
+                    <WeatherInfo
+                      weather={weather}
+                      label={weatherLabel}
+                    />
                   )}
                 </div>
               )}
