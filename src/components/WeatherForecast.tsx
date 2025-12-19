@@ -14,8 +14,8 @@ export const WeatherForecast = ({ daily }: Props) => {
           <p >{day.date}</p>
 
           <img
-            src="https://openweathermap.org/img/wn/${day.icon}.png`"
-            alt="{day.description"
+            src={`https://openweathermap.org/img/wn/${day.icon}.png`}
+            alt={day.description}
           />
 
           <p>{Math.round(day.temp)}

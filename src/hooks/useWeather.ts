@@ -4,7 +4,6 @@ import { useState } from "react";
 // import { getCurrentWeatherApi } from "../services/weatherApi";
 import { get5DayForecastApi } from "../services/weatherApi";
 // import type { WeatherData } from "../types/weather";
-import type { ForecastResponse } from "../types/weather";
 import type {
   ForecastApiResponse,
   DailyForecast,
@@ -12,7 +11,7 @@ import type {
 
 export function useWeather() {
   // const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [forecast, setForecast] = useState<WeatherForecast | null>(null);
+  const [forecast, setForecast] = useState<DailyForecast[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 

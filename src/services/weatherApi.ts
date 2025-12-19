@@ -1,7 +1,7 @@
 // APIを叩く関数（ゆくゆくLaravelに移行）
 
 // import type { WeatherData } from "../types/weather";
-import type { ForecastResponce } from "../types/weather";
+import type { ForecastApiResponse } from "../types/weather";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
@@ -26,7 +26,7 @@ const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 export async function get5DayForecastApi (
   lat: number,
   lon: number
-): Promise<ForecastResponce> {
+): Promise<ForecastApiResponse> {
     console.log("🔥 get5DayForecastApi called", lat, lon);
 
   const res = await fetch(

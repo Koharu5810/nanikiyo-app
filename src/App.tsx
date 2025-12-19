@@ -6,7 +6,6 @@ import { useCurrentLocation } from "./hooks/useCurrentLocation";
 import { useLocationSearch } from './hooks/useLocationSearch';
 import { useWeatherTabs } from './hooks/useWeatherTabs';
 import type { GeoLocation } from "./types/location";
-import { WeatherInfo } from './components/WeatherInfo';
 import { WeatherForecast } from './components/WeatherForecast';
 
 function App() {
@@ -142,9 +141,8 @@ function App() {
                     />
                   )} */}
 
-                  {forecast?.list && (
-                    // <WeatherForecast daily={forecast.daily} />
-                    <div>予報データ取得成功</div>
+                  {forecast && forecast.length > 0 && (
+                    <WeatherForecast daily={forecast} />
                   )}
                 </div>
               )}
@@ -192,6 +190,10 @@ function App() {
                       label={weatherLabel}
                     />
                   )} */}
+
+                  {forecast && forecast.length > 0 && (
+                    <WeatherForecast daily={forecast} />
+                  )}
                 </div>
               )}
             </div>
