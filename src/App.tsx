@@ -14,8 +14,9 @@ function App() {
     loading,
     error,
     fetchByCoords,
-    setWeather,
-    setError
+    // setWeather,
+    // setError
+    resetWeather,
   } = useWeather();
 
   const {
@@ -32,11 +33,11 @@ function App() {
   // 現在地の緯度・経度を取得
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
-      setError("現在地を取得できません");
+      // setError("現在地を取得できません");
       return;
     }
 
-    setError("");
+    // setError("");
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -44,15 +45,16 @@ function App() {
         fetchByCoords(latitude, longitude);
       },
       () => {
-        setError("位置情報の取得が許可されませんでした");
+        // setError("位置情報の取得が許可されませんでした");
       }
     );
   };
 
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
-    setError("");
-    setWeather(null);
+    resetWeather();
+    // setError("");
+    // setWeather(null);
 
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
     setCandidates([]);  // 他候補は消す
@@ -94,8 +96,9 @@ function App() {
 
   // タブ切替時に表示をリセット
   useEffect(() => {
-    setWeather(null);
-    setError("");
+    // setWeather(null);
+    // setError("");
+    resetWeather();
     setCandidates([]);
   }, [activeTab]);
 

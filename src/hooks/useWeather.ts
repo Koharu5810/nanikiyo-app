@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { getCurrentWeatherApi } from "../services/weatherApi";
 
 // 天気取得ロジック
-export type OpenWeatherResponse = {
+export type WeatherData = {
   name: string;
   weather: {
     description: string;
@@ -17,10 +18,8 @@ export type OpenWeatherResponse = {
   };
 };
 
-const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
-
 export function useWeather() {
-  const [weather, setWeather] = useState<OpenWeatherResponse | null>(null);
+  const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,22 +29,29 @@ export function useWeather() {
       setError("");
 
       // 緯度経度→天気取得
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ja`
-      );
+      // const res = await fetch(
+      //   `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ja`
+      // );
 
-      if (!res.ok) {
-        throw new Error();
-      }
+      // if (!res.ok) {
+      //   throw new Error();
+      // }
 
-      const data: OpenWeatherResponse = await res.json();
+      const data = await getCurrentWeatherApi(lat, lon);
+
+      // const data: OpenWeatherResponse = await res.json();
       setWeather(data);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setError("天気の取得中にエラーが発生しました");
     } finally {
       setLoading(false);
     }
+  };
+
+  const resetWeather = () => {
+    setWeather(null);
+    setError("");
   };
 
   return {
@@ -53,7 +59,8 @@ export function useWeather() {
     loading,
     error,
     fetchByCoords,
-    setWeather,
-    setError,
+    // setWeather,
+    // setError,
+    resetWeather,
   };
 }
