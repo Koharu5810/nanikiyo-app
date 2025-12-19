@@ -5,6 +5,7 @@ import { useWeather } from './hooks/useWeather';
 import { useLocationSearch } from './hooks/useLocationSearch';
 import type { GeoLocation } from "./types/location";
 import { useCurrentLocation } from './hooks/useCurrentLocation';
+import { useWeatherTabs } from './hooks/useWeatherTabs';
 
 function App() {
   const {
@@ -39,12 +40,15 @@ function App() {
     fetchByCoords(loc.lat, loc.lon);
   };
 
-  const [activeTab, setActiveTab] = useState<"current" | "custom">("current");
+  // タブ選択
+  const { activeTab, setActiveTab } = useWeatherTabs(() => {
+    resetWeather();
+    selectLocation();
+  })
 
   // 現在地タブ用
   useEffect(() => {
     if (activeTab !== 'current') return;
-
     getCurrentLocation();
   }, [activeTab]);
 
@@ -71,11 +75,6 @@ function App() {
     };
   }, [place]);
 
-  // タブ切替時に表示をリセット
-  useEffect(() => {
-    resetWeather();
-    selectLocation();
-  }, [activeTab]);
 
   return (
     <div className="app">
