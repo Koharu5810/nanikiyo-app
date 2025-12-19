@@ -1,5 +1,6 @@
 // 地域検索（geocoding）
-import { useRef, useState } from "react";
+
+import { useCallback, useRef, useState } from "react";
 import type { GeoLocation, GeoApiResponse } from "../types/location";
 
 export function useLocationSearch() {
@@ -7,15 +8,15 @@ export function useLocationSearch() {
   // debounce（打つたびにAPIを叩かないための必須技術）用
   const debounceTimerRef = useRef<number | null>(null);
 
-  const clearCandidates = () => {
+  const clearCandidates = useCallback(() => {
     setCandidates([]);
-  };
+  }, []);
   // 選択した地名以外の候補を削除
-  const selectLocation = () => {
+  const selectLocation = useCallback(() => {
     clearCandidates();
-  };
+  }, [clearCandidates]);
 
-  const uniqueLocations = (locations: GeoLocation[]) => {
+  const uniqueLocations = useCallback((locations: GeoLocation[]) => {
     const map = new Map<string, GeoLocation>();
 
     locations.forEach((loc) => {
@@ -26,52 +27,66 @@ export function useLocationSearch() {
     });
 
     return Array.from(map.values());
-  };
+  }, []);
 
   // 地名検索（候補取得）
-  const searchLocations = async (place: string) => {
-    if (!place.trim()) {
-      setCandidates([]);
-      return;
-    }
-
-    try {
-      // 1）地名→緯度経度（Geocoding API）
-      const res = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
-          place
-        )}&count=5&language=ja`
-      );
-
-      if (!res.ok) {
-        throw new Error("位置情報の取得に失敗しました");
-      }
-
-      const data: GeoApiResponse = await res.json();
-
-      if (!data.results || data.results.length === 0) {
+  const searchLocations = useCallback(
+    async (place: string) => {
+      if (!place.trim()) {
         setCandidates([]);
         return;
       }
 
-      const locations: GeoLocation[] = data.results.map((r) => ({
-        name: r.name,
-        state: r.admin1,
-        lat: r.latitude,
-        lon: r.longitude,
-      }));
+      try {
+        // 1）地名→緯度経度（Geocoding API）
+        const res = await fetch(
+          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+            place
+          )}&count=5&language=ja`
+        );
 
-      setCandidates(uniqueLocations(locations));
-    } catch (err) {
-      console.log(err);
-      clearCandidates();
+        if (!res.ok) {
+          throw new Error("位置情報の取得に失敗しました");
+        }
+
+        const data: GeoApiResponse = await res.json();
+
+        if (!data.results || data.results.length === 0) {
+          setCandidates([]);
+          return;
+        }
+
+        const locations: GeoLocation[] = data.results.map((r) => ({
+          name: r.name,
+          state: r.admin1,
+          lat: r.latitude,
+          lon: r.longitude,
+        }));
+
+        setCandidates(uniqueLocations(locations));
+      } catch (err) {
+        console.log(err);
+        clearCandidates();
+      }
+    },
+    [uniqueLocations, clearCandidates]
+  );
+
+  // 既存のタイマーをクリア
+  const searchLocationsDebounced = useCallback((place: string) => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
     }
-  };
+
+    debounceTimerRef.current = window.setTimeout(() => {
+      searchLocations(place);
+    }, 300);
+  }, [searchLocations]);
+
 
   return {
     candidates,
-    debounceTimerRef,
     selectLocation,
-    searchLocations,
+    searchLocationsDebounced,
   };
 }

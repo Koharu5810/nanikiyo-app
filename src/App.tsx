@@ -22,9 +22,8 @@ function App() {
 
   const {
     candidates,
-    debounceTimerRef,
     selectLocation,
-    searchLocations,
+    searchLocationsDebounced,
   } = useLocationSearch();
 
   const { getCurrentLocation } = useCurrentLocation(
@@ -66,21 +65,8 @@ function App() {
       return;
     }
 
-    // 既存のタイマーをクリア
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
-
-    debounceTimerRef.current = window.setTimeout(() => {
-      searchLocations(place);
-    }, 300);
-
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-    };
-  }, [place]);
+    searchLocationsDebounced(place);
+  }, [place, selectLocation, searchLocationsDebounced]);
 
   // タブのラベル
   const weatherLabel =
@@ -157,7 +143,7 @@ function App() {
                       onChange={(e) => setPlace(e.target.value)}
                       onFocus={() => {
                         if (place.trim()) {
-                          searchLocations(place); // オートコンプリート用
+                          searchLocationsDebounced(place); // オートコンプリート用
                         }
                       }}
                     />
