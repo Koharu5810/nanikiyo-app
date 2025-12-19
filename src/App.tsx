@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import './styles/sanitize.css'
 import './styles/global.css'
 import { useWeather } from './hooks/useWeather';
+import { useCurrentLocation } from "./hooks/useCurrentLocation";
 import { useLocationSearch } from './hooks/useLocationSearch';
-import type { GeoLocation } from "./types/location";
-import { useCurrentLocation } from './hooks/useCurrentLocation';
 import { useWeatherTabs } from './hooks/useWeatherTabs';
+import type { GeoLocation } from "./types/location";
 
 function App() {
   const {
