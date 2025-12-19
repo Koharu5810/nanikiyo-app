@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
@@ -6,6 +6,7 @@ import './styles/sanitize.css'
 import './styles/global.css'
 import { useWeather } from './hooks/useWeather';
 import { useLocationSearch } from './hooks/useLocationSearch';
+import type { GeoLocation } from "./hooks/useLocationSearch";
 
 function App() {
   const {
@@ -28,19 +29,6 @@ function App() {
   const [place, setPlace] = useState('');
   const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>('');
 
-  // const uniqueLocations = (locations: GeoLocation[]) => {
-  //   const map = new Map<string, GeoLocation>();
-
-  //   locations.forEach((loc) => {
-  //     const key = `${loc.name}_${loc.state ?? ''}`;
-  //     if (!map.has(key)) {
-  //       map.set(key, loc);
-  //     }
-  //   });
-
-    // return Array.from(map.values());
-  // };
-
   // 現在地の緯度・経度を取得
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
@@ -48,7 +36,6 @@ function App() {
       return;
     }
 
-    // setLoading(true);
     setError("");
 
     navigator.geolocation.getCurrentPosition(
@@ -57,7 +44,6 @@ function App() {
         fetchByCoords(latitude, longitude);
       },
       () => {
-        // setLoading(false);
         setError("位置情報の取得が許可されませんでした");
       }
     );
@@ -65,35 +51,14 @@ function App() {
 
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
-  // const fetchWeatherByLocation = async (loc: GeoLocation) => {
-    // try {
-      // setLoading(true);
-      setError("");
-      setWeather(null);
+    setError("");
+    setWeather(null);
 
-      setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
+    setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
+    setCandidates([]);  // 他候補は消す
 
-      // 2）緯度経度→天気取得
-      // const weatherRes = await fetch(
-      //   `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&appid=${API_KEY}&units=metric&lang=ja`
-      // );
-
-      // if (!weatherRes.ok) {
-      //   throw new Error("天気情報の取得に失敗しました");
-      // }
-
-      // const weatherData: OpenWeatherResponse = await weatherRes.json();
-      // setWeather(weatherData);
-      setCandidates([]);  // 他候補は消す
-    // } catch (err) {
-    //   console.log(err);
-    //   setError("天気の取得中にエラーが発生しました");
-    // } finally {
-    //   setLoading(false);
-    // }
     fetchByCoords(loc.lat, loc.lon);
   };
-
 
   const [activeTab, setActiveTab] = useState<"current" | "custom">("current");
 
@@ -103,7 +68,6 @@ function App() {
 
     getCurrentLocation();
   }, [activeTab]);
-
 
   // 地域検索タブ用 複数候補検索用
   useEffect(() => {

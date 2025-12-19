@@ -40,7 +40,6 @@ export function useWeather() {
 
       const data: OpenWeatherResponse = await res.json();
       setWeather(data);
-      // setSelectedLocationLabel("現在地");
     } catch (err) {
       console.log(err);
       setError("天気の取得中にエラーが発生しました");

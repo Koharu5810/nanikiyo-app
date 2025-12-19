@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-
 // 地域検索（geocoding）
 
 export type GeoLocation = {
@@ -43,17 +42,10 @@ export function useLocationSearch() {
   const searchLocations = async (place: string) => {
     if (!place.trim()) {
       setCandidates([]);
-      // setError("地名を入力してください");
       return;
     }
 
     try {
-      // setLoading(true);
-      // setError("");
-      // setWeather(null);
-      // setCandidates([]);
-
-      // openWeatherは city name 直指定だと日本語で不安定のため、Geocoding API を挟んで緯度経度ベースで取得
       // 1）地名→緯度経度（Geocoding API）
       const res = await fetch(
         `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
@@ -69,7 +61,6 @@ export function useLocationSearch() {
 
       if (!data.results || data.results.length === 0) {
         setCandidates([]);
-        // setError("地名が見つかりませんでした");
         return;
       }
 
@@ -83,10 +74,7 @@ export function useLocationSearch() {
       setCandidates(uniqueLocations(locations));
     } catch (err) {
       console.log(err);
-      // setError("位置情報の取得中にエラーが発生しました");
       setCandidates([]);
-    // } finally {
-    //   setLoading(false);
     }
   };
 
