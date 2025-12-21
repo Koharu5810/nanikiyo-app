@@ -22,6 +22,18 @@ export type WeatherData = {
   };
 };
 
+export type UvLevel =
+  | "low"
+  | "moderate"
+  | "high"
+  | "very_high"
+  | "extreme";
+
+
+// ========================
+// OpenWeather API response
+// ========================
+
 // 3日間表示用
 export type DailyForecast = {
   date: string;
@@ -43,4 +55,31 @@ export type ForecastApiResponse = {
       description: string;
     }[];
   }[];
+};
+
+
+// ========================
+// App internal models
+// ========================
+
+export type DailyWeatherView = {
+  label: string;             // 今日、明日、明後日
+  dateText: string;          // 表示用日付
+  weatherIcon: string;
+  maxTemp: number;
+  minTemp: number;
+  diffMaxTemp?: number;
+  diffMinTemp?: number;
+  precipitation: number;     // 降水確率
+  humidity?: number;         // 湿度
+  windSpeed?: number;
+  uv?: {
+    Index?: number;          // 紫外線強度（数値）
+    level: UvLevel;          // 表示・判定用
+  };
+  outfit: {
+    type: string;            // 半袖、長袖、薄手コート、厚手コート、ダウン など
+    label: string;
+    icon: string;
+  };
 };
