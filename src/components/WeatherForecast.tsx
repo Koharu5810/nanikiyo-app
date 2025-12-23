@@ -1,6 +1,6 @@
 // 3日間天気の一覧表示
 
-import type { DailyWeatherView } from "../types/weather";
+import type { DailyWeatherView } from "@/types/weather";
 
 type Props = {
   daily: DailyWeatherView[];

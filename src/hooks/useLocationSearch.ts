@@ -1,7 +1,7 @@
 // 地域検索（geocoding）
 
 import { useCallback, useRef, useState } from "react";
-import type { GeoLocation, GeoApiResponse } from "../types/location";
+import type { GeoLocation, GeoApiResponse } from "@/types/location";
 
 export function useLocationSearch() {
   const [candidates, setCandidates] = useState<GeoLocation[]>([]);

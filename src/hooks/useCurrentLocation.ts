@@ -6,7 +6,6 @@ export function useCurrentLocation(
   fetchByCoords: (lat: number, lon: number) => void,
   fetchForecastByCoords: (lat: number, lon: number) => void
 ) {
-  // const getCurrentLocation = () => {
   const getCurrentLocation = useCallback(() => {
     console.log("📍 getCurrentLocation called");
 
