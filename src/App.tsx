@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import './styles/sanitize.css'
-import './styles/global.css'
-import { useWeather } from './hooks/useWeather';
-import { useCurrentLocation } from "./hooks/useCurrentLocation";
-import { useLocationSearch } from './hooks/useLocationSearch';
-import { useWeatherTabs } from './hooks/useWeatherTabs';
-import type { GeoLocation } from "./types/location";
-import { WeatherInfo } from "./components/WeatherInfo";
-import { WeatherForecast } from './components/WeatherForecast';
+import '@/styles/sanitize.css'
+import '@/styles/global.css'
+import { useWeather } from '@/hooks/useWeather';
+import { useCurrentLocation } from "@/hooks/useCurrentLocation";
+import { useLocationSearch } from '@/hooks/useLocationSearch';
+import { useWeatherTabs } from '@/hooks/useWeatherTabs';
+import type { GeoLocation } from "@/types/location";
+import { WeatherInfo } from "@/components/WeatherInfo";
+import { WeatherForecast } from '@/components/WeatherForecast';
+import type { DailyWeatherView } from "@/types/weather";
+import { buildDailyWeatherFromForecast } from "@/utils/weatherMapper";
 
 function App() {
   const {
@@ -19,6 +21,17 @@ function App() {
     fetchForecastByCoords,
     resetWeather,
   } = useWeather();
+
+  const [dailyWeather, setDailyWeather] =
+    useState<DailyWeatherView[]>([]);
+
+  useEffect(() => {
+    if (!forecast) return;
+
+    const result = buildDailyWeatherFromForecast(forecast, 3);
+    setDailyWeather(result);
+  }, [forecast]);
+
 
   const { candidates, selectLocation, searchLocationsDebounced } =
     useLocationSearch();
@@ -137,9 +150,6 @@ function App() {
                     <WeatherInfo weather={weather} label={weatherLabel} />
                   )}
 
-                  {forecast && forecast.length > 0 && (
-                    <WeatherForecast daily={forecast} />
-                  )}
                 </div>
               )}
 
@@ -184,8 +194,8 @@ function App() {
                     <WeatherInfo weather={weather} label={weatherLabel} />
                   )}
 
-                  {forecast && forecast.length > 0 && selectedLocationLabel && (
-                    <WeatherForecast daily={forecast} />
+                  {dailyWeather.length > 0 && selectedLocationLabel && (
+                    <WeatherForecast daily={dailyWeather} />
                   )}
                 </div>
               )}
