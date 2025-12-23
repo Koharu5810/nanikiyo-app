@@ -1,18 +1,21 @@
 import { useMemo } from "react";
-import type { DailyWeatherView, ForecastApiResponse } from "@/types/weather";
+
+import type { ForecastApiResponse } from "@/types/weather";
 import { buildDailyWeatherFromForecast } from "@/utils/weatherMapper";
 
 export function useDailyWeather(
-  forecast: ForecastApiResponse | null,
-  selectedLocationLabel: string
+  currentForecast: ForecastApiResponse | null,
+  customForecast: ForecastApiResponse | null
 ) {
-  const dailyWeather = useMemo<DailyWeatherView[]>(() => {
-    if (!forecast) return [];
-    return buildDailyWeatherFromForecast(forecast, 3);
-  }, [forecast]);
+  const currentDailyWeather = useMemo(() => {
+    if (!currentForecast) return [];
+    return buildDailyWeatherFromForecast(currentForecast, 3);
+  }, [currentForecast]);
 
-  const currentDailyWeather = selectedLocationLabel ? [] : dailyWeather;
-  const customDailyWeather = selectedLocationLabel ? dailyWeather : [];
+  const customDailyWeather = useMemo(() => {
+    if (!customForecast) return [];
+    return buildDailyWeatherFromForecast(customForecast, 3);
+  }, [customForecast]);
 
   return {
     currentDailyWeather,
