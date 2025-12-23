@@ -23,7 +23,7 @@ export function buildDailyWeatherFromForecast(
   return dates.slice(0, days).map((date, index) => {
     const items = grouped[date];
 
-    const temps = items.map((i) => i.map.temp);
+    const temps = items.map((i) => i.main.temp);
     const maxTemp = Math.max(...temps);
     const minTemp = Math.min(...temps);
 
