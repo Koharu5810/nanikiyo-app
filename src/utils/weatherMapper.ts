@@ -27,7 +27,8 @@ export function buildDailyWeatherFromForecast(
     const maxTemp = Math.max(...temps);
     const minTemp = Math.min(...temps);
 
-    const weatherDescription = pickNoonWeatherDescription(items);
+    const description = pickNoonWeatherDescription(items);
+    const weatherIcon = mapWeatherToIconType(description);
 
     const precipitationProbability = calcAveragePrecipitation(items);
 
@@ -37,7 +38,7 @@ export function buildDailyWeatherFromForecast(
       label: index === 0 ? "today" : "future",
       dayOffset: index,
       dateText,
-      weatherIcon: weatherDescription,
+      weatherIcon,
       maxTemp,
       minTemp,
       precipitationProbability,
@@ -75,16 +76,12 @@ function groupForecastByDate(
 function pickNoonWeatherDescription(
   items: ForecastApiResponse["list"]
 ): string {
-  // 該当データが見つからなかった時用初期値
-  let result = "";
+  const noonItem = items.find((item) =>
+    item.dt_txt.includes("12:00:00")
+  );
 
-  items.forEach((item) => {
-    if (item.dt_txt.includes("12:00:00")) {
-      result = item.weather[0]?.description ?? "";
-    }
-  });
-
-  return result
+  return noonItem?.weather[0]?.description ?? "";
+  // return result
 }
 
 // 降水確率の平均を計算
@@ -117,4 +114,37 @@ function formatDateText(date: Date): string {
   const weekday = weekdays[date.getDate()];
 
   return `${month} / ${day} (${weekday})`;
+}
+
+/**
+ * OpenWeather の description / main から
+ * アプリ用の天気アイコンタイプを決める
+ */
+export function mapWeatherToIconType(
+  description: string,
+  windSpeed?: number
+): WeatherIconType {
+  const text = description.toLowerCase();
+
+  // 風速で決める
+  if (windSpeed !== undefined && windSpeed >= 8) {
+    return "windy";
+  }
+  if (text.includes("heavy rain") || text.includes("storm")) {
+    return "heavyRain";
+  }
+  if (text.includes("rain")) {
+    return "rain";
+  }
+  if (text.includes("snow")) {
+    return "snow";
+  }
+  if (text.includes("few clouds")) {
+    return "partyCloudy";
+  }
+  if (text.includes("cloud")) {
+    return "cloudy";
+  }
+
+  return "sunny";
 }

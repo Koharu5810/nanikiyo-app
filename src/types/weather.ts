@@ -36,6 +36,15 @@ export type OutfitType =
   | "outer"
   | "down";
 
+export type WeatherIconType =
+  | "sunny"
+  | "partlyCloudy"
+  | "cloudy"
+  | "rain"
+  | "heavyRain"
+  | "snow"
+  | "windy";
+
 
 // ========================
 // OpenWeather API response
