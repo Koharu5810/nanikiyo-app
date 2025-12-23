@@ -14,21 +14,42 @@ export function buildDailyWeatherFromForecast(
   days: number
 ): DailyWeatherView[] {
   // 1. forecast.list を日付ごとにグループ化する
-  //    { "2025-01-01": ForecastItem[], ... }
+  const grouped = groupForecastByDate(forecast.list);
 
   // 2. 今日を dayOffset = 0 として並び替える
+  const dates = Object.keys(grouped).sort();
 
   // 3. 各日について DailyWeatherView を作る
-  //    - maxTemp / minTemp
-  //    - precipitationProbability（平均）
-  //    - 12:00 の weatherDescription
-  //    - dateText
-  //    - label ("today" | "future")
+  return dates.slice(0, days).map((date, index) => {
+    const items = grouped[date];
 
-  // 4. 必要な日数（days）だけ返す
+    const temps = items.map((i) => i.map.temp);
+    const maxTemp = Math.max(...temps);
+    const minTemp = Math.min(...temps);
 
-  return [];
-};
+    const weatherDescription = pickNoonWeatherDescription(items);
+
+    const precipitationProbability = calcAveragePrecipitation(items);
+
+    const dateText = formatDateText(new Date(date));
+
+    return {
+      label: index === 0 ? "today" : "future",
+      dayOffset: index,
+      dateText,
+      weatherIcon: weatherDescription,
+      maxTemp,
+      minTemp,
+      precipitationProbability,
+
+      outfit: {
+        type: "long_sleeve",
+        label: "長袖",
+        icon: "",
+      },
+    };
+  });
+}
 
 // 日付ごとにforecastをまとめる
 function groupForecastByDate(
