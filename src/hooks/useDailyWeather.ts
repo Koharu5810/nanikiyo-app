@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import type { DailyWeatherView } from "@/types/weather";
+import type { DailyWeatherView, ForecastApiResponse } from "@/types/weather";
 import { buildDailyWeatherFromForecast } from "@/utils/weatherMapper";
 
 export function useDailyWeather(
-  forecast: any,
+  forecast: ForecastApiResponse | null,
   selectedLocationLabel: string
 ) {
   const dailyWeather = useMemo<DailyWeatherView[]>(() => {
