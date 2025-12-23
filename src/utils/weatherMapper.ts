@@ -3,6 +3,7 @@
 import type {
   ForecastApiResponse,
   DailyWeatherView,
+  WeatherIconType,
 } from "@/types/weather";
 
 /**
@@ -111,7 +112,7 @@ function formatDateText(date: Date): string {
   const day = date.getDate();
 
   const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
-  const weekday = weekdays[date.getDate()];
+  const weekday = weekdays[date.getDay()];
 
   return `${month} / ${day} (${weekday})`;
 }
@@ -140,7 +141,7 @@ export function mapWeatherToIconType(
     return "snow";
   }
   if (text.includes("few clouds")) {
-    return "partyCloudy";
+    return "partlyCloudy";
   }
   if (text.includes("cloud")) {
     return "cloudy";
