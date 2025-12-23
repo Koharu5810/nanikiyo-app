@@ -21,16 +21,37 @@ function App() {
     resetWeather,
   } = useWeather();
 
-  const [dailyWeather, setDailyWeather] =
-    useState<DailyWeatherView[]>([]);
+  // タブ選択
+  const { activeTab, setActiveTab } = useWeatherTabs();
+  const hasFetchedCurrentRef = useRef(false);
+  const currentLocationLabelRef = useRef<string>("現在地");
+
+  const [place, setPlace] = useState("");
+  const [selectedLocationLabel, setSelectedLocationLabel] =
+    useState<string>("");
+
+  // ↓エラーコメント回避用タグ
+  // eslint-disable-next-line react-hooks/refs
+  const currentLocationLabel = currentLocationLabelRef.current;
+
+  const [currentDailyWeather, setCurrentDailyWeather] = useState<
+    DailyWeatherView[]
+  >([]);
+  const [customDailyWeather, setCustomDailyWeather] = useState<
+    DailyWeatherView[]
+  >([]);
 
   useEffect(() => {
     if (!forecast) return;
 
     const result = buildDailyWeatherFromForecast(forecast, 3);
-    setDailyWeather(result);
-  }, [forecast]);
 
+    if (selectedLocationLabel) {
+      setCustomDailyWeather(result);
+    } else {
+      setCurrentDailyWeather(result);
+    }
+  }, [forecast, selectedLocationLabel]);
 
   const { candidates, selectLocation, searchLocationsDebounced } =
     useLocationSearch();
@@ -40,37 +61,31 @@ function App() {
     fetchForecastByCoords
   );
 
-  const [place, setPlace] = useState("");
-  const [selectedLocationLabel, setSelectedLocationLabel] =
-    useState<string>("");
-
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
     resetWeather();
     selectLocation();
     setPlace("");
 
+    setIscurrentWeather(false);
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
+
     fetchByCoords(loc.lat, loc.lon);
     fetchForecastByCoords(loc.lat, loc.lon);
   };
 
-  // タブ選択
-  const { activeTab, setActiveTab } = useWeatherTabs();
-  const hasFetchedCurrentRef = useRef(false);
-  const currentLocationLabelRef = useRef<string>("現在地");
-
-  // eslint-disable-next-line react-hooks/refs
-  const currentLocationLabel = currentLocationLabelRef.current;
-
   /* ====================
     現在地点取得ロジック
   ==================== */
+  // 現在地取得中かの判定フラグ
+  const [isCurrentWeather, setIscurrentWeather] = useState(true);
+
   // 現在地の初回取得
   useEffect(() => {
     if (activeTab !== "current") return;
     if (hasFetchedCurrentRef.current) return;
 
+    setIscurrentWeather(true);
     getCurrentLocation();
     hasFetchedCurrentRef.current = true;
   }, [activeTab, getCurrentLocation]);
@@ -78,12 +93,10 @@ function App() {
   // 現在地タブのラベル更新
   useEffect(() => {
     if (!weather) return;
-
-    if (!hasFetchedCurrentRef.current) return;
+    if (!isCurrentWeather) return;
 
     currentLocationLabelRef.current = weather.name ?? "現在地";
-  }, [weather, activeTab]);
-
+  }, [weather, isCurrentWeather]);
 
   /* =========================
     地域検索タブ用 複数候補検索用
@@ -141,10 +154,9 @@ function App() {
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {dailyWeather.length > 0 && (
-                    <WeatherOutfitList days={dailyWeather} />
+                  {currentDailyWeather.length > 0 && (
+                    <WeatherOutfitList days={currentDailyWeather} />
                   )}
-
                 </div>
               )}
 
@@ -184,13 +196,12 @@ function App() {
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {dailyWeather.length > 0 && selectedLocationLabel && (
-                    <WeatherOutfitList days={dailyWeather} />
+                  {customDailyWeather.length > 0 && selectedLocationLabel && (
+                    <WeatherOutfitList days={customDailyWeather} />
                   )}
                 </div>
               )}
             </div>
-
           </section>
         </main>
 

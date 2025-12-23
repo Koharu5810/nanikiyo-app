@@ -26,6 +26,7 @@ export function WeatherOutfitCard({ day }: Props) {
               {day.maxTemp}
               {"\u00b0"}C
             </span>
+            <span> / </span>
             <span className="min">
               {day.minTemp}
               {"\u00b0"}C
