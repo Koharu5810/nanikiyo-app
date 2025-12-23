@@ -7,8 +7,7 @@ import { useLocationSearch } from '@/hooks/useLocationSearch';
 import { useWeatherTabs } from '@/hooks/useWeatherTabs';
 import type { GeoLocation } from "@/types/location";
 import { WeatherOutfitList } from "@/components/WeatherOutfitList";
-import type { DailyWeatherView } from "@/types/weather";
-import { buildDailyWeatherFromForecast } from "@/utils/weatherMapper";
+import { useDailyWeather } from './hooks/useDailyWeather';
 
 function App() {
   const {
@@ -34,24 +33,10 @@ function App() {
   // eslint-disable-next-line react-hooks/refs
   const currentLocationLabel = currentLocationLabelRef.current;
 
-  const [currentDailyWeather, setCurrentDailyWeather] = useState<
-    DailyWeatherView[]
-  >([]);
-  const [customDailyWeather, setCustomDailyWeather] = useState<
-    DailyWeatherView[]
-  >([]);
-
-  useEffect(() => {
-    if (!forecast) return;
-
-    const result = buildDailyWeatherFromForecast(forecast, 3);
-
-    if (selectedLocationLabel) {
-      setCustomDailyWeather(result);
-    } else {
-      setCurrentDailyWeather(result);
-    }
-  }, [forecast, selectedLocationLabel]);
+  const { currentDailyWeather, customDailyWeather } = useDailyWeather(
+    forecast,
+    selectedLocationLabel
+  );
 
   const { candidates, selectLocation, searchLocationsDebounced } =
     useLocationSearch();
@@ -61,13 +46,16 @@ function App() {
     fetchForecastByCoords
   );
 
+  // 現在地取得中かの判定フラグ
+  const [isCurrentWeather, setIsCurrentWeather] = useState(true);
+
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
     resetWeather();
     selectLocation();
     setPlace("");
 
-    setIscurrentWeather(false);
+    setIsCurrentWeather(false);
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
 
     fetchByCoords(loc.lat, loc.lon);
@@ -77,15 +65,12 @@ function App() {
   /* ====================
     現在地点取得ロジック
   ==================== */
-  // 現在地取得中かの判定フラグ
-  const [isCurrentWeather, setIscurrentWeather] = useState(true);
-
   // 現在地の初回取得
   useEffect(() => {
     if (activeTab !== "current") return;
     if (hasFetchedCurrentRef.current) return;
 
-    setIscurrentWeather(true);
+    setIsCurrentWeather(true);
     getCurrentLocation();
     hasFetchedCurrentRef.current = true;
   }, [activeTab, getCurrentLocation]);
