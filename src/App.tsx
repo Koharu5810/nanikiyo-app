@@ -6,8 +6,7 @@ import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import { useLocationSearch } from '@/hooks/useLocationSearch';
 import { useWeatherTabs } from '@/hooks/useWeatherTabs';
 import type { GeoLocation } from "@/types/location";
-import { WeatherInfo } from "@/components/WeatherInfo";
-import { WeatherForecast } from '@/components/WeatherForecast';
+import { WeatherOutfitList } from "@/components/weather/WeatherOutfitList";
 import type { DailyWeatherView } from "@/types/weather";
 import { buildDailyWeatherFromForecast } from "@/utils/weatherMapper";
 
@@ -60,10 +59,6 @@ function App() {
   const { activeTab, setActiveTab } = useWeatherTabs();
   const hasFetchedCurrentRef = useRef(false);
   const currentLocationLabelRef = useRef<string>("現在地");
-
-  // タブのラベル
-  const weatherLabel =
-    activeTab === "current" ? "現在地" : selectedLocationLabel;
 
   // eslint-disable-next-line react-hooks/refs
   const currentLocationLabel = currentLocationLabelRef.current;
@@ -146,8 +141,8 @@ function App() {
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {weather && (
-                    <WeatherInfo weather={weather} label={weatherLabel} />
+                  {dailyWeather.length > 0 && (
+                    <WeatherOutfitList days={dailyWeather} />
                   )}
 
                 </div>
@@ -176,7 +171,6 @@ function App() {
                         {candidates.map((loc, index) => (
                           <li
                             key={`${loc.lat}-${loc.lon}-${index}`}
-                            // className="candidate-item"
                             className="autocomplete-item"
                             onClick={() => fetchWeatherByLocation(loc)}
                           >
@@ -190,18 +184,13 @@ function App() {
                   {loading && <p className="helper-text">取得中...</p>}
                   {error && <p className="helper-text error">{error}</p>}
 
-                  {weather && selectedLocationLabel && (
-                    <WeatherInfo weather={weather} label={weatherLabel} />
-                  )}
-
                   {dailyWeather.length > 0 && selectedLocationLabel && (
-                    <WeatherForecast daily={dailyWeather} />
+                    <WeatherOutfitList days={dailyWeather} />
                   )}
                 </div>
               )}
             </div>
 
-            <p>ここにおすすめの服装が表示されます</p>
           </section>
         </main>
 
