@@ -1,5 +1,5 @@
-import type { OutfitView } from "@/types/outfit";
-import type { UvLevel } from "@/types/uv";
+import type { OutfitView } from "./outfit";
+import type { UvLevel } from "./uv";
 
 export type WeatherLocation = {
   name: string;
