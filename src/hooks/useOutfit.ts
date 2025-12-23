@@ -6,6 +6,11 @@ type UseOutfitParams = {
   feelsLike?: number;
 };
 
+type TempRule = {
+  min: number;
+  type: OutfitType;
+};
+
 export function useOutfit({
   temp,
   feelsLike,
@@ -23,15 +28,15 @@ export function useOutfit({
   }
 }
 
-export const TEMP_RULES: { min: number; type: OutfitType }[] = [
-  { min: 30, type: "sleeveless"},
-  { min: 28, type: "short_sleeve"},
-  { min: 26, type: "three_quarter_sleeve"},
-  { min: 22, type: "long_sleeve"},
-  { min: 20, type: "cardigan"},
-  { min: 16, type: "mock_neck"},
-  { min: 14, type: "jacket"},
-  { min: 12, type: "duffle_coat"},
-  { min: 8, type: "coat"},
-  { min: -Infinity, type: "down_jacket"},
-];
+export const TEMP_RULES: TempRule[] = [
+  { min: 30, type: "sleeveless" },
+  { min: 28, type: "short_sleeve" },
+  { min: 25, type: "three_quarter_sleeve" },
+  { min: 22, type: "long_sleeve" },
+  { min: 19, type: "mock_neck" },
+  { min: 16, type: "cardigan" },
+  { min: 14, type: "jacket" },
+  { min: 12, type: "light_coat" },
+  { min: 8, type: "wool_coat" },
+  { min: -Infinity, type: "down_jacket" },
+] as const;
