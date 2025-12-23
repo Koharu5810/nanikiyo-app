@@ -84,9 +84,5 @@ export type DailyWeatherView = {
     index?: number;          // 紫外線強度（数値）
     level: UvLevel;          // 表示・判定用
   };
-  outfit: {
-    type: OutfitView;
-    label: string;
-    icon: string;
-  };
+  outfit: OutfitView;
 };

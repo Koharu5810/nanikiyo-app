@@ -16,6 +16,7 @@ export function useOutfit({
   feelsLike,
 }: UseOutfitParams): OutfitView {
 
+  // 体感気温があれば優先、なければ実気温
   const baseTemp = feelsLike ?? temp;
 
   const type =

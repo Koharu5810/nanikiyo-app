@@ -5,6 +5,7 @@ import type {
   DailyWeatherView,
   WeatherIconType,
 } from "@/types/weather";
+import { useOutfit } from "@/hooks/useOutfit";
 
 /**
  * OpenWeather の forecast API を
@@ -35,6 +36,10 @@ export function buildDailyWeatherFromForecast(
 
     const dateText = formatDateText(new Date(date));
 
+    const outfit = useOutfit({
+      temp: maxTemp,
+    });
+
     return {
       label: index === 0 ? "today" : "future",
       dayOffset: index,
@@ -43,12 +48,7 @@ export function buildDailyWeatherFromForecast(
       maxTemp,
       minTemp,
       precipitationProbability,
-
-      outfit: {
-        type: "long_sleeve",
-        label: "長袖",
-        icon: "",
-      },
+      outfit,
     };
   });
 }
