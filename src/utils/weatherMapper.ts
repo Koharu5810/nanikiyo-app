@@ -21,7 +21,7 @@ export function buildDailyWeatherFromForecast(
   // 3. 各日について DailyWeatherView を作る
   //    - maxTemp / minTemp
   //    - precipitationProbability（平均）
-  //    - 12:00 の weatherIcon
+  //    - 12:00 の weatherDescription
   //    - dateText
   //    - label ("today" | "future")
 
@@ -34,24 +34,66 @@ export function buildDailyWeatherFromForecast(
 function groupForecastByDate(
   list: ForecastApiResponse["list"]
 ): Record<string, ForecastApiResponse["list"]> {
-  return {};
+  const grouped: Record<string, ForecastApiResponse["list"]> = {};
+
+  list.forEach((item) => {
+    // 例）"2025-01-01 12:00:00" → "2025-01-01"
+    const date = item.dt_txt.split(" ")[0];
+
+    if (!grouped[date]) {
+      grouped[date] = [];
+    }
+
+    grouped[date].push(item);
+  });
+
+  return grouped;
 }
 
-// その日の代表アイコン（12:00時点）を取得
-function pickNoonWeatherIcon(
+// その日の代表天気（12:00時点）を取得
+function pickNoonWeatherDescription(
   items: ForecastApiResponse["list"]
 ): string {
-  return "";
+  // 該当データが見つからなかった時用初期値
+  let result = "";
+
+  items.forEach((item) => {
+    if (item.dt_txt.includes("12:00:00")) {
+      result = item.weather[0]?.description ?? "";
+    }
+  });
+
+  return result
 }
 
 // 降水確率の平均を計算
 function calcAveragePrecipitation(
   items: ForecastApiResponse["list"]
 ): number {
-  return 0;
+  let total = 0;
+  let count = 0;
+
+  items.forEach((item) => {
+    if (typeof item.pop === "number") {
+      total += item.pop;
+      count += 1;
+    }
+  });
+
+  // データが1件もなかった場合は表示上0%にする
+  if (count === 0) return 0;
+
+  // 0〜1 → 0〜100 に変換して四捨五入
+  return Math.round((total / count) * 100);
 }
 
 // 表示用の日付文字列を作る
 function formatDateText(date: Date): string {
-  return "";
+  const month = date.getMonth() + 1;  // 0始まりなので+1する
+  const day = date.getDate();
+
+  const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
+  const weekday = weekdays[date.getDate()];
+
+  return `${month} / ${day} (${weekday})`;
 }

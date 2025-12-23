@@ -61,6 +61,7 @@ export type ForecastApiResponse = {
       icon: string;
       description: string;
     }[];
+    pop?: number;
   }[];
 };
 
