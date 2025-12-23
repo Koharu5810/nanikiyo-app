@@ -1,3 +1,6 @@
+import type { OutfitView } from "@/types/outfit";
+import type { UvLevel } from "@/types/uv";
+
 export type WeatherLocation = {
   name: string;
   state?: string;
@@ -21,20 +24,6 @@ export type WeatherData = {
     speed: number;
   };
 };
-
-export type UvLevel =
-  | "low"
-  | "moderate"
-  | "high"
-  | "very_high"
-  | "extreme";
-
-export type OutfitType =
-  | "short_sleeve"
-  | "long_sleeve"
-  | "light_outer"
-  | "outer"
-  | "down";
 
 export type WeatherIconType =
   | "sunny"
@@ -96,7 +85,7 @@ export type DailyWeatherView = {
     level: UvLevel;          // 表示・判定用
   };
   outfit: {
-    type: OutfitType;
+    type: OutfitView;
     label: string;
     icon: string;
   };
