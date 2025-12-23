@@ -7,7 +7,6 @@ type Props = {
 export function WeatherOutfitCard({ day }: Props) {
   return (
     <div className="weather-outfit-card">
-
       {/* 左：日付・天気 */}
       <div className="card-left">
         <div className="data-badge">
@@ -16,15 +15,13 @@ export function WeatherOutfitCard({ day }: Props) {
         </div>
 
         <div className="weather-info">
-          <img
-            src={`/icons/weather/${day.weatherIcon}.svg`}
-            alt=""
-          />
+          <img src={`/icons/weather/${day.weatherIcon}.svg`} alt="" />
 
           <p className="temp">
             <span className="max">
               {day.maxTemp}
               {"\u00b0"}C
+              {/* ℃のユニコードu2103を利用するより組み合わせたほうが文字化けに強いらしい */}
             </span>
             <span> / </span>
             <span className="min">
@@ -47,9 +44,7 @@ export function WeatherOutfitCard({ day }: Props) {
           alt={day.outfit.label}
           className="outfit-icon"
         />
-        <p className="outfit-label">
-          {day.outfit.label}
-        </p>
+        <p className="outfit-label">{day.outfit.label}</p>
       </div>
     </div>
   );

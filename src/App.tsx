@@ -6,7 +6,7 @@ import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import { useLocationSearch } from '@/hooks/useLocationSearch';
 import { useWeatherTabs } from '@/hooks/useWeatherTabs';
 import type { GeoLocation } from "@/types/location";
-import { WeatherOutfitList } from "@/components/weather/WeatherOutfitList";
+import { WeatherOutfitList } from "@/components/WeatherOutfitList";
 import type { DailyWeatherView } from "@/types/weather";
 import { buildDailyWeatherFromForecast } from "@/utils/weatherMapper";
 
