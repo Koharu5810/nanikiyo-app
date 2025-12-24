@@ -4,13 +4,20 @@ type Props = {
   day: DailyWeatherView;
 };
 
+const getDayLabelText = (dayOffset: number) => {
+  if (dayOffset === 0) return "今日";
+  if (dayOffset === 1) return "明日";
+  if (dayOffset === 2) return "明後日";
+  return "";
+}
+
 export function WeatherOutfitCard({ day }: Props) {
   return (
     <div className="weather-outfit-card">
       {/* 左：日付・天気 */}
       <div className="card-left">
         <div className="data-badge">
-          <p className="label">{day.label === "today" ? "今日" : "明日"}</p>
+          <p className="label">{getDayLabelText(day.dayOffset)}</p>
           <p className="date">{day.dateText}</p>
         </div>
 
