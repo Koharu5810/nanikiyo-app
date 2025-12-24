@@ -26,8 +26,8 @@ export function buildDailyWeatherFromForecast(
     const items = grouped[date];
 
     const temps = items.map((i) => i.main.temp);
-    const maxTemp = Math.max(...temps);
-    const minTemp = Math.min(...temps);
+    const maxTemp = Math.ceil(Math.max(...temps));   // 小数点切り上げ
+    const minTemp = Math.floor(Math.min(...temps));  // 小数点切り下げ
 
     const description = pickNoonWeatherDescription(items);
     const weatherIcon = mapWeatherToIconType(description);
@@ -82,7 +82,6 @@ function pickNoonWeatherDescription(
   );
 
   return noonItem?.weather[0]?.description ?? "";
-  // return result
 }
 
 // 降水確率の平均を計算
