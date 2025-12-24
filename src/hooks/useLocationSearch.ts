@@ -80,7 +80,7 @@ export function useLocationSearch() {
 
     debounceTimerRef.current = window.setTimeout(() => {
       searchLocations(place);
-    }, 300);
+    }, 200);
   }, [searchLocations]);
 
 
