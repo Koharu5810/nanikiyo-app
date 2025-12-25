@@ -1,5 +1,6 @@
 import type { DailyWeatherView } from "@/types/weather";
 import type { OutfitView } from "@/types/outfit";
+import { TodayDetails } from "./TodayDetails";
 
 type WeatherCardVariant = "today" | "near" | "far";
 
