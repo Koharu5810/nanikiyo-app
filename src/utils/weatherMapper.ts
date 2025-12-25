@@ -29,8 +29,8 @@ export function buildDailyWeatherFromForecast(
     const maxTemp = Math.ceil(Math.max(...temps));   // 小数点切り上げ
     const minTemp = Math.floor(Math.min(...temps));  // 小数点切り下げ
 
-    const description = pickNoonWeatherDescription(items);
-    const weatherIcon = mapWeatherToIconType(description);
+    const weatherMain = pickNoonWeatherMain(items);
+    const weatherIcon = mapWeatherToIconType(weatherMain);
 
     const precipitationProbability = calcAveragePrecipitation(items);
 
@@ -74,14 +74,13 @@ function groupForecastByDate(
 }
 
 // その日の代表天気（12:00時点）を取得
-function pickNoonWeatherDescription(
+function pickNoonWeatherMain(
   items: ForecastApiResponse["list"]
 ): string {
-  const noonItem = items.find((item) =>
-    item.dt_txt.includes("12:00:00")
-  );
+  const noonItem =
+    items.find((item) => item.dt_txt.includes("12:00:00")) ?? items[0];
 
-  return noonItem?.weather[0]?.description ?? "";
+  return noonItem?.weather[0]?.main ?? "";
 }
 
 // 降水確率の平均を計算
@@ -116,34 +115,34 @@ function formatDateText(date: Date): string {
   return `${month} / ${day} (${weekday})`;
 }
 
-/**
- * OpenWeather の description / main から
- * アプリ用の天気アイコンタイプを決める
- */
+// OpenWeatherのmainからアプリ用の天気アイコンタイプを決める
 export function mapWeatherToIconType(
-  description: string,
+  main: string,
   windSpeed?: number
 ): WeatherIconType {
-  const text = description.toLowerCase();
+  const text = main.toLowerCase();
 
-  // 風速で決める
+  // 風が強い場合は風優先
   if (windSpeed !== undefined && windSpeed >= 8) {
     return "windy";
   }
-  if (text.includes("heavy rain") || text.includes("storm")) {
-    return "heavyRain";
-  }
+  // if (text.includes("heavy rain") || text.includes("storm")) {
+  //   return "heavyRain";
+  // }
   if (text.includes("rain")) {
     return "rain";
   }
   if (text.includes("snow")) {
     return "snow";
   }
-  if (text.includes("few clouds")) {
-    return "partlyCloudy";
-  }
-  if (text.includes("cloud")) {
+  // if (text.includes("few clouds")) {
+  //   return "partlyCloudy";
+  // }
+  if (text.includes("clouds")) {
     return "cloudy";
+  }
+  if (text === "clear") {
+    return "sunny";
   }
 
   return "sunny";

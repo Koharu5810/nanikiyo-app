@@ -57,6 +57,7 @@ export type ForecastApiResponse = {
     };
     weather: {
       icon: string;
+      main: string;
       description: string;
     }[];
     pop?: number;
