@@ -32,7 +32,8 @@ export type WeatherIconType =
   | "rain"
   | "heavyRain"
   | "snow"
-  | "windy";
+  | "windy"
+  | "fog";
 
 
 // ========================
@@ -61,6 +62,10 @@ export type ForecastApiResponse = {
       description: string;
     }[];
     pop?: number;
+    wind?: {
+      speed: number;
+      deg?: number;
+    }
   }[];
 };
 

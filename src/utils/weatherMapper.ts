@@ -26,11 +26,17 @@ export function buildDailyWeatherFromForecast(
     const items = grouped[date];
 
     const temps = items.map((i) => i.main.temp);
-    const maxTemp = Math.ceil(Math.max(...temps));   // 小数点切り上げ
-    const minTemp = Math.floor(Math.min(...temps));  // 小数点切り下げ
+    const maxTemp = Math.ceil(Math.max(...temps)); // 小数点切り上げ
+    const minTemp = Math.floor(Math.min(...temps)); // 小数点切り下げ
 
-    const weatherMain = pickNoonWeatherMain(items);
-    const weatherIcon = mapWeatherToIconType(weatherMain);
+    // その日の代表天気（12:00時点）を取得
+    const noonItem =
+      items.find((item) => item.dt_txt.includes("12:00:00")) ?? items[0];
+    const weatherIcon = mapWeatherToIconType(
+      noonItem.weather[0].main,
+      noonItem.weather[0].description,
+      noonItem.wind?.speed
+    );
 
     const precipitationProbability = calcAveragePrecipitation(items);
 
@@ -73,16 +79,6 @@ function groupForecastByDate(
   return grouped;
 }
 
-// その日の代表天気（12:00時点）を取得
-function pickNoonWeatherMain(
-  items: ForecastApiResponse["list"]
-): string {
-  const noonItem =
-    items.find((item) => item.dt_txt.includes("12:00:00")) ?? items[0];
-
-  return noonItem?.weather[0]?.main ?? "";
-}
-
 // 降水確率の平均を計算
 function calcAveragePrecipitation(
   items: ForecastApiResponse["list"]
@@ -118,30 +114,38 @@ function formatDateText(date: Date): string {
 // OpenWeatherのmainからアプリ用の天気アイコンタイプを決める
 export function mapWeatherToIconType(
   main: string,
+  description?: string,
   windSpeed?: number
 ): WeatherIconType {
-  const text = main.toLowerCase();
+  const mainText = main.toLowerCase();
+  const descText = description?.toLowerCase() ?? "";
 
   // 風が強い場合は風優先
   if (windSpeed !== undefined && windSpeed >= 8) {
     return "windy";
   }
-  // if (text.includes("heavy rain") || text.includes("storm")) {
-  //   return "heavyRain";
-  // }
-  if (text.includes("rain")) {
+  if (mainText === "rain" && descText.includes("heavy")) {
+    return "heavyRain";
+  }
+  if (mainText === "rain" || mainText === "drizzle") {
     return "rain";
   }
-  if (text.includes("snow")) {
+  if (mainText === "snow") {
     return "snow";
   }
-  // if (text.includes("few clouds")) {
-  //   return "partlyCloudy";
-  // }
-  if (text.includes("clouds")) {
+  if (["mist", "fog", "haze"].includes(mainText)) {
+    return "fog";
+  }
+  if (
+    mainText === "clouds" &&
+    (descText.includes("few") || descText.includes("scattered")) 
+  ) {
+    return "partlyCloudy";
+  }
+  if (mainText === "clouds") {
     return "cloudy";
   }
-  if (text === "clear") {
+  if (mainText === "clear") {
     return "sunny";
   }
 
