@@ -29,16 +29,18 @@ export function buildDailyWeatherFromForecast(
     const maxTemp = Math.ceil(Math.max(...temps)); // 小数点切り上げ
     const minTemp = Math.floor(Math.min(...temps)); // 小数点切り下げ
 
+    const precipitationProbability = calcAveragePrecipitation(items);
+
+    const windSpeed = calcAverageWindSpeed(items);
+
     // その日の代表天気（12:00時点）を取得
     const noonItem =
       items.find((item) => item.dt_txt.includes("12:00:00")) ?? items[0];
     const weatherIcon = mapWeatherToIconType(
       noonItem.weather[0].main,
       noonItem.weather[0].description,
-      noonItem.wind?.speed
+      windSpeed
     );
-
-    const precipitationProbability = calcAveragePrecipitation(items);
 
     const dateText = formatDateText(new Date(date));
 
@@ -100,6 +102,22 @@ function calcAveragePrecipitation(
   return Math.round((total / count) * 100);
 }
 
+// 平均風速を計算
+function calcAverageWindSpeed(
+  items: ForecastApiResponse["list"]
+): number | undefined {
+  const speeds = items
+    .map((item) => item.wind?.speed)
+    .filter((v): v is number => typeof v === "number");  // v is numberは型ガード
+
+  if (speeds.length === 0) return undefined;
+
+  const avg =
+    speeds.reduce((sum, speed) => sum + speed, 0) / speeds.length;
+
+  return Math.round(avg * 10) / 10;
+}
+
 // 表示用の日付文字列を作る
 function formatDateText(date: Date): string {
   const month = date.getMonth() + 1;  // 0始まりなので+1する
@@ -120,10 +138,11 @@ export function mapWeatherToIconType(
   const mainText = main.toLowerCase();
   const descText = description?.toLowerCase() ?? "";
 
-  // 風が強い場合は風優先
+  // 風が強い場合（平均8m/s以上）は風優先
   if (windSpeed !== undefined && windSpeed >= 8) {
     return "windy";
   }
+
   if (mainText === "rain" && descText.includes("heavy")) {
     return "heavyRain";
   }
