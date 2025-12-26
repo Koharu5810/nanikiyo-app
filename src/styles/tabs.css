@@ -1,6 +1,4 @@
-
 /* ===== Tabs ===== */
-
 .tabs {
   display: flex;
   border-bottom: 1px solid #ddd;
@@ -14,19 +12,22 @@
   border: none;
   border-radius: 0;
   font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
-  color: #666;
+  color: #f7f7f7;
   border-bottom: 3px solid transparent;
 }
 .tab:hover {
-  background: #f7f7f7;
+  background: #fff;
   border-radius: 0;
   border-bottom: 3px solid #F2B705;
+  color: #222;
 }
 .tab.active {
   color: #222;
+  background: #f7f7f7;
   font-weight: 600;
-  border-bottom: 3px solid #B7B1A6;
+  border-bottom: 3px solid #fff;
 }
 .tab:focus {
   outline: none;
@@ -34,10 +35,4 @@
 .tab:focus-visible {
   outline: 2px solid #F2B705;
   outline-offset: 2px;
-}
-
-/* ===== Tab Content ===== */
-
-.tab-content {
-  padding-top: 8px;
 }

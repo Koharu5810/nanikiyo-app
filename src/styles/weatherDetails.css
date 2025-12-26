@@ -1,5 +1,5 @@
 /* =========================
-    Weather Details
+  Weather画面固有の構造＋中身
 ========================= */
 
 /* ヘッダー */
@@ -21,21 +21,25 @@
   height: 48px;
 }
 
+.weather-details-layout {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
 .weather-details-left {
   flex: 1;
 }
-
 .weather-details-right {
   width: 120px;
   text-align: center;
 }
+
 
 .weather-card-header {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-
 .weather-card-header img {
   width: 40px;
   height: 40px;
