@@ -1,9 +1,6 @@
 import "@/styles/base/sanitize.css";
 import "@/styles/base/global.css";
 import "@/styles/layout.css";
-import "@/styles/weather/page.css";
-import "@/styles/weather/tabs.css";
-import "@/styles/weather/card.css";
 import { WeatherOutfitContainer } from "@/containers/WeatherOutfitContainer";
 
 function App() {

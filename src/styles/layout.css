@@ -4,11 +4,11 @@
   background: #fff;
   border-bottom: 1px solid #ddd;
 }
-.title {
+.app-logo {
   margin: 0;
   font-size: 24px;
 }
-.subtitle {
+.app-tagline {
   margin: 4px 0 0;
   color: #666;
   font-size: 14px;
@@ -21,12 +21,13 @@
   display: grid;
   gap: 16px;
 }
-.page-card {
+.page-section {
   background: #B7B1A6;
   padding: 16px;
   border-radius: 12px;
   margin-bottom: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid red;
 }
 
 /* ===== Footer ===== */
@@ -35,4 +36,30 @@
   text-align: center;
   font-size: 12px;
   color: #999;
+}
+
+/* ===== debug ===== */
+.color-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+.color-sample{
+  width: 30px;
+  height: 15px;
+}
+.main-color {
+  background: #B7B1A6;
+}
+.sub-color {
+  background: #F7F6F4;
+}
+.sunny {
+  background: #F2B705;
+}
+.cloud {
+  background: #9DA3A6;
+}
+.rain {
+  background: #7FAFC9;
 }

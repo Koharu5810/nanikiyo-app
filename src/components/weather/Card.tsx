@@ -1,3 +1,4 @@
+import "@/styles/weather/card.css";
 import type { DailyWeatherView, WeatherIconType } from "@/types/weather";
 import type { UvLevel } from "@/types/uv";
 import { TodayDetails } from "./details/Today";
@@ -44,7 +45,6 @@ export function WeatherOutfitCard({ day, variant }: Props) {
   return (
     <div className={`weather-card weather-card-${variant}`}>
       <div className="weather-details-layout">
-
         {/* 左 */}
         <div className="weather-details-left">
           <div className="weather-card-header">

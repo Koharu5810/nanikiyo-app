@@ -1,3 +1,5 @@
+import "@/styles/weather/page.css";
+import "@/styles/weather/tabs.css";
 import type { GeoLocation } from "@/types/location";
 import type { DailyWeatherView } from "@/types/weather";
 import { WeatherOutfitList } from "@/components/weather/List";
@@ -39,8 +41,8 @@ export function WeatherOutfitPage({
     <div className="app">
       <div className="app-inner">
         <header className="header">
-          <h1 className="title">nanikiyo</h1>
-          <p className="subtitle">今日何着よ？</p>
+          <h1 className="app-logo">nanikiyo</h1>
+          <p className="app-tagline">今日何着よ？</p>
 
           {/* サンプルカラー テスト表示用 */}
           <div className="color-wrapper">
@@ -53,7 +55,7 @@ export function WeatherOutfitPage({
         </header>
 
         <main className="main">
-          <section className="page-card">
+          <section className="page-section">
             {/* タブ */}
             <div className="tabs">
               <button

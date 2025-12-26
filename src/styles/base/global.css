@@ -31,29 +31,3 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-/* ===== debug ===== */
-.color-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  gap: 5px;
-}
-.color-sample{
-  width: 30px;
-  height: 15px;
-}
-.main-color {
-  background: #B7B1A6;
-}
-.sub-color {
-  background: #F7F6F4;
-}
-.sunny {
-  background: #F2B705;
-}
-.cloud {
-  background: #9DA3A6;
-}
-.rain {
-  background: #7FAFC9;
-}
