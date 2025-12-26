@@ -1,7 +1,5 @@
 import type { DailyWeatherView, WeatherIconType } from "@/types/weather";
-import type { OutfitView } from "@/types/outfit";
 import type { UvLevel } from "@/types/uv";
-import { Header } from "./Header";
 import { TodayDetails } from "./details/Today";
 import { NearDetails } from "./details/Near";
 import { FarDetails } from "./details/Far";
@@ -27,7 +25,6 @@ export type BaseWeatherDetailsProps = {
   maxTemp: number;
   minTemp: number;
   precipitation: number;
-  outfit: OutfitView;
 };
 
 export function WeatherOutfitCard({ day, variant }: Props) {
@@ -47,9 +44,13 @@ export function WeatherOutfitCard({ day, variant }: Props) {
   return (
     <div className={`weather-card weather-card-${variant}`}>
       <div className="weather-details-layout">
+
         {/* 左 */}
         <div className="weather-details-left">
-          <Header dayLabel={day.dateLabel} dayText={day.dateText} />
+          <div className="weather-card-header">
+            <div className="day-label">{day.dateLabel}</div>
+            <div className="day-text">{day.dateText}</div>
+          </div>
         </div>
 
         {/* 中央 */}
@@ -63,7 +64,6 @@ export function WeatherOutfitCard({ day, variant }: Props) {
               humidity={humidity}
               windSpeed={windSpeed}
               uvLabel={uvLabel}
-              outfit={outfit}
             />
           )}
 
@@ -78,7 +78,6 @@ export function WeatherOutfitCard({ day, variant }: Props) {
                 windSpeed,
                 uvLabel,
               }}
-              outfit={outfit}
             />
           )}
 
@@ -88,20 +87,18 @@ export function WeatherOutfitCard({ day, variant }: Props) {
               maxTemp={maxTemp}
               minTemp={minTemp}
               precipitation={precipitationProbability}
-              outfit={outfit}
             />
           )}
         </div>
 
         {/* 右 */}
-        <div className="wea-details-right">
+        <div className="weather-details-right">
           <OutfitSummary
             icon={outfit.icon}
             label={outfit.label}
             // description={outfit.description}
           />
         </div>
-
       </div>
     </div>
   );
