@@ -1,7 +1,7 @@
-import type { BaseWeatherDetailsProps } from "../Card";
-import { WeatherDetailsLayout } from "../layout/DetailsLayout";
-import { WeatherSummary } from "../parts/WeatherSummary";
-import { OutfitSummary } from "../parts/OutfitSummary";
+import type { BaseWeatherDetailsProps } from "@/components/weather/Card";
+import { WeatherDetailsLayout } from "@/components/weather/layout/DetailsLayout";
+import { WeatherSummary } from "@/components/weather/parts/WeatherSummary";
+import { OutfitSummary } from "@/components/weather/parts/OutfitSummary";
 import type { WeatherIconType } from "@/types/weather";
 
 type TodayDetailsProps = BaseWeatherDetailsProps & {
