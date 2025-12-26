@@ -1,9 +1,24 @@
+/* =========================
+    Weather Details
+========================= */
+
+/* ヘッダー */
 .weather-details-layout {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
   padding: 16px;
+}
+
+.day-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.weather-icon {
+  width: 48px;
+  height: 48px;
 }
 
 .weather-details-left {
@@ -26,3 +41,42 @@
   height: 40px;
 }
 
+/* 今日の詳細（湿度・風・UV） */
+.weather-meta-list {
+  display: flex;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #555;
+}
+
+.meta-item .icon {
+  font-size: 14px;
+}
+
+/* 服装サマリー */
+.outfit-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.outfit-icon {
+  width: 64px;
+  height: 64px;
+}
+
+.outfit-label {
+  font-size: 14px;
+  font-weight: 500;
+}

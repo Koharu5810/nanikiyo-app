@@ -33,7 +33,7 @@ export function WeatherOutfitCard({ day, variant }: Props) {
   } = day;
 
   return (
-    <div className={`card card-${variant}`}>
+    <div className={`weather-card weather-card-${variant}`}>
       <Header label={day.dateLabel} icon={weatherIcon} />
 
       {variant === "today" && (

@@ -55,7 +55,7 @@ export function WeatherOutfitPage({
         </header>
 
         <main className="main">
-          <section className="card">
+          <section className="page-card">
             {/* タブ */}
             <div className="tabs">
               <button
@@ -90,12 +90,12 @@ export function WeatherOutfitPage({
               {/* 任意地点タブ */}
               {activeTab === "custom" && (
                 <div>
-                  <p className="label">地域を入力</p>
+                  <p className="search-label">地域を入力</p>
                   <div className="search-wrapper">
                     <input
                       type="text"
                       placeholder="例：東京"
-                      className="input"
+                      className="search-input"
                       value={place}
                       onChange={(e) => setPlace(e.target.value)}
                       onFocus={() => {

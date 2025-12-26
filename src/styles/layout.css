@@ -21,6 +21,13 @@
   display: grid;
   gap: 16px;
 }
+.page-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
 
 /* ===== Footer ===== */
 .footer {

@@ -4,7 +4,6 @@ type OutfitSummaryProps = {
   description?: string;
 };
 
-
 export function OutfitSummary({
   icon,
   label,
