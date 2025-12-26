@@ -1,3 +1,4 @@
+import "@/styles/weather/details.css";
 import type { BaseWeatherDetailsProps } from "@/components/weather/Card";
 import { WeatherSummary } from "@/components/weather/parts/WeatherSummary";
 

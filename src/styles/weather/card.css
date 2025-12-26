@@ -1,7 +1,6 @@
 /* =========================
   Weather画面固有の構造＋中身
 ========================= */
-
 .weather-details-layout {
   display: flex;
   justify-content: space-between;
@@ -9,13 +8,13 @@
   gap: 16px;
   padding: 16px;
 }
-.weather-details-left {
+/* .weather-details-left {
   flex: 1;
 }
 .weather-details-right {
   width: 120px;
   text-align: center;
-}
+} */
 
 /* =========================
           左カラム
@@ -106,37 +105,4 @@
 .outfit-label {
   font-size: 14px;
   font-weight: 500;
-}
-
-/* =========================
-        今日カード
-========================= */
-.weather-card-today {
-  /* border: 2px solid #F2B705;
-  background: #fffbe8; */
-}
-
-/* =========================
-      明日・明後日カード
-========================= */
-.weather-card-near .weather-meta-list {
-  opacity: 0.9;
-}
-.weather-card-near {
-  background: #ffffff;
-}
-
-/* =========================
-      ４日目以降カード
-========================= */
-.weather-card-far {
-  /* background: #fafafa; */
-  /* opacity: 0.85; */
-}
-.weather-card-far .outfit-icon {
-  width: 48px;
-  height: 48px;
-}
-.weather-card-far .outfit-label {
-  font-size: 12px;
 }
