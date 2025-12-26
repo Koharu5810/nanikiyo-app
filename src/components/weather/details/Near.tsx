@@ -1,7 +1,5 @@
 import type { BaseWeatherDetailsProps } from "@/components/weather/Card";
-import { WeatherDetailsLayout } from "@/components/weather/layout/DetailsLayout";
 import { WeatherSummary } from "@/components/weather/parts/WeatherSummary";
-import { OutfitSummary } from "@/components/weather/parts/OutfitSummary";
 
 type NearDetailsProps = BaseWeatherDetailsProps & {
   accordionData?: {
@@ -16,7 +14,6 @@ export function NearDetails({
   maxTemp,
   minTemp,
   precipitation,
-  outfit,
   accordionData,
 }: NearDetailsProps) {
   const hasAccordionContent =
@@ -25,51 +22,46 @@ export function NearDetails({
     accordionData?.uvLabel !== undefined;
 
   return (
-    <WeatherDetailsLayout
-      weather={
-        <>
-          <img
-            src={`/icons/weather/${weatherIcon}.svg`}
-            alt=""
-            className="weather-icon large"
-          />
-          <WeatherSummary
-            maxTemp={maxTemp}
-            minTemp={minTemp}
-            precipitation={precipitation}
-          />
+    <div className="near-weather-block">
+      <img
+        src={`/icons/weather/${weatherIcon}.svg`}
+        alt=""
+        className="weather-icon large"
+      />
+      <WeatherSummary
+        maxTemp={maxTemp}
+        minTemp={minTemp}
+        precipitation={precipitation}
+      />
 
-          {hasAccordionContent && (
-            <details className="weather-accordion">
-              <summary className="accordion-summary">詳細を見る</summary>
+      {hasAccordionContent && (
+        <details className="weather-accordion">
+          <summary className="accordion-summary">詳細を見る</summary>
 
-              <ul className="weather-meta">
-                {accordionData?.humidity !== undefined && (
-                  <li className="meta-item">
-                    <span className="icon">湿度 💧 </span>
-                    <span>{accordionData.humidity}%</span>
-                  </li>
-                )}
+          <ul className="weather-meta">
+            {accordionData?.humidity !== undefined && (
+              <li className="meta-item">
+                <span className="icon">湿度 💧 </span>
+                <span>{accordionData.humidity}%</span>
+              </li>
+            )}
 
-                {accordionData?.windSpeed !== undefined && (
-                  <li className="meta-item">
-                    <span className="icon">風 🌬️ </span>
-                    <span>{accordionData.windSpeed}m</span>
-                  </li>
-                )}
+            {accordionData?.windSpeed !== undefined && (
+              <li className="meta-item">
+                <span className="icon">風 🌬️ </span>
+                <span>{accordionData.windSpeed}m</span>
+              </li>
+            )}
 
-                {accordionData.uvLabel && (
-                  <li className="meta-item">
-                    <span className="icon">UV 🕶️ </span>
-                    <span>{accordionData.uvLabel}</span>
-                  </li>
-                )}
-              </ul>
-            </details>
-          )}
-        </>
-      }
-      outfit={<OutfitSummary icon={outfit.icon} label={outfit.label} />}
-    />
+            {accordionData.uvLabel && (
+              <li className="meta-item">
+                <span className="icon">UV 🕶️ </span>
+                <span>{accordionData.uvLabel}</span>
+              </li>
+            )}
+          </ul>
+        </details>
+      )}
+    </div>
   );
 }

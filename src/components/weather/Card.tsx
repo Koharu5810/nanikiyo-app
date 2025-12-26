@@ -5,6 +5,7 @@ import { Header } from "./Header";
 import { TodayDetails } from "./details/Today";
 import { NearDetails } from "./details/Near";
 import { FarDetails } from "./details/Far";
+import { OutfitSummary } from "./parts/OutfitSummary";
 
 type WeatherCardVariant = "today" | "near" | "far";
 
@@ -45,47 +46,63 @@ export function WeatherOutfitCard({ day, variant }: Props) {
 
   return (
     <div className={`weather-card weather-card-${variant}`}>
-      <div className="weather-details-left">
-        <Header dayLabel={day.dateLabel} dayText={day.dateText} />
+      <div className="weather-details-layout">
+        {/* 左 */}
+        <div className="weather-details-left">
+          <Header dayLabel={day.dateLabel} dayText={day.dateText} />
+        </div>
+
+        {/* 中央 */}
+        <div className="weather-details-center">
+          {variant === "today" && (
+            <TodayDetails
+              weatherIcon={weatherIcon}
+              maxTemp={maxTemp}
+              minTemp={minTemp}
+              precipitation={precipitationProbability}
+              humidity={humidity}
+              windSpeed={windSpeed}
+              uvLabel={uvLabel}
+              outfit={outfit}
+            />
+          )}
+
+          {variant === "near" && (
+            <NearDetails
+              weatherIcon={weatherIcon}
+              maxTemp={maxTemp}
+              minTemp={minTemp}
+              precipitation={precipitationProbability}
+              accordionData={{
+                humidity,
+                windSpeed,
+                uvLabel,
+              }}
+              outfit={outfit}
+            />
+          )}
+
+          {variant === "far" && (
+            <FarDetails
+              weatherIcon={weatherIcon}
+              maxTemp={maxTemp}
+              minTemp={minTemp}
+              precipitation={precipitationProbability}
+              outfit={outfit}
+            />
+          )}
+        </div>
+
+        {/* 右 */}
+        <div className="wea-details-right">
+          <OutfitSummary
+            icon={outfit.icon}
+            label={outfit.label}
+            // description={outfit.description}
+          />
+        </div>
+
       </div>
-
-      {variant === "today" && (
-        <TodayDetails
-          weatherIcon={weatherIcon}
-          maxTemp={maxTemp}
-          minTemp={minTemp}
-          precipitation={precipitationProbability}
-          humidity={humidity}
-          windSpeed={windSpeed}
-          uvLabel={uvLabel}
-          outfit={outfit}
-        />
-      )}
-
-      {variant === "near" && (
-        <NearDetails
-          weatherIcon={weatherIcon}
-          maxTemp={maxTemp}
-          minTemp={minTemp}
-          precipitation={precipitationProbability}
-          accordionData={{
-            humidity,
-            windSpeed,
-            uvLabel,
-          }}
-          outfit={outfit}
-        />
-      )}
-
-      {variant === "far" && (
-        <FarDetails
-          weatherIcon={weatherIcon}
-          maxTemp={maxTemp}
-          minTemp={minTemp}
-          precipitation={precipitationProbability}
-          outfit={outfit}
-        />
-      )}
     </div>
   );
 }

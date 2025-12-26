@@ -44,8 +44,9 @@
 .weather-details-center {
   flex: 1;
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  /* align-items: flex-start; */
+  flex-direction: column;
+  gap: 8px;
 }
 .today-weather-block {
   display: flex;
@@ -87,8 +88,8 @@
 ========================= */
 .weather-details-right {
   width: 120px;
-  text-align: center;
   flex-shrink: 0;
+  text-align: center;
 }
 .outfit-summary {
   display: flex;
