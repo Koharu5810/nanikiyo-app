@@ -27,11 +27,25 @@
   font-weight: 600;
   font-size: 14px;
 }
-.weather-icon {
+/* .weather-icon {
   width: 48px;
   height: 48px;
-}
+} */
 
+.today-weather-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.weather-icon.large {
+  width: 56px;
+  height: 56px;
+}
+.weather-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
 /* 詳細（湿度・風・UV） */
 .weather-meta-list {
@@ -74,8 +88,8 @@
         今日カード
 ========================= */
 .weather-card-today {
-  border: 2px solid #F2B705;
-  background: #fffbe8;
+  /* border: 2px solid #F2B705;
+  background: #fffbe8; */
 }
 
 /* =========================
@@ -92,8 +106,8 @@
       ４日目以降カード
 ========================= */
 .weather-card-far {
-  background: #fafafa;
-  opacity: 0.85;
+  /* background: #fafafa; */
+  /* opacity: 0.85; */
 }
 .weather-card-far .outfit-icon {
   width: 48px;

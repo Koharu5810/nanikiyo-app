@@ -1,4 +1,4 @@
-import type { DailyWeatherView } from "@/types/weather";
+import type { DailyWeatherView, WeatherIconType } from "@/types/weather";
 import type { OutfitView } from "@/types/outfit";
 import type { UvLevel } from "@/types/uv";
 import { Header } from "./Header";
@@ -22,6 +22,7 @@ const uvLevelLabelMap: Record<UvLevel, string> = {
 };
 
 export type BaseWeatherDetailsProps = {
+  weatherIcon: WeatherIconType;
   maxTemp: number;
   minTemp: number;
   precipitation: number;
@@ -44,10 +45,11 @@ export function WeatherOutfitCard({ day, variant }: Props) {
 
   return (
     <div className={`weather-card weather-card-${variant}`}>
-      <Header label={day.dateLabel} icon={weatherIcon} />
+      <Header dayLabel={day.dateLabel} dayText={day.dateText} />
 
       {variant === "today" && (
         <TodayDetails
+          weatherIcon={weatherIcon}
           maxTemp={maxTemp}
           minTemp={minTemp}
           precipitation={precipitationProbability}
@@ -60,6 +62,7 @@ export function WeatherOutfitCard({ day, variant }: Props) {
 
       {variant === "near" && (
         <NearDetails
+          weatherIcon={weatherIcon}
           maxTemp={maxTemp}
           minTemp={minTemp}
           precipitation={precipitationProbability}
@@ -74,6 +77,7 @@ export function WeatherOutfitCard({ day, variant }: Props) {
 
       {variant === "far" && (
         <FarDetails
+          weatherIcon={weatherIcon}
           maxTemp={maxTemp}
           minTemp={minTemp}
           precipitation={precipitationProbability}

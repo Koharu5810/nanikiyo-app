@@ -12,6 +12,7 @@ type NearDetailsProps = BaseWeatherDetailsProps & {
 };
 
 export function NearDetails({
+  weatherIcon,
   maxTemp,
   minTemp,
   precipitation,
@@ -27,6 +28,11 @@ export function NearDetails({
     <WeatherDetailsLayout
       weather={
         <>
+          <img
+            src={`/icons/weather/${weatherIcon}.svg`}
+            alt=""
+            className="weather-icon large"
+          />
           <WeatherSummary
             maxTemp={maxTemp}
             minTemp={minTemp}

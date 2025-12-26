@@ -1,18 +1,13 @@
 type HeaderProps = {
-  label: string;
-  icon: string;
+  dayLabel: string;
+  dayText: string;
 };
 
-export function Header({ label, icon }: HeaderProps) {
+export function Header({ dayLabel, dayText }: HeaderProps) {
   return (
     <div className="weather-card-header">
-      <span className="day-label">{label}</span>
-
-      <img
-        src={`/icons/weather/${icon}.svg`}
-        alt=""
-        className="weather-icon"
-      />
+      <div className="day-label">{dayLabel}</div>
+      <div className="day-text">{dayText}</div>
     </div>
   );
 }
