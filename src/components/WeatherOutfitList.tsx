@@ -8,12 +8,22 @@ type Props = {
 export function WeatherOutfitList({ days }: Props) {
   return (
     <div className="weather-outfit-list">
-      {days.map((day) => (
-        <WeatherOutfitCard
-          key={day.dayOffset}
-          day={day}
-        />
-      ))}
+      {days.map((day) => {
+        const variant =
+          day.dayOffset === 0
+            ? "today"
+            : day.dayOffset <= 2
+              ? "near"
+              : "far";
+
+        return (
+          <WeatherOutfitCard
+            key={day.dayOffset}
+            day={day}
+            variant={variant}
+          />
+        );
+      })}
     </div>
   );
 }
