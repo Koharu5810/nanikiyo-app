@@ -73,14 +73,19 @@ export function WeatherOutfitPage({
               </button>
             </div>
 
-            {/* コンテンツ */}
+            {/* カード（タブごと） */}
             <div className="tab-content">
+              {/* 共通・ローディング/エラー */}
+              {(loading || error) && (
+                <>
+                  {loading && <p className="helper-text">取得中...</p>}
+                  {error && <p className="helper-text error">{error}</p>}
+                </>
+              )}
+
               {/* 現在地タブ */}
               {activeTab === "current" && (
                 <div>
-                  {loading && <p className="helper-text">取得中...</p>}
-                  {error && <p className="helper-text error">{error}</p>}
-
                   {currentDailyWeather.length > 0 && (
                     <WeatherOutfitList days={currentDailyWeather} />
                   )}
@@ -119,9 +124,6 @@ export function WeatherOutfitPage({
                       </ul>
                     )}
                   </div>
-
-                  {loading && <p className="helper-text">取得中...</p>}
-                  {error && <p className="helper-text error">{error}</p>}
 
                   {customDailyWeather.length > 0 && selectedLocationLabel && (
                     <WeatherOutfitList days={customDailyWeather} />
