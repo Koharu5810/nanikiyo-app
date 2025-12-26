@@ -8,9 +8,6 @@ type NearDetailsProps = BaseWeatherDetailsProps & {
     humidity?: number;
     windSpeed?: number;
     uvLabel?: string;
-    // uv?: {
-    //   level: string;
-    // };
   };
 };
 
@@ -61,12 +58,6 @@ export function NearDetails({
                     <span>{accordionData.uvLabel}</span>
                   </li>
                 )}
-                {/* {accordionData.uv && (
-                  <li className="meta-item">
-                    <span className="icon">UV 🕶️ </span>
-                    <span>{accordionData.uv.level}</span>
-                  </li>
-                )} */}
               </ul>
             </details>
           )}
