@@ -21,6 +21,13 @@ export function buildDailyWeatherFromForecast(
   // 2. 今日を dayOffset = 0 として並び替える
   const dates = Object.keys(grouped).sort();
 
+  const getDayLabelText = (dayOffset: number): string => {
+    if (dayOffset === 0) return "今日";
+    if (dayOffset === 1) return "明日";
+    if (dayOffset === 2) return "明後日";
+    return `${dayOffset + 1}日後`;
+  };
+
   // 3. 各日について DailyWeatherView を作る
   return dates.slice(0, days).map((date, index) => {
     const items = grouped[date];
@@ -49,8 +56,8 @@ export function buildDailyWeatherFromForecast(
     });
 
     return {
-      label: index === 0 ? "today" : "future",
       dayOffset: index,
+      dateLabel: getDayLabelText(index),
       dateText,
       weatherIcon,
       maxTemp,

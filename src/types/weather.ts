@@ -75,10 +75,10 @@ export type ForecastApiResponse = {
 // ========================
 
 export type DailyWeatherView = {
-  label: "today" | "future";
   dayOffset: number;         // 0 = 今日, 1 = 明日, 2 = 明後日...
+  dateLabel: string;
   dateText: string;          // 表示用日付
-  weatherIcon: string;
+  weatherIcon: WeatherIconType;
   maxTemp: number;
   minTemp: number;
   diffMaxTemp?: number;
