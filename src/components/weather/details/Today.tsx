@@ -1,5 +1,5 @@
-import type { BaseWeatherDetailsProps } from "../WeatherOutfitCard";
-import { WeatherDetailsLayout } from "../layout/WeatherDetailsLayout";
+import type { BaseWeatherDetailsProps } from "../Card";
+import { WeatherDetailsLayout } from "../layout/DetailsLayout";
 import { WeatherSummary } from "../parts/WeatherSummary";
 import { OutfitSummary } from "../parts/OutfitSummary";
 import type { WeatherIconType } from "@/types/weather";

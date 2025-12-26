@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "@/styles/sanitize.css";
 import "@/styles/global.css";
-import { WeatherOutfitPage } from "@/components/weather/WeatherOutfitPage";
+import { WeatherOutfitPage } from "@/components/weather/Page";
 import { useWeather } from "@/hooks/useWeather";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import { useLocationSearch } from "@/hooks/useLocationSearch";
