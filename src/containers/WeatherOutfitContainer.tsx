@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "@/styles/sanitize.css";
 import "@/styles/global.css";
-import { WeatherOutfitPage } from "@/components/WeatherOutfitPage";
+import { WeatherOutfitPage } from "@/components/weather/WeatherOutfitPage";
 import { useWeather } from "@/hooks/useWeather";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import { useLocationSearch } from "@/hooks/useLocationSearch";
@@ -9,7 +9,6 @@ import { useWeatherTabs } from "@/hooks/useWeatherTabs";
 import { useDailyWeather } from "@/hooks/useDailyWeather";
 import type { GeoLocation } from "@/types/location";
 import type { ForecastApiResponse } from "@/types/weather";
-
 
 export function WeatherOutfitContainer() {
   const {
@@ -38,7 +37,8 @@ export function WeatherOutfitContainer() {
         検索UI用 state
     ==================== */
   const [place, setPlace] = useState("");
-  const [selectedLocationLabel, setSelectedLocationLabel] = useState<string>("");
+  const [selectedLocationLabel, setSelectedLocationLabel] =
+    useState<string>("");
 
   /* ====================================
         forecastを2系統で保持（現在地・任意地点）

@@ -2,9 +2,9 @@ import type { DailyWeatherView, WeatherIconType } from "@/types/weather";
 import type { OutfitView } from "@/types/outfit";
 import type { UvLevel } from "@/types/uv";
 import { Header } from "./Header";
-import { TodayDetails } from "./TodayDetails";
-import { NearDetails } from "./NearDetails";
-import { FarDetails } from "./FarDetails";
+import { TodayDetails } from "./details/TodayDetails";
+import { NearDetails } from "./details/NearDetails";
+import { FarDetails } from "./details/FarDetails";
 
 type WeatherCardVariant = "today" | "near" | "far";
 
