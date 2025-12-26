@@ -1,5 +1,3 @@
-import "@/styles/sanitize.css";
-import "@/styles/global.css";
 import type { GeoLocation } from "@/types/location";
 import type { DailyWeatherView } from "@/types/weather";
 import { WeatherOutfitList } from "@/components/weather/List";

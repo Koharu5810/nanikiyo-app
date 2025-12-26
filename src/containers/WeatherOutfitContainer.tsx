@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import "@/styles/sanitize.css";
-import "@/styles/global.css";
 import { WeatherOutfitPage } from "@/components/weather/Page";
 import { useWeather } from "@/hooks/useWeather";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
@@ -73,7 +71,7 @@ export function WeatherOutfitContainer() {
   );
 
   /* ====================
-        任意地点検索 → customForecast
+  任意地点検索 → customForecast
     ==================== */
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
@@ -101,7 +99,7 @@ export function WeatherOutfitContainer() {
   }, [activeTab, getCurrentLocation]);
 
   /* ====================
-        forecast を振り分けて保存
+    forecast を振り分けて保存
     ==================== */
   useEffect(() => {
     if (!forecast) return;
