@@ -9,15 +9,14 @@ export function WeatherDetailsLayout({
 }: WeatherDetailsLayoutProps) {
   return (
     <div className="weather-details-layout">
-      {/* 左：天気情報 */}
-      <div className="weather-details-left">
-        {weather}
-      </div>
+      {/* 左：日付 */}
+      {/* WeatherOutfitCard.tsxで定義 */}
+
+      {/* 中央：天気情報 */}
+      <div className="weather-details-center">{weather}</div>
 
       {/* 右：服装 */}
-      <div className="weather-details-right">
-        {outfit}
-      </div>
+      <div className="weather-details-right">{outfit}</div>
     </div>
   );
 }

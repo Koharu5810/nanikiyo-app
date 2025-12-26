@@ -17,21 +17,36 @@
   text-align: center;
 }
 
-/* ヘッダー */
+/* =========================
+          左カラム
+========================= */
+.weather-details-left {
+  width: 72px;              /* 丸バッジ＋日付にちょうどいい */
+  flex-shrink: 0;
+}
 .weather-card-header {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 .day-label {
-  font-weight: 600;
   font-size: 14px;
+  font-weight: 600;
 }
-/* .weather-icon {
-  width: 48px;
-  height: 48px;
-} */
+.day-text {
+  font-size: 12px;
+  color: #666;
+}
 
+/* =========================
+          中央カラム
+========================= */
+.weather-details-center {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
 .today-weather-block {
   display: flex;
   align-items: flex-start;
@@ -40,6 +55,7 @@
 .weather-icon.large {
   width: 56px;
   height: 56px;
+  border: 1px solid blue;
 }
 .weather-summary {
   display: flex;
@@ -66,7 +82,14 @@
   font-size: 14px;
 }
 
-/* 服装サマリー */
+/* =========================
+          右カラム
+========================= */
+.weather-details-right {
+  width: 120px;
+  text-align: center;
+  flex-shrink: 0;
+}
 .outfit-summary {
   display: flex;
   flex-direction: column;
