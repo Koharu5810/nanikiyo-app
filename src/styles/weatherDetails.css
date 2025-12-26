@@ -2,29 +2,12 @@
   Weather画面固有の構造＋中身
 ========================= */
 
-/* ヘッダー */
 .weather-details-layout {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
   padding: 16px;
-}
-
-.day-label {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.weather-icon {
-  width: 48px;
-  height: 48px;
-}
-
-.weather-details-layout {
-  display: flex;
-  gap: 16px;
-  align-items: center;
 }
 .weather-details-left {
   flex: 1;
@@ -34,18 +17,23 @@
   text-align: center;
 }
 
-
+/* ヘッダー */
 .weather-card-header {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-.weather-card-header img {
-  width: 40px;
-  height: 40px;
+.day-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+.weather-icon {
+  width: 48px;
+  height: 48px;
 }
 
-/* 今日の詳細（湿度・風・UV） */
+
+/* 詳細（湿度・風・UV） */
 .weather-meta-list {
   display: flex;
   gap: 12px;
@@ -53,7 +41,6 @@
   margin: 0;
   list-style: none;
 }
-
 .meta-item {
   display: flex;
   align-items: center;
@@ -61,7 +48,6 @@
   font-size: 13px;
   color: #555;
 }
-
 .meta-item .icon {
   font-size: 14px;
 }
@@ -74,14 +60,45 @@
   gap: 8px;
   margin-top: 12px;
 }
-
 .outfit-icon {
   width: 64px;
   height: 64px;
   color: #222;
 }
-
 .outfit-label {
   font-size: 14px;
   font-weight: 500;
+}
+
+/* =========================
+        今日カード
+========================= */
+.weather-card-today {
+  border: 2px solid #F2B705;
+  background: #fffbe8;
+}
+
+/* =========================
+      明日・明後日カード
+========================= */
+.weather-card-near .weather-meta-list {
+  opacity: 0.9;
+}
+.weather-card-near {
+  background: #ffffff;
+}
+
+/* =========================
+      ４日目以降カード
+========================= */
+.weather-card-far {
+  background: #fafafa;
+  opacity: 0.85;
+}
+.weather-card-far .outfit-icon {
+  width: 48px;
+  height: 48px;
+}
+.weather-card-far .outfit-label {
+  font-size: 12px;
 }

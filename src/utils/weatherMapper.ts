@@ -39,6 +39,8 @@ export function buildDailyWeatherFromForecast(
     const precipitationProbability = calcAveragePrecipitation(items);
 
     const windSpeed = calcAverageWindSpeed(items);
+    const humidity = calcAverageHumidity(items);
+    const uv = estimateUvLevel(items);
 
     // その日の代表天気（12:00時点）を取得
     const noonItem =
@@ -63,6 +65,9 @@ export function buildDailyWeatherFromForecast(
       maxTemp,
       minTemp,
       precipitationProbability,
+      humidity,
+      windSpeed,
+      uv,
       outfit,
     };
   });
@@ -123,6 +128,35 @@ function calcAverageWindSpeed(
     speeds.reduce((sum, speed) => sum + speed, 0) / speeds.length;
 
   return Math.round(avg * 10) / 10;
+}
+
+// 平均湿度を計算
+function calcAverageHumidity(
+  items: ForecastApiResponse["list"]
+): number | undefined {
+  const humidities = items
+    .map((item) => item.main?.humidity)
+    .filter((v): v is number => typeof v === "number");
+
+  if (humidities.length === 0) return undefined;
+
+  const avg = humidities.reduce((sum, h) => sum + h, 0) / humidities.length;
+
+  return Math.round(avg);
+}
+
+// UVレベルを天気から推定
+function estimateUvLevel(
+  items: ForecastApiResponse["list"]
+): { level: string } | undefined {
+  const noon =
+    items.find((item) => item.dt_txt.includes("12:00:00")) ?? items[0];
+
+  const main = noon.weather[0].main.toLowerCase();
+
+  if (main === "clear") return { level: "強い" };
+  if (main === "clouds") return { level: "中" };
+  return { level: "弱い" };
 }
 
 // 表示用の日付文字列を作る
