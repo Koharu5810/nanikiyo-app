@@ -55,6 +55,7 @@ export type ForecastApiResponse = {
     dt_txt: string;
     main: {
       temp: number;
+      humidity: number;
     };
     weather: {
       icon: string;

@@ -7,9 +7,10 @@ type NearDetailsProps = BaseWeatherDetailsProps & {
   accordionData?: {
     humidity?: number;
     windSpeed?: number;
-    uv?: {
-      level: string;
-    };
+    uvLabel?: string;
+    // uv?: {
+    //   level: string;
+    // };
   };
 };
 
@@ -23,7 +24,7 @@ export function NearDetails({
   const hasAccordionContent =
     accordionData?.humidity !== undefined ||
     accordionData?.windSpeed !== undefined ||
-    accordionData?.uv !== undefined;
+    accordionData?.uvLabel !== undefined;
 
   return (
     <WeatherDetailsLayout
@@ -37,9 +38,7 @@ export function NearDetails({
 
           {hasAccordionContent && (
             <details className="weather-accordion">
-              <summary className="accordion-summary">
-                詳細を見る
-              </summary>
+              <summary className="accordion-summary">詳細を見る</summary>
 
               <ul className="weather-meta">
                 {accordionData?.humidity !== undefined && (
@@ -56,23 +55,24 @@ export function NearDetails({
                   </li>
                 )}
 
-                {accordionData.uv && (
+                {accordionData.uvLabel && (
+                  <li className="meta-item">
+                    <span className="icon">UV 🕶️ </span>
+                    <span>{accordionData.uvLabel}</span>
+                  </li>
+                )}
+                {/* {accordionData.uv && (
                   <li className="meta-item">
                     <span className="icon">UV 🕶️ </span>
                     <span>{accordionData.uv.level}</span>
                   </li>
-                )}
+                )} */}
               </ul>
             </details>
           )}
         </>
       }
-      outfit={
-        <OutfitSummary
-          icon={outfit.icon}
-          label={outfit.label}
-        />
-      }
+      outfit={<OutfitSummary icon={outfit.icon} label={outfit.label} />}
     />
   );
 }

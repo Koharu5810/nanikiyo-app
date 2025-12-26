@@ -6,9 +6,7 @@ import { OutfitSummary } from "./OutfitSummary";
 type TodayDetailsProps = BaseWeatherDetailsProps & {
   humidity?: number;
   windSpeed?: number;
-  uv?: {
-    level: string;
-  };
+  uvLabel?: string;
 };
 
 export function TodayDetails({
@@ -17,7 +15,7 @@ export function TodayDetails({
   precipitation,
   humidity,
   windSpeed,
-  uv,
+  uvLabel,
   outfit,
 }: TodayDetailsProps) {
   return (
@@ -43,10 +41,10 @@ export function TodayDetails({
                 </li>
               )}
 
-              {uv && (
+              {uvLabel && (
                 <li className="meta-item">
                   <span className="icon">UV 🕶️ </span>
-                  <span>{uv.level}</span>
+                  <span>{uvLabel}</span>
                 </li>
               )}
             </>

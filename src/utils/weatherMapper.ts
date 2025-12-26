@@ -6,6 +6,7 @@ import type {
   WeatherIconType,
 } from "@/types/weather";
 import { useOutfit } from "@/hooks/useOutfit";
+import type { UvLevel } from "@/types/uv";
 
 /**
  * OpenWeather の forecast API を
@@ -148,15 +149,15 @@ function calcAverageHumidity(
 // UVレベルを天気から推定
 function estimateUvLevel(
   items: ForecastApiResponse["list"]
-): { level: string } | undefined {
+): { level: UvLevel } | undefined {
   const noon =
     items.find((item) => item.dt_txt.includes("12:00:00")) ?? items[0];
 
   const main = noon.weather[0].main.toLowerCase();
 
-  if (main === "clear") return { level: "強い" };
-  if (main === "clouds") return { level: "中" };
-  return { level: "弱い" };
+  if (main === "clear") return { level: "high" };
+  if (main === "clouds") return { level: "moderate" };
+  return { level: "low" };
 }
 
 // 表示用の日付文字列を作る
