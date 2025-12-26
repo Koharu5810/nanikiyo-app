@@ -1,0 +1,31 @@
+/* ===== Header ===== */
+.header {
+  padding: 24px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+.title {
+  margin: 0;
+  font-size: 24px;
+}
+.subtitle {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* ===== Main ===== */
+.main {
+  flex: 1;
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+/* ===== Footer ===== */
+.footer {
+  padding: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+}
