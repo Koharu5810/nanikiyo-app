@@ -74,13 +74,12 @@
   width: 56px;
   height: 56px;
 }
-.weather-summary {
+.weather-main {
   display: flex;
   flex-direction: column;
   gap: 6px;
   border: 1px solid yellowgreen;
 }
-
 .precipitation {
   display: flex;
   gap: 12px;

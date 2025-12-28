@@ -1,5 +1,4 @@
 import type { WeatherIconType } from "@/types/weather";
-import { WeatherSummary } from "./WeatherSummary";
 
 type WeatherMainBlockProps = {
   weatherIcon: WeatherIconType;
@@ -8,19 +7,40 @@ type WeatherMainBlockProps = {
   precipitation: number;
 };
 
-export function WeatherMainBlock(props: WeatherMainBlockProps) {
+export function WeatherMainBlock({
+  weatherIcon,
+  maxTemp,
+  minTemp,
+  precipitation,
+}: WeatherMainBlockProps) {
   return (
-    <>
+    <div className="weather-main">
+      {/* 天気アイコン */}
       <img
-        src={`/icons/weather/${props.weatherIcon}.svg`}
+        src={`/icons/weather/${weatherIcon}.svg`}
         alt=""
         className="weather-icon large"
       />
-      <WeatherSummary
-        maxTemp={props.maxTemp}
-        minTemp={props.minTemp}
-        precipitation={props.precipitation}
-      />
-    </>
+
+      {/* 気温 */}
+      <div className="temp-row">
+        <span className="temp-max">
+          {maxTemp}
+          {"\u00b0"}C
+        </span>
+        <span className="temp-separator"> / </span>
+        <span className="temp-min">
+          {minTemp}
+          {"\u00b0"}C
+        </span>
+      </div>
+
+      {/* 降水情報 */}
+      <div className="precipitation">
+        <span className="icon">降水 ☂️ </span>
+        <span>{precipitation}%</span>
+      </div>
+
+    </div>
   );
 }

@@ -14,13 +14,8 @@ type TodayDetailsProps = BaseWeatherDetailsProps & {
 export function TodayDetails(props: TodayDetailsProps) {
   return (
     <div className="today-weather-block">
-      <div className="weather-main">
-        <WeatherMainBlock {...props} />
-      </div>
-
-      <ul className="weather-meta-list">
-        <WeatherMetaBlock {...props} />
-      </ul>
+      <WeatherMainBlock {...props} />
+      <WeatherMetaBlock {...props} />
     </div>
   );
 }

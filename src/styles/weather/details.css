@@ -12,6 +12,13 @@
   opacity: 0.9;
 }
 
+.weather-accordion {
+  margin-top: 10px;
+}
+.accordion-summary {
+  font-size: 10px;
+}
+
 /* =========================
       ４日目以降カード
 ========================= */
