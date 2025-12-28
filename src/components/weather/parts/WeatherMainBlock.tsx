@@ -24,15 +24,11 @@ export function WeatherMainBlock({
 
       {/* 気温 */}
       <div className="temp-row">
-        <span className="temp-max">
-          {maxTemp}
-          {"\u00b0"}C
-        </span>
+        <span className="temp-max content">{maxTemp}</span>
+        <span className="temp-degree">{"\u00b0"}C</span>
         <span className="temp-separator"> / </span>
-        <span className="temp-min">
-          {minTemp}
-          {"\u00b0"}C
-        </span>
+        <span className="temp-min content">{minTemp}</span>
+        <span className="temp-degree">{"\u00b0"}C</span>
       </div>
 
       {/* 降水情報 */}
@@ -40,7 +36,6 @@ export function WeatherMainBlock({
         <span className="label">降水 ☂️ </span>
         <span className="content">{precipitation}%</span>
       </div>
-
     </div>
   );
 }

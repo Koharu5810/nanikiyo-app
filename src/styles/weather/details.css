@@ -13,10 +13,18 @@
   height: 48px;
 }
 .weather-accordion {
+  width: 100%;
   margin-top: 10px;
 }
 .accordion-summary {
+  margin-bottom: 10px;
+  text-align: left;
   font-size: 10px;
+  cursor: pointer;
+}
+.accordion-summary:hover {
+  text-decoration: underline;
+  color: #B7B1A6;
 }
 
 /* =========================
