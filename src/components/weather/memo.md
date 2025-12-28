@@ -2,7 +2,7 @@
 🧩 表示パーツ（中身）
 🧭 レイアウト専用
 
-components/
+components/weather/
 ├─ 🧱Page.tsx              ← ページ（画面の入口）
 │
 ├─ 🧱List.tsx              ← 複数日分を並べるリスト
