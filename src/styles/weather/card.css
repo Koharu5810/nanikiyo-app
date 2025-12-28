@@ -13,20 +13,16 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
-  padding: 16px;
-  border: 1px solid red;
+  gap: 8px;
 }
 
 /* =========================
           左カラム
 ========================= */
 .weather-details-left {
-  width: 72px;
   flex-shrink: 0;
   display: flex;
-  justify-content: center;
-  border: 1px solid blue;
+  justify-content: left;
 }
 .date-badge {
   width: 56px;
@@ -60,43 +56,63 @@
 .weather-details-center {
   flex: 1;
   display: flex;
-  /* align-items: flex-start; */
   flex-direction: column;
   gap: 8px;
   border: 1px solid orange;
 }
-.today-weather-block {
+.weather-block {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   gap: 12px;
+  border: 2px solid purple;
+}
+.weather-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid yellowgreen;
 }
 .weather-icon.large {
   width: 56px;
   height: 56px;
 }
-.weather-main {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  border: 1px solid yellowgreen;
+.temp-max {
+  color: red;
+}
+.temp-min {
+  color: blue;
 }
 .precipitation {
-  display: flex;
-  gap: 12px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
   border: 1px solid yellow;
+}
+.label {
+  font-size: 12px;
+}
+.content {
+  font-size: 16px;
 }
 
 /* 詳細（湿度・風・UV） */
+.weather-meta-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border: 1px solid pink;
+}
 .meta-item {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: 13px;
   color: #555;
-  border: 1px solid pink;
+  border: 1px dashed red;
 }
 .meta-item .icon {
   font-size: 14px;

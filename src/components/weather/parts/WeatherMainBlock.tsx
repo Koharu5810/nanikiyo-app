@@ -37,8 +37,8 @@ export function WeatherMainBlock({
 
       {/* 降水情報 */}
       <div className="precipitation">
-        <span className="icon">降水 ☂️ </span>
-        <span>{precipitation}%</span>
+        <span className="label">降水 ☂️ </span>
+        <span className="content">{precipitation}%</span>
       </div>
 
     </div>

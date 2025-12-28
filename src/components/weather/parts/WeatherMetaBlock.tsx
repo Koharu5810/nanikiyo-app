@@ -14,21 +14,21 @@ export function WeatherMetaBlock({
       {humidity !== undefined && (
         <li className="meta-item">
           <span className="label">湿度 💧 </span>
-          <span>{humidity}%</span>
+          <span className="content">{humidity}%</span>
         </li>
       )}
 
       {windSpeed !== undefined && (
         <li className="meta-item">
           <span className="label">風 🌬️ </span>
-          <span>{windSpeed}m</span>
+          <span className="content">{windSpeed}m</span>
         </li>
       )}
 
       {uvLabel && (
         <li className="meta-item">
           <span className="label">UV 🕶️ </span>
-          <span>{uvLabel}</span>
+          <span className="content">{uvLabel}</span>
         </li>
       )}
     </ul>

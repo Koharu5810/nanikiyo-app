@@ -13,7 +13,7 @@ type NearDetailsProps = BaseWeatherDetailsProps & {
 
 export function NearDetails(props: NearDetailsProps) {
   return (
-    <div className="near-weather-block">
+    <div className="weather-block">
       <WeatherMainBlock {...props} />
 
       <details className="weather-accordion">

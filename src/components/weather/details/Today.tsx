@@ -13,7 +13,7 @@ type TodayDetailsProps = BaseWeatherDetailsProps & {
 
 export function TodayDetails(props: TodayDetailsProps) {
   return (
-    <div className="today-weather-block">
+    <div className="weather-block">
       <WeatherMainBlock {...props} />
       <WeatherMetaBlock {...props} />
     </div>

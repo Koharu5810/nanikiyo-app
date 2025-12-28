@@ -8,10 +8,10 @@
 /* =========================
       明日・明後日カード
 ========================= */
-.weather-card-near .weather-meta-list {
-  opacity: 0.9;
+.weather-card-near .weather-icon {
+  width: 48px;
+  height: 48px;
 }
-
 .weather-accordion {
   margin-top: 10px;
 }
@@ -22,8 +22,11 @@
 /* =========================
       ４日目以降カード
 ========================= */
-.weather-card-far {
+.weather-card-far .weather-icon {
+  width: 30px;
+  height: 30px;
 }
+
 .weather-card-far .outfit-icon {
   width: 48px;
   height: 48px;

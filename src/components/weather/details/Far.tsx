@@ -4,7 +4,7 @@ import { WeatherMainBlock } from "@/components/weather/parts/WeatherMainBlock";
 
 export function FarDetails(props: BaseWeatherDetailsProps) {
   return (
-    <div className="far-weather-block">
+    <div className="weather-block">
       <WeatherMainBlock {...props} />
     </div>
   );
