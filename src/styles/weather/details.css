@@ -27,6 +27,11 @@
   color: #B7B1A6;
 }
 
+.weather-card-near .outfit-icon {
+  width: 72px;
+  height: 72px;
+}
+
 /* =========================
       ４日目以降カード
 ========================= */
