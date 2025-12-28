@@ -2,8 +2,7 @@
         今日カード
 ========================= */
 .weather-card-today {
-  /* border: 2px solid #F2B705;
-  background: #fffbe8; */
+  border: 2px solid #F2B705;
 }
 
 /* =========================
@@ -12,16 +11,11 @@
 .weather-card-near .weather-meta-list {
   opacity: 0.9;
 }
-.weather-card-near {
-  background: #ffffff;
-}
 
 /* =========================
       ４日目以降カード
 ========================= */
 .weather-card-far {
-  /* background: #fafafa; */
-  /* opacity: 0.85; */
 }
 .weather-card-far .outfit-icon {
   width: 48px;

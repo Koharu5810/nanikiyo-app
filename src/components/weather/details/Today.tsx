@@ -1,7 +1,8 @@
 import "@/styles/weather/details.css";
 import type { WeatherIconType } from "@/types/weather";
 import type { BaseWeatherDetailsProps } from "@/components/weather/Card";
-import { WeatherSummary } from "@/components/weather/parts/WeatherSummary";
+import { WeatherMainBlock } from "@/components/weather/parts/WeatherMainBlock";
+import { WeatherMetaBlock } from "@/components/weather/parts/WeatherMetaBlock";
 
 type TodayDetailsProps = BaseWeatherDetailsProps & {
   weatherIcon: WeatherIconType;
@@ -10,52 +11,16 @@ type TodayDetailsProps = BaseWeatherDetailsProps & {
   uvLabel?: string;
 };
 
-export function TodayDetails({
-  weatherIcon,
-  maxTemp,
-  minTemp,
-  precipitation,
-  humidity,
-  windSpeed,
-  uvLabel,
-}: TodayDetailsProps) {
+export function TodayDetails(props: TodayDetailsProps) {
   return (
     <div className="today-weather-block">
-      <img
-        src={`/icons/weather/${weatherIcon}.svg`}
-        alt=""
-        className="weather-icon large"
-      />
+      <div className="weather-main">
+        <WeatherMainBlock {...props} />
+      </div>
 
-      <WeatherSummary
-        maxTemp={maxTemp}
-        minTemp={minTemp}
-        precipitation={precipitation}
-        items={
-          <>
-            {humidity !== undefined && (
-              <li className="meta-item">
-                <span className="icon">湿度 💧 </span>
-                <span>{humidity}%</span>
-              </li>
-            )}
-
-            {windSpeed !== undefined && (
-              <li className="meta-item">
-                <span className="icon">風 🌬️ </span>
-                <span>{windSpeed}m</span>
-              </li>
-            )}
-
-            {uvLabel && (
-              <li className="meta-item">
-                <span className="icon">UV 🕶️ </span>
-                <span>{uvLabel}</span>
-              </li>
-            )}
-          </>
-        }
-      />
+      <ul className="weather-meta-list">
+        <WeatherMetaBlock {...props} />
+      </ul>
     </div>
   );
 }

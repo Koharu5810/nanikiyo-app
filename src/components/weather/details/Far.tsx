@@ -1,25 +1,13 @@
 import "@/styles/weather/details.css";
 import type { BaseWeatherDetailsProps } from "@/components/weather/Card";
-import { WeatherSummary } from "@/components/weather/parts/WeatherSummary";
+import { WeatherMainBlock } from "@/components/weather/parts/WeatherMainBlock";
 
-export function FarDetails({
-  weatherIcon,
-  maxTemp,
-  minTemp,
-  precipitation,
-}: BaseWeatherDetailsProps) {
+export function FarDetails(props: BaseWeatherDetailsProps) {
   return (
-    <div className="near-weather-block">
-      <img
-        src={`/icons/weather/${weatherIcon}.svg`}
-        alt=""
-        className="weather-icon large"
-      />
-      <WeatherSummary
-        maxTemp={maxTemp}
-        minTemp={minTemp}
-        precipitation={precipitation}
-      />
+    <div className="far-weather-block">
+      <div className="weather-main">
+        <WeatherMainBlock {...props} />
+      </div>
     </div>
   );
 }
