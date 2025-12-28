@@ -1,18 +1,9 @@
 /* =========================
-      カードの枠＋検索UI
+    タブコンテンツの枠＋検索UI
 ========================= */
-/* カード郡の大枠 */
+/* タブコンテンツの大枠 */
 .tab-content {
   padding-top: 8px;
-}
-
-/* カード共通 */
-.weather-card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* 検索UI */

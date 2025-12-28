@@ -77,8 +77,9 @@ export type ForecastApiResponse = {
 
 export type DailyWeatherView = {
   dayOffset: number;         // 0 = 今日, 1 = 明日, 2 = 明後日...
-  dateLabel: string;
+  dateLabel: string | undefined; // 表示用日時（今日、明日、明後日）
   dateText: string;          // 表示用日付
+  dayOfWeek: string;         // 表示用曜日
   weatherIcon: WeatherIconType;
   maxTemp: number;
   minTemp: number;

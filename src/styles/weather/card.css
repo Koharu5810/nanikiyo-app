@@ -1,40 +1,57 @@
 /* =========================
   Weather画面固有の構造＋中身
 ========================= */
+/* カード共通 */
+.weather-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 .weather-details-layout {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
   padding: 16px;
+  border: 1px solid red;
 }
-/* .weather-details-left {
-  flex: 1;
-}
-.weather-details-right {
-  width: 120px;
-  text-align: center;
-} */
 
 /* =========================
           左カラム
 ========================= */
 .weather-details-left {
-  width: 72px;              /* 丸バッジ＋日付にちょうどいい */
+  width: 72px;
   flex-shrink: 0;
-}
-.weather-card-header {
   display: flex;
+  justify-content: center;
+  border: 1px solid blue;
+}
+.date-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #f2f2f2;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  line-height: 1.2;
+  gap: 2px;
 }
 .day-label {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 9px;
+  color: #333;
 }
 .day-text {
-  font-size: 12px;
-  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+}
+.day-week {
+  font-size: 10px;
+  color: #333;
 }
 
 /* =========================
@@ -46,6 +63,7 @@
   /* align-items: flex-start; */
   flex-direction: column;
   gap: 8px;
+  border: 1px solid orange;
 }
 .today-weather-block {
   display: flex;
@@ -55,28 +73,31 @@
 .weather-icon.large {
   width: 56px;
   height: 56px;
-  border: 1px solid blue;
 }
 .weather-summary {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  border: 1px solid yellowgreen;
 }
 
-/* 詳細（湿度・風・UV） */
-.weather-meta-list {
+.precipitation {
   display: flex;
   gap: 12px;
   padding: 0;
   margin: 0;
   list-style: none;
+  border: 1px solid yellow;
 }
+
+/* 詳細（湿度・風・UV） */
 .meta-item {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: 13px;
   color: #555;
+  border: 1px solid pink;
 }
 .meta-item .icon {
   font-size: 14px;
@@ -89,6 +110,7 @@
   width: 120px;
   flex-shrink: 0;
   text-align: center;
+  border: 1px solid green;
 }
 .outfit-summary {
   display: flex;

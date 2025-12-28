@@ -27,7 +27,7 @@ export function WeatherSummary({
       </div>
 
       {/* 降水情報 */}
-      <ul className="weather-meta-list">
+      <ul className="precipitation">
         <li>
           <span className="icon">降水 ☂️ </span>
           <span>{precipitation}%</span>

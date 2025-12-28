@@ -47,9 +47,10 @@ export function WeatherOutfitCard({ day, variant }: Props) {
       <div className="weather-details-layout">
         {/* 左 */}
         <div className="weather-details-left">
-          <div className="weather-card-header">
+          <div className="date-badge">
             <div className="day-label">{day.dateLabel}</div>
             <div className="day-text">{day.dateText}</div>
+            <div className="day-week">({day.dayOfWeek})</div>
           </div>
         </div>
 

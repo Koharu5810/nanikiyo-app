@@ -1,5 +1,4 @@
 // データ変換処理
-
 import type {
   ForecastApiResponse,
   DailyWeatherView,
@@ -22,23 +21,23 @@ export function buildDailyWeatherFromForecast(
   // 2. 今日を dayOffset = 0 として並び替える
   const dates = Object.keys(grouped).sort();
 
-  const getDayLabelText = (dayOffset: number): string => {
+  const getDayLabelText = (dayOffset: number): string | undefined => {
     if (dayOffset === 0) return "今日";
     if (dayOffset === 1) return "明日";
     if (dayOffset === 2) return "明後日";
-    return `${dayOffset + 1}日後`;
+    return undefined;
   };
 
   // 3. 各日について DailyWeatherView を作る
   return dates.slice(0, days).map((date, index) => {
     const items = grouped[date];
+    const dateObj = new Date(date);
 
     const temps = items.map((i) => i.main.temp);
     const maxTemp = Math.ceil(Math.max(...temps)); // 小数点切り上げ
     const minTemp = Math.floor(Math.min(...temps)); // 小数点切り下げ
 
     const precipitationProbability = calcAveragePrecipitation(items);
-
     const windSpeed = calcAverageWindSpeed(items);
     const humidity = calcAverageHumidity(items);
     const uv = estimateUvLevel(items);
@@ -52,8 +51,6 @@ export function buildDailyWeatherFromForecast(
       windSpeed
     );
 
-    const dateText = formatDateText(new Date(date));
-
     const outfit = useOutfit({
       temp: maxTemp,
     });
@@ -61,7 +58,8 @@ export function buildDailyWeatherFromForecast(
     return {
       dayOffset: index,
       dateLabel: getDayLabelText(index),
-      dateText,
+      dateText: formatMonthDay(dateObj),
+      dayOfWeek: getDayOfWeek(dateObj),
       weatherIcon,
       maxTemp,
       minTemp,
@@ -92,6 +90,17 @@ function groupForecastByDate(
   });
 
   return grouped;
+}
+
+// 表示用の日付文字列を作る
+function formatMonthDay(date: Date): string {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${month}/${day}`;
+}
+function getDayOfWeek(date: Date): string {
+  const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
+  return weekdays[date.getDay()];
 }
 
 // 降水確率の平均を計算
@@ -158,17 +167,6 @@ function estimateUvLevel(
   if (main === "clear") return { level: "high" };
   if (main === "clouds") return { level: "moderate" };
   return { level: "low" };
-}
-
-// 表示用の日付文字列を作る
-function formatDateText(date: Date): string {
-  const month = date.getMonth() + 1;  // 0始まりなので+1する
-  const day = date.getDate();
-
-  const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
-  const weekday = weekdays[date.getDay()];
-
-  return `${month} / ${day} (${weekday})`;
 }
 
 // OpenWeatherのmainからアプリ用の天気アイコンタイプを決める
