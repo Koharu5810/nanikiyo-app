@@ -34,6 +34,7 @@ export function WeatherOutfitContainer() {
   const [place, setPlace] = useState("");
   const [selectedLocationLabel, setSelectedLocationLabel] =
     useState<string>("");
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   /* ====================
         フラグ・DOM系
@@ -128,6 +129,8 @@ export function WeatherOutfitContainer() {
       candidates={candidates}
       onSelectLocation={fetchWeatherByLocation}
       searchLocationsDebounced={searchLocationsDebounced}
+      activeIndex={activeIndex}
+      setActiveIndex={setActiveIndex}
       searchError={searchError}
     />
   );

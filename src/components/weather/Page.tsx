@@ -18,6 +18,9 @@ type Props = {
   onSelectLocation: (loc: GeoLocation) => void;
   selectedLocationLabel: string;
   dailyWeather: DailyWeatherView[];
+
+  activeIndex: number;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
   searchError: string | null;
 };
 
@@ -34,6 +37,8 @@ export function WeatherOutfitPage({
   onSelectLocation,
   selectedLocationLabel,
   dailyWeather,
+  activeIndex,
+  setActiveIndex,
   searchError,
 }: Props) {
   return (
@@ -97,7 +102,9 @@ export function WeatherOutfitPage({
               <input
                 type="text"
                 placeholder="例：東京"
-                className="search-input"
+                className={`search-input ${
+                  candidates.length > 0 ? "has-candidates" : ""
+                }`}
                 value={place}
                 onChange={(e) => setPlace(e.target.value)}
                 onFocus={() => {
@@ -105,19 +112,46 @@ export function WeatherOutfitPage({
                     searchLocationsDebounced(place); // オートコンプリート用
                   }
                 }}
+                onKeyDown={(e) => {
+                  if (candidates.length === 0) return;
+
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setActiveIndex((prev) =>
+                      Math.min(prev + 1, candidates.length - 1)
+                    );
+                  }
+
+                  if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    setActiveIndex((prev) => Math.max(prev - 1, 0));
+                  }
+
+                  if (e.key === "Enter" && activeIndex >= 0) {
+                    e.preventDefault();
+                    onSelectLocation(candidates[activeIndex]);
+                    setActiveIndex(-1);
+                  }
+                }}
               />
 
               {searchError && (
-                <p className="helper-text error">{ searchError }</p>
+                <p className="helper-text error">{searchError}</p>
               )}
 
               {candidates.length > 0 && (
-                <ul className="candidate-list">
+                <ul className="autocomplete-list">
                   {candidates.map((loc, index) => (
                     <li
                       key={`${loc.lat}-${loc.lon}-${index}`}
-                      className="autocomplete-item"
-                      onClick={() => onSelectLocation(loc)}
+                      className={`autocomplete-item ${
+                        index === activeIndex ? "active" : ""
+                      }`}
+                      onMouseEnter={() => setActiveIndex(index)}
+                      onClick={() => {
+                        onSelectLocation(loc);
+                        setActiveIndex(-1);
+                      }}
                     >
                       {loc.name} （{loc.state}）
                     </li>
