@@ -50,12 +50,15 @@
   color: #333;
 }
 
-/* 日曜 */
-.date-badge.sun {
+/* 日曜祝日 */
+.date-badge.sun,
+.date-badge.holiday {
   background: #fff3f3;
 }
 .date-badge.sun .day-text,
-.date-badge.sun .day-week {
+.date-badge.sun .day-week,
+.date-badge.holiday .day-text,
+.date-badge.holiday .day-week {
   color: #d64545;
 }
 

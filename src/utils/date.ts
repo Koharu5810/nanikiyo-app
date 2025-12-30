@@ -14,12 +14,15 @@ export function getDayOfWeek(date: Date): string {
 }
 
 // 祝日判定
-export function isHoliday(date: Date): boolean {
+export function getHolidayName(date: Date): string | undefined {
   const key = date.toISOString().split("T")[0];
-  return JP_HOLIDAYS.includes(key);
+  return JP_HOLIDAYS[key];
+}
+export function isHoliday(date: Date): boolean {
+  return Boolean(getHolidayName(date));
 }
 export function getDayOfWeekType(date: Date): DayOfWeekType {
-  if (isHoliday(date)) return "holiday";
+  if (getHolidayName(date)) return "holiday"
 
   const day = date.getDay();
   if (day === 0) return "sun";

@@ -6,7 +6,7 @@ import type {
 } from "@/types/weather";
 import type { UvLevel } from "@/types/uv";
 import { getOutfitByTemp } from "./outfit";
-import { formatMonthDay, getDayOfWeek, getDayOfWeekType } from "./date";
+import { formatMonthDay, getDayOfWeek, getDayOfWeekType, getHolidayName } from "./date";
 
 /**
  * OpenWeather の forecast API を
@@ -29,10 +29,13 @@ export function buildDailyWeatherFromForecast(
     return undefined;
   };
 
+
   // 3. 各日について DailyWeatherView を作る
   return dates.slice(0, days).map((date, index) => {
     const items = grouped[date];
     const dateObj = new Date(date);
+
+    const holidayName = getHolidayName(dateObj);
 
     const temps = items.map((i) => i.main.temp);
     const maxTemp = Math.ceil(Math.max(...temps)); // 小数点切り上げ
@@ -61,7 +64,10 @@ export function buildDailyWeatherFromForecast(
       dateLabel: getDayLabelText(index),
       dateText: formatMonthDay(dateObj),
       dayOfWeek: getDayOfWeek(dateObj),
-      dayOfWeekType: getDayOfWeekType(dateObj),
+      holidayName,
+      dayOfWeekType: holidayName
+        ? "holiday"
+        : getDayOfWeekType(dateObj),
       weatherIcon,
       maxTemp,
       minTemp,

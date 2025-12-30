@@ -52,6 +52,9 @@ export function WeatherOutfitCard({ day, variant }: Props) {
             <div className="day-text">{day.dateText}</div>
             <div className="day-week">({day.dayOfWeek})</div>
           </div>
+          {day.holidayName && (
+            <div className="holiday-label">{day.holidayName}</div>
+          )}
         </div>
 
         {/* 中央 */}
