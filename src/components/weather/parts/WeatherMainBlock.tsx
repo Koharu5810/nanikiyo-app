@@ -25,10 +25,10 @@ export function WeatherMainBlock({
 
       {/* 気温 */}
       <div className="temp-row">
-        <span className="temp-max content">{maxTemp}</span>
+        <span className="temp-max">{maxTemp}</span>
         <span className="temp-degree">{"\u00b0"}C</span>
         <span className="temp-separator"> / </span>
-        <span className="temp-min content">{minTemp}</span>
+        <span className="temp-min">{minTemp}</span>
         <span className="temp-degree">{"\u00b0"}C</span>
       </div>
 

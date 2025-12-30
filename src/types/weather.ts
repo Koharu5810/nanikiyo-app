@@ -80,6 +80,7 @@ export type DailyWeatherView = {
   dateLabel: string | undefined; // 表示用日時（今日、明日、明後日）
   dateText: string;          // 表示用日付
   dayOfWeek: string;         // 表示用曜日
+  dayOfWeekType: string;     // 表示用曜日種別（土日祝・平日）
   weatherIcon: WeatherIconType;
   maxTemp: number;
   minTemp: number;

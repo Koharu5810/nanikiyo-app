@@ -50,6 +50,24 @@
   color: #333;
 }
 
+/* 日曜 */
+.date-badge.sun {
+  background: #fff3f3;
+}
+.date-badge.sun .day-text,
+.date-badge.sun .day-week {
+  color: #d64545;
+}
+
+/* 土曜 */
+.date-badge.sat {
+  background: #f3f6ff;
+}
+.date-badge.sat .day-text,
+.date-badge.sat .day-week {
+  color: #3f5bd6;
+}
+
 /* =========================
           中央カラム
 ========================= */
@@ -78,10 +96,12 @@
   height: 56px;
 }
 .temp-max {
-  color: red;
+  font-size: 22px;
+  color: #d64545;
 }
 .temp-min {
-  color: blue;
+  font-size: 22px;
+  color: #3f5bd6;
 }
 .temp-separator {
   opacity: 0.4;
@@ -94,21 +114,21 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 12px;
+  font-size: 10px;
 }
 .label::first-letter {
   line-height: 1;
 }
 .content {
-  font-size: 18px;
+  font-size: 16px;
   align-items: baseline;
 }
 .umbrella-icon,
 .droplets-icon,
 .wind-speed-icon,
 .glass-icon {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   margin: 0 3px;
   color: #7FAFC9;
 }

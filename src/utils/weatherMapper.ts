@@ -27,6 +27,13 @@ export function buildDailyWeatherFromForecast(
     if (dayOffset === 2) return "明後日";
     return undefined;
   };
+  // 土日は日付の色を変える
+  function getDayOfWeekType(date: Date): "sun" | "sat" | "weekday" {
+    const day = date.getDay();
+    if (day === 0) return "sun";
+    if (day === 6) return "sat";
+    return "weekday";
+  }
 
   // 3. 各日について DailyWeatherView を作る
   return dates.slice(0, days).map((date, index) => {
@@ -60,6 +67,7 @@ export function buildDailyWeatherFromForecast(
       dateLabel: getDayLabelText(index),
       dateText: formatMonthDay(dateObj),
       dayOfWeek: getDayOfWeek(dateObj),
+      dayOfWeekType: getDayOfWeekType(dateObj),
       weatherIcon,
       maxTemp,
       minTemp,
