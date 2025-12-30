@@ -1,5 +1,6 @@
 /* ===== Tabs ===== */
 .tabs {
+  position: relative;
   display: flex;
   border-bottom: 1px solid #ddd;
   margin-bottom: 16px;
@@ -15,24 +16,35 @@
   font-weight: bold;
   cursor: pointer;
   color: #f7f7f7;
-  border-bottom: 3px solid transparent;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .tab:hover {
   background: #fff;
-  border-radius: 0;
-  border-bottom: 3px solid #F2B705;
   color: #222;
 }
 .tab.active {
   color: #222;
   background: #f7f7f7;
   font-weight: 600;
-  border-bottom: 3px solid #fff;
 }
-.tab:focus {
-  outline: none;
+
+/* 選択タブ遷移アニメーション */
+.tab-indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 50%;
+  height: 3px;
+  background: #fff;
+  transition: transform 0.25s ease, background-color 0.2s ease;
 }
-.tab:focus-visible {
-  outline: 2px solid #F2B705;
-  outline-offset: 2px;
+.tab-indicator.hover {
+  background: #F2B705;
+}
+.tab-indicator.left {
+  transform: translateX(0%);
+}
+.tab-indicator.right {
+  transform: translateX(100%);
 }

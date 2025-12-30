@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "@/styles/weather/page.css";
 import "@/styles/weather/tabs.css";
 import type { GeoLocation } from "@/types/location";
@@ -41,6 +42,8 @@ export function WeatherOutfitPage({
   setActiveIndex,
   searchError,
 }: Props) {
+  const [hoverTab, setHoverTab] = useState<"current" | "custom" | null>(null);
+
   return (
     <section className="page-section">
       {/* タブ */}
@@ -48,6 +51,8 @@ export function WeatherOutfitPage({
         <button
           className={`tab ${activeTab === "current" ? "active" : ""}`}
           onClick={() => setActiveTab("current")}
+          onMouseEnter={() => setHoverTab("current")}
+          onMouseLeave={() => setHoverTab(null)}
         >
           {currentLocationLabel}
         </button>
@@ -55,6 +60,8 @@ export function WeatherOutfitPage({
         <button
           className={`tab ${activeTab === "custom" ? "active" : ""}`}
           onClick={() => setActiveTab("custom")}
+          onMouseEnter={() => setHoverTab("custom")}
+          onMouseLeave={() => setHoverTab(null)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -73,6 +80,12 @@ export function WeatherOutfitPage({
           </svg>
           地域検索
         </button>
+
+        <span
+          className={`tab-indicator ${
+            (hoverTab ?? activeTab) === "custom" ? "right" : "left"
+          } ${hoverTab ? "hover" : ""}`}
+        />
       </div>
 
       {/* カード（タブごと） */}
