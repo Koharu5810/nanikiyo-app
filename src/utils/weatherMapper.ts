@@ -4,8 +4,9 @@ import type {
   DailyWeatherView,
   WeatherIconType,
 } from "@/types/weather";
-import { getOutfitByTemp } from "./outfit";
 import type { UvLevel } from "@/types/uv";
+import { getOutfitByTemp } from "./outfit";
+import { formatMonthDay, getDayOfWeek, getDayOfWeekType } from "./date";
 
 /**
  * OpenWeather の forecast API を
@@ -27,13 +28,6 @@ export function buildDailyWeatherFromForecast(
     if (dayOffset === 2) return "明後日";
     return undefined;
   };
-  // 土日は日付の色を変える
-  function getDayOfWeekType(date: Date): "sun" | "sat" | "weekday" {
-    const day = date.getDay();
-    if (day === 0) return "sun";
-    if (day === 6) return "sat";
-    return "weekday";
-  }
 
   // 3. 各日について DailyWeatherView を作る
   return dates.slice(0, days).map((date, index) => {
@@ -98,17 +92,6 @@ function groupForecastByDate(
   });
 
   return grouped;
-}
-
-// 表示用の日付文字列を作る
-function formatMonthDay(date: Date): string {
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  return `${month}/${day}`;
-}
-function getDayOfWeek(date: Date): string {
-  const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
-  return weekdays[date.getDay()];
 }
 
 // 降水確率の平均を計算
