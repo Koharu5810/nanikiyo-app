@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "@/styles/weather/page.css";
-import "@/styles/weather/tabs.css";
 import type { GeoLocation } from "@/types/location";
 import type { DailyWeatherView } from "@/types/weather";
 import { WeatherOutfitList } from "@/components/weather/List";
@@ -89,7 +88,7 @@ export function WeatherOutfitPage({
       </div>
 
       {/* カード（タブごと） */}
-      <div className="tab-content">
+      <div className="weather-content">
         {/* 共通・ローディング/エラー */}
         {(loading || error) && (
           <>

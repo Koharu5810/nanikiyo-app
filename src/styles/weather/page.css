@@ -1,27 +1,93 @@
-/* =========================
-    タブコンテンツの枠＋検索UI
-========================= */
-/* タブコンテンツの大枠 */
-.tab-content {
+/* コンテンツの大枠 */
+.weather-content {
   padding-top: 8px;
 }
 
-/* 検索UI */
-.search-label {
-  font-size: 12px;
-  color: #F7F6F4;
-  margin-bottom: 8px;
+/* ====================
+        タブ
+==================== */
+.tabs {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
 }
+
 .tab {
+  flex: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  padding: 12px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  font-size: 14px;
+  cursor: pointer;
+  background: #B7B1A6;
+  background: transparent;
+  color: #fff;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.tab:hover::not(.active) {
+  background: rgba(255,255,255,0.15);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.tab.active {
+  background: #fff;
+  color: #222;
+  font-weight: 600;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 .tab-icon {
   width: 14px;
   height: 14px;
   margin-top: -1px;
+}
+
+/* フォーカスリング（クリック時はなし、Tab時はあり） */
+.tab:focus {
+  outline: none;
+}
+.tab:focus-visible {
+  outline: 2px solid #F2B705;
+  outline-offset: 2px;
+}
+
+/* 選択タブ遷移アニメーション */
+.tab-indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 50%;
+  height: 3px;
+  background: #F2B705;
+  background: transparent;
+  transition: transform 0.25s ease;
+}
+.tab-indicator.hover {
+  background: #F2B705;
+}
+.tab-indicator.left {
+  transform: translateX(0%);
+}
+.tab-indicator.right {
+  transform: translateX(100%);
+}
+
+/* ====================
+        検索UI
+==================== */
+.search-label {
+  font-size: 12px;
+  color: #F7F6F4;
+  margin-bottom: 8px;
 }
 
 .search-wrapper {
@@ -36,6 +102,13 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   margin-bottom: 0;
+}
+.search-input {
+  outline: none;
+}
+.search-input:focus-visible {
+  outline: 2px solid #F2B705;
+  outline-offset: 2px;
 }
 /* 候補が表示されている時だけ */
 .search-input.has-candidates {
@@ -82,6 +155,9 @@
   color: #222222;
 }
 
+/* =========================
+      エラーメッセージ
+========================= */
 .helper-text {
   margin: 12px 0;
   font-size: 12px;

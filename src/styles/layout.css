@@ -33,6 +33,7 @@
   gap: 16px;
 }
 .page-section {
+  position: relative;
   background: #B7B1A6;
   padding: 16px;
   border-radius: 12px;

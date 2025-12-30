@@ -22,9 +22,13 @@
   font-size: 10px;
   cursor: pointer;
 }
+.accordion-summary:focus-visible {
+  outline: 2px solid #F2B705;
+  outline-offset: 2px;
+}
 .accordion-summary:hover {
   text-decoration: underline;
-  color: #B7B1A6;
+  color: #F2B705;
 }
 
 .weather-card-near .outfit-icon {
