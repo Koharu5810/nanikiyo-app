@@ -4,7 +4,7 @@ import type {
   DailyWeatherView,
   WeatherIconType,
 } from "@/types/weather";
-import { useOutfit } from "@/hooks/useOutfit";
+import { getOutfitByTemp } from "./outfit";
 import type { UvLevel } from "@/types/uv";
 
 /**
@@ -51,7 +51,7 @@ export function buildDailyWeatherFromForecast(
       windSpeed
     );
 
-    const outfit = useOutfit({
+    const outfit = getOutfitByTemp({
       temp: maxTemp,
     });
 

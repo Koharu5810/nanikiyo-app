@@ -1,5 +1,4 @@
-// 地域検索（geocoding）
-
+// 地域検索（geocoding）＋debounce
 import { useCallback, useRef, useState } from "react";
 import type { GeoLocation, GeoApiResponse } from "@/types/location";
 

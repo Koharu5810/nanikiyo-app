@@ -11,7 +11,7 @@ type TempRule = {
   type: OutfitType;
 };
 
-export function useOutfit({
+export function getOutfitByTemp({
   temp,
   feelsLike,
 }: UseOutfitParams): OutfitView {

@@ -1,3 +1,4 @@
+// 表示用データ生成
 import { useMemo } from "react";
 
 import type { ForecastApiResponse } from "@/types/weather";

@@ -1,5 +1,4 @@
-// 天気取得
-
+// API通信（天気取得）と状態管理
 import { useState } from "react";
 import { getCurrentWeatherApi } from "@/services/weatherApi";
 import { get5DayForecastApi } from "@/services/weatherApi";
@@ -18,8 +17,10 @@ export function useWeather() {
     try {
       setLoading(true);
       setError("");
+      console.log("⛅️天気取得開始", { lat, lon });
 
       const data: WeatherData = await getCurrentWeatherApi(lat, lon);
+      console.log("⛅️現在の天気取得成功", data);
 
       setWeather(data);
     } catch (err) {
@@ -34,8 +35,10 @@ export function useWeather() {
     try {
       setLoading(true);
       setError("");
+      console.log("📅予報取得開始", { lat, lon });
 
       const rawData = await get5DayForecastApi(lat, lon);
+      console.log("📅5日間予報取得成功", rawData);
 
       setForecast(rawData);
     } catch (err) {
