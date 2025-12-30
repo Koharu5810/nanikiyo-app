@@ -1,10 +1,6 @@
 # やること
-- [ ] フック・コンテナ内点検
-- [ ] weatherMapper.ts でuseOutfitを呼んでいる件修正（React Hooksのルール的にNG）
-
 - [ ] 検索タブに虫眼鏡アイコン
 - [ ] 検索候補表示地続き、キーTabキー操作
-- [ ] 検索した候補地の地名表示
 - [ ] 検索窓バリデーション
 
 - [ ] ヘッダーは動かなくする
@@ -25,6 +21,3 @@
 
 
 ## 技術的負債・備忘録
-- [ ] WeatherOutfitContainer.tsx 内の ESLint 警告を `disable-next-line` で回避中。
-  - 理由：
-  - 将来的にReact標準のやり方に直せるか検討。
