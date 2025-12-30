@@ -27,8 +27,8 @@
 /* ===== Main ===== */
 .main {
   flex: 1;
-  padding: 16px;
-  padding-top: 140px;
+  padding: 10px;
+  padding-top: 130px;
   display: grid;
   gap: 16px;
 }

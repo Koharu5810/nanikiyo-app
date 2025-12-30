@@ -1,6 +1,7 @@
 /* コンテンツの大枠 */
 .weather-content {
-  padding-top: 8px;
+  padding-top: 0;
+  box-sizing: border-box;
 }
 
 /* ====================
@@ -44,6 +45,7 @@
   font-weight: 600;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.05);
 }
 .tab-icon {
   width: 14px;
@@ -67,7 +69,6 @@
   left: 0;
   width: 50%;
   height: 3px;
-  background: #F2B705;
   background: transparent;
   transition: transform 0.25s ease;
 }
@@ -102,8 +103,6 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   margin-bottom: 0;
-}
-.search-input {
   outline: none;
 }
 .search-input:focus-visible {
@@ -152,7 +151,7 @@
   margin-bottom: 8px;
   font-size: 14px;
   font-weight: 600;
-  color: #222222;
+  color: #F7F6F4;
 }
 
 /* =========================
