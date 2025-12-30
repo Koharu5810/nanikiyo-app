@@ -17,9 +17,7 @@ type Props = {
   searchLocationsDebounced: (v: string) => void;
   onSelectLocation: (loc: GeoLocation) => void;
   selectedLocationLabel: string;
-
-  currentDailyWeather: DailyWeatherView[];
-  customDailyWeather: DailyWeatherView[];
+  dailyWeather: DailyWeatherView[];
 };
 
 export function WeatherOutfitPage({
@@ -34,8 +32,7 @@ export function WeatherOutfitPage({
   searchLocationsDebounced,
   onSelectLocation,
   selectedLocationLabel,
-  currentDailyWeather,
-  customDailyWeather,
+  dailyWeather,
 }: Props) {
   return (
     <section className="page-section">
@@ -69,8 +66,8 @@ export function WeatherOutfitPage({
         {/* 現在地タブ */}
         {activeTab === "current" && (
           <div>
-            {currentDailyWeather.length > 0 && (
-              <WeatherOutfitList days={currentDailyWeather} />
+            {dailyWeather.length > 0 && (
+              <WeatherOutfitList days={dailyWeather} />
             )}
           </div>
         )}
@@ -108,8 +105,8 @@ export function WeatherOutfitPage({
               )}
             </div>
 
-            {customDailyWeather.length > 0 && selectedLocationLabel && (
-              <WeatherOutfitList days={customDailyWeather} />
+            {dailyWeather.length > 0 && selectedLocationLabel && (
+              <WeatherOutfitList days={dailyWeather} />
             )}
           </div>
         )}

@@ -1,27 +1,19 @@
 // 表示用データ生成
 import { useMemo } from "react";
-
 import type { ForecastApiResponse } from "@/types/weather";
 import { buildDailyWeatherFromForecast } from "@/utils/weatherMapper";
 
 const DISPLAY_DAYS = 5;
 
 export function useDailyWeather(
-  currentForecast: ForecastApiResponse | null,
-  customForecast: ForecastApiResponse | null
+  forecast: ForecastApiResponse | null
 ) {
-  const currentDailyWeather = useMemo(() => {
-    if (!currentForecast) return [];
-    return buildDailyWeatherFromForecast(currentForecast, DISPLAY_DAYS);
-  }, [currentForecast]);
-
-  const customDailyWeather = useMemo(() => {
-    if (!customForecast) return [];
-    return buildDailyWeatherFromForecast(customForecast, DISPLAY_DAYS);
-  }, [customForecast]);
+  const dailyWeather = useMemo(() => {
+    if (!forecast) return [];
+    return buildDailyWeatherFromForecast(forecast, DISPLAY_DAYS);
+  }, [forecast]);
 
   return {
-    currentDailyWeather,
-    customDailyWeather,
+    dailyWeather
   };
 }

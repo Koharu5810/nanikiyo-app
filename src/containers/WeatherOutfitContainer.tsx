@@ -6,11 +6,9 @@ import { useLocationSearch } from "@/hooks/useLocationSearch";
 import { useWeatherTabs } from "@/hooks/useWeatherTabs";
 import { useDailyWeather } from "@/hooks/useDailyWeather";
 import type { GeoLocation } from "@/types/location";
-import type { ForecastApiResponse } from "@/types/weather";
 
 export function WeatherOutfitContainer() {
   const {
-    weather,
     forecast,
     locationLabel: currentLocationLabel,
     loading,
@@ -20,33 +18,14 @@ export function WeatherOutfitContainer() {
     resetWeather,
   } = useWeather();
 
+  const { dailyWeather } = useDailyWeather(forecast);
+
   /* ====================
         検索UI用 state
     ==================== */
   const [place, setPlace] = useState("");
   const [selectedLocationLabel, setSelectedLocationLabel] =
     useState<string>("");
-
-  /* ====================================
-        forecastを2系統で保持（現在地・任意地点）
-    ==================================== */
-  const [currentForecast, setCurrentForecast] =
-    useState<ForecastApiResponse | null>(null);
-  const [customForecast, setCustomForecast] =
-    useState<ForecastApiResponse | null>(null);
-
-  /* ====================
-        どちらの取得か判定
-    ==================== */
-  const [isCurrentWeather, setIsCurrentWeather] = useState(true);
-
-  /* ====================
-        dailyWeather 生成
-    ==================== */
-  const { currentDailyWeather, customDailyWeather } = useDailyWeather(
-    currentForecast,
-    customForecast
-  );
 
   /* ====================
         地域検索
@@ -59,6 +38,15 @@ export function WeatherOutfitContainer() {
     fetchForecastByCoords
   );
 
+  const hasFetchedRef = useRef(false);
+
+  useEffect(() => {
+    if (hasFetchedRef.current) return;
+
+    hasFetchedRef.current = true;
+    getCurrentLocation();
+  }, [getCurrentLocation]);
+
   /* ====================
   任意地点検索 → customForecast
     ==================== */
@@ -68,7 +56,6 @@ export function WeatherOutfitContainer() {
     selectLocation();
     setPlace("");
 
-    setIsCurrentWeather(false);
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
 
     fetchByCoords(loc.lat, loc.lon);
@@ -81,7 +68,7 @@ export function WeatherOutfitContainer() {
   // タブ選択
   const { activeTab, setActiveTab } = useWeatherTabs();
   // タブ切り替えのたびに現在地取得を防ぐ
-  const hasFetchedCurrentRef = useRef(false);
+  // const hasFetchedCurrentRef = useRef(false);
 
   // const [currentLocationLabel, setCurrentLocationLabel] =
   //   useState<string>("現在地");
@@ -89,27 +76,14 @@ export function WeatherOutfitContainer() {
   /* ====================
       現在地点初回取得
     ==================== */
-  useEffect(() => {
-    if (activeTab !== "current") return;
-    if (hasFetchedCurrentRef.current) return;
+  // useEffect(() => {
+  //   if (activeTab !== "current") return;
+  //   if (hasFetchedCurrentRef.current) return;
 
-    setIsCurrentWeather(true);
-    getCurrentLocation();
-    hasFetchedCurrentRef.current = true;
-  }, [activeTab, getCurrentLocation]);
-
-  /* ====================
-    forecast を振り分けて保存
-    ==================== */
-  useEffect(() => {
-    if (!forecast) return;
-
-    if (isCurrentWeather) {
-      setCurrentForecast(forecast);
-    } else {
-      setCustomForecast(forecast);
-    }
-  }, [forecast, isCurrentWeather]);
+  //   setIsCurrentWeather(true);
+  //   getCurrentLocation();
+  //   hasFetchedCurrentRef.current = true;
+  // }, [activeTab, getCurrentLocation])
 
   /* ====================
         現在地タブのラベル更新
@@ -146,8 +120,7 @@ export function WeatherOutfitContainer() {
       onSelectLocation={fetchWeatherByLocation}
       searchLocationsDebounced={searchLocationsDebounced}
       selectedLocationLabel={selectedLocationLabel}
-      currentDailyWeather={currentDailyWeather}
-      customDailyWeather={customDailyWeather}
+      dailyWeather={dailyWeather}
     />
   );
 }
