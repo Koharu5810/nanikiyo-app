@@ -87,6 +87,8 @@ export function WeatherOutfitContainer() {
       activeTab={activeTab}
       setActiveTab={setActiveTab}
       currentLocationLabel={currentLocationLabel}
+      selectedLocationLabel={selectedLocationLabel}
+      dailyWeather={dailyWeather}
       loading={loading}
       error={error}
       place={place}
@@ -94,8 +96,6 @@ export function WeatherOutfitContainer() {
       candidates={candidates}
       onSelectLocation={fetchWeatherByLocation}
       searchLocationsDebounced={searchLocationsDebounced}
-      selectedLocationLabel={selectedLocationLabel}
-      dailyWeather={dailyWeather}
     />
   );
 }

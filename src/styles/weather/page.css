@@ -66,6 +66,14 @@
   font-weight: 600;
 }
 
+.selected-location-label {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222222;
+}
+
 .helper-text {
   margin: 12px 0;
   font-size: 12px;

@@ -105,6 +105,12 @@ export function WeatherOutfitPage({
               )}
             </div>
 
+            {selectedLocationLabel && (
+              <p className="selected-location-label">
+                📍 {selectedLocationLabel}
+              </p>
+            )}
+
             {dailyWeather.length > 0 && selectedLocationLabel && (
               <WeatherOutfitList days={dailyWeather} />
             )}
