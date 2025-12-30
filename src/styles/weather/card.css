@@ -89,10 +89,12 @@
 .temp-degree {
   font-size: 10px;
 }
+
 .label {
-  padding-right: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 12px;
-  align-items: baseline;
 }
 .label::first-letter {
   line-height: 1;
@@ -100,6 +102,15 @@
 .content {
   font-size: 18px;
   align-items: baseline;
+}
+.umbrella-icon,
+.droplets-icon,
+.wind-speed-icon,
+.glass-icon {
+  width: 14px;
+  height: 14px;
+  margin: 0 3px;
+  color: #7FAFC9;
 }
 
 /* 詳細（湿度・風・UV） */
@@ -117,6 +128,7 @@
   display: flex;
   justify-content: center;
   align-items: baseline;
+  align-items: center;
   gap: 6px;
   font-size: 13px;
   color: #555;

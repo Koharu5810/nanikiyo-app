@@ -28,11 +28,16 @@
   border-radius: 0;
   font-size: 14px;
   cursor: pointer;
-  background: #B7B1A6;
   background: transparent;
   color: #fff;
   outline: none;
   -webkit-tap-highlight-color: transparent;
+}
+.tab:hover {
+  background: #F7F6F4;
+  color: #B7B1A6;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 .tab:hover::not(.active) {
   background: rgba(255,255,255,0.15);
@@ -47,7 +52,7 @@
   border-top-right-radius: 8px;
   box-shadow: 0 1px 0 rgba(0,0,0,0.05);
 }
-.tab-icon {
+.search-icon {
   width: 14px;
   height: 14px;
   margin-top: -1px;
@@ -69,7 +74,7 @@
   left: 0;
   width: 50%;
   height: 3px;
-  background: transparent;
+  background: #F2B705;
   transition: transform 0.25s ease;
 }
 .tab-indicator.hover {
@@ -152,6 +157,11 @@
   font-size: 14px;
   font-weight: 600;
   color: #F7F6F4;
+}
+.map-pin-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 3px;
 }
 
 /* =========================

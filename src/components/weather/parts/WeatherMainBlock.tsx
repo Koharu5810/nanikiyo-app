@@ -1,4 +1,5 @@
 import type { WeatherIconType } from "@/types/weather";
+import { UmbrellaIcon } from "@/components/icons/ui";
 
 type WeatherMainBlockProps = {
   weatherIcon: WeatherIconType;
@@ -32,8 +33,11 @@ export function WeatherMainBlock({
       </div>
 
       {/* 降水情報 */}
-      <div className="precipitation">
-        <span className="label">降水 ☂️ </span>
+      <div className="precipitation meta-item">
+        <span className="label">
+          降水
+          <UmbrellaIcon />
+        </span>
         <span className="content">{precipitation}%</span>
       </div>
     </div>

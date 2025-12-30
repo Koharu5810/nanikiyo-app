@@ -3,6 +3,7 @@ import "@/styles/weather/page.css";
 import type { GeoLocation } from "@/types/location";
 import type { DailyWeatherView } from "@/types/weather";
 import { WeatherOutfitList } from "@/components/weather/List";
+import { SearchIcon, MapPinIcon } from "@/components/icons/ui";
 
 type Props = {
   activeTab: "current" | "custom";
@@ -62,21 +63,7 @@ export function WeatherOutfitPage({
           onMouseEnter={() => setHoverTab("custom")}
           onMouseLeave={() => setHoverTab(null)}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide tab-icon"
-          >
-            <path d="m21 21-4.34-4.34" />
-            <circle cx="11" cy="11" r="8" />
-          </svg>
+          <SearchIcon />
           地域検索
         </button>
 
@@ -174,7 +161,8 @@ export function WeatherOutfitPage({
 
             {selectedLocationLabel && (
               <p className="selected-location-label">
-                📍 {selectedLocationLabel}
+                <MapPinIcon />
+                {selectedLocationLabel}
               </p>
             )}
 
