@@ -12,6 +12,18 @@
   color: #F7F6F4;
   margin-bottom: 8px;
 }
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.tab-icon {
+  width: 14px;
+  height: 14px;
+  margin-top: -1px;
+}
+
 .search-wrapper {
   margin-bottom: 30px;
   position: relative;
