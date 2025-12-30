@@ -8,6 +8,9 @@ import { useDailyWeather } from "@/hooks/useDailyWeather";
 import type { GeoLocation } from "@/types/location";
 
 export function WeatherOutfitContainer() {
+  /* ====================
+      外部ロジック（hooks）
+  ==================== */
   const {
     forecast,
     locationLabel: currentLocationLabel,
@@ -20,26 +23,30 @@ export function WeatherOutfitContainer() {
   } = useWeather();
 
   const { dailyWeather } = useDailyWeather(forecast);
+  const { activeTab, setActiveTab } = useWeatherTabs();
+  const { candidates, selectLocation, searchLocationsDebounced } =
+    useLocationSearch(); // 地域検索
 
   /* ====================
-        検索UI用 state
+        UIの状態
     ==================== */
+  // 地域検索
   const [place, setPlace] = useState("");
   const [selectedLocationLabel, setSelectedLocationLabel] =
     useState<string>("");
 
   /* ====================
-        地域検索
+        フラグ・DOM系
     ==================== */
-  const { candidates, selectLocation, searchLocationsDebounced } =
-    useLocationSearch();
+  const hasFetchedRef = useRef(false);
 
+  /* ====================
+        副作用
+  ==================== */
   const { getCurrentLocation } = useCurrentLocation(
     fetchCurrentLocationWeather,
     fetchForecastByCoords
   );
-
-  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
     if (hasFetchedRef.current) return;
@@ -48,8 +55,17 @@ export function WeatherOutfitContainer() {
     getCurrentLocation();
   }, [getCurrentLocation]);
 
+  // 地域検索タブオートコンプリート
+  useEffect(() => {
+    if (!place.trim()) {
+      selectLocation();
+      return;
+    }
+    searchLocationsDebounced(place);
+  }, [place, selectLocation, searchLocationsDebounced]);
+
   /* ====================
-  任意地点検索 → customForecast
+      イベント・アクション
     ==================== */
   // 地名候補クリック→天気取得
   const fetchWeatherByLocation = (loc: GeoLocation) => {
@@ -64,22 +80,8 @@ export function WeatherOutfitContainer() {
   };
 
   /* ====================
-          タブ選択
-    ==================== */
-  const { activeTab, setActiveTab } = useWeatherTabs();
-
-  /* =========================
-      地域検索タブオートコンプリート
-    ========================= */
-  useEffect(() => {
-    if (!place.trim()) {
-      selectLocation();
-      return;
-    }
-
-    searchLocationsDebounced(place);
-  }, [place, selectLocation, searchLocationsDebounced]);
-
+          JSX
+  ==================== */
   return (
     <WeatherOutfitPage
       activeTab={activeTab}
