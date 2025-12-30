@@ -12,24 +12,13 @@ export function WeatherOutfitContainer() {
   const {
     weather,
     forecast,
+    locationLabel: currentLocationLabel,
     loading,
     error,
     fetchByCoords,
     fetchForecastByCoords,
     resetWeather,
   } = useWeather();
-
-  /* ====================
-        タブ・ラベル管理
-    ==================== */
-  // タブ選択
-  const { activeTab, setActiveTab } = useWeatherTabs();
-  const hasFetchedCurrentRef = useRef(false);
-  const currentLocationLabelRef = useRef<string>("現在地");
-
-  // ↓エラーコメント回避用タグ
-  // eslint-disable-next-line react-hooks/refs
-  const currentLocationLabel = currentLocationLabelRef.current;
 
   /* ====================
         検索UI用 state
@@ -87,6 +76,17 @@ export function WeatherOutfitContainer() {
   };
 
   /* ====================
+        タブ・ラベル管理
+    ==================== */
+  // タブ選択
+  const { activeTab, setActiveTab } = useWeatherTabs();
+  // タブ切り替えのたびに現在地取得を防ぐ
+  const hasFetchedCurrentRef = useRef(false);
+
+  // const [currentLocationLabel, setCurrentLocationLabel] =
+  //   useState<string>("現在地");
+
+  /* ====================
       現在地点初回取得
     ==================== */
   useEffect(() => {
@@ -114,12 +114,12 @@ export function WeatherOutfitContainer() {
   /* ====================
         現在地タブのラベル更新
     ==================== */
-  useEffect(() => {
-    if (!weather) return;
-    if (!isCurrentWeather) return;
+  // useEffect(() => {
+  //   if (!weather) return;
+  //   if (!isCurrentWeather) return;
 
-    currentLocationLabelRef.current = weather.name ?? "現在地";
-  }, [weather, isCurrentWeather]);
+  //   setCurrentLocationLabel(weather.name ?? "現在地");
+  // }, [weather, isCurrentWeather]);
 
   /* =========================
       地域検索タブオートコンプリート
