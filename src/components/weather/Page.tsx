@@ -18,6 +18,7 @@ type Props = {
   onSelectLocation: (loc: GeoLocation) => void;
   selectedLocationLabel: string;
   dailyWeather: DailyWeatherView[];
+  searchError: string | null;
 };
 
 export function WeatherOutfitPage({
@@ -33,6 +34,7 @@ export function WeatherOutfitPage({
   onSelectLocation,
   selectedLocationLabel,
   dailyWeather,
+  searchError,
 }: Props) {
   return (
     <section className="page-section">
@@ -59,8 +61,7 @@ export function WeatherOutfitPage({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-search-icon lucide-search
-            tab-icon"
+            className="lucide tab-icon"
           >
             <path d="m21 21-4.34-4.34" />
             <circle cx="11" cy="11" r="8" />
@@ -105,6 +106,10 @@ export function WeatherOutfitPage({
                   }
                 }}
               />
+
+              {searchError && (
+                <p className="helper-text error">{ searchError }</p>
+              )}
 
               {candidates.length > 0 && (
                 <ul className="candidate-list">

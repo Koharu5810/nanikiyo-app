@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { WeatherOutfitPage } from "@/components/weather/Page";
 import { useWeather } from "@/hooks/useWeather";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
@@ -79,6 +79,38 @@ export function WeatherOutfitContainer() {
     fetchForecastByCoords(loc.lat, loc.lon);
   };
 
+  // 地域検索バリデーション
+  const searchError = useMemo (() => {
+    const trimmed = place.trim();
+    const invalidPattern = /[^a-zA-Zぁ-んァ-ン一-龥\s]/;
+
+    // 未入力
+    if (!trimmed) return null;
+    // 1文字はNG
+    if (trimmed.length < 2) return "2文字以上入力してください";
+    // 入力文字種の制限
+    if (invalidPattern.test(trimmed)) return "使用できない文字が含まれています";
+
+    return null;
+  }, [place]);
+
+  useEffect(() => {
+    const trimmed = place.trim();
+
+    if (searchError) {
+      selectLocation();
+      return
+    }
+
+    if (!trimmed) {
+      selectLocation();
+      return;
+    }
+
+    searchLocationsDebounced(trimmed);
+  }, [place, searchError, selectLocation, searchLocationsDebounced])
+
+
   /* ====================
           JSX
   ==================== */
@@ -96,6 +128,7 @@ export function WeatherOutfitContainer() {
       candidates={candidates}
       onSelectLocation={fetchWeatherByLocation}
       searchLocationsDebounced={searchLocationsDebounced}
+      searchError={searchError}
     />
   );
 }
