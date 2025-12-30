@@ -13,7 +13,8 @@ export function WeatherOutfitContainer() {
     locationLabel: currentLocationLabel,
     loading,
     error,
-    fetchByCoords,
+    fetchCurrentLocationWeather,
+    fetchWeatherByCoords,
     fetchForecastByCoords,
     resetWeather,
   } = useWeather();
@@ -34,7 +35,7 @@ export function WeatherOutfitContainer() {
     useLocationSearch();
 
   const { getCurrentLocation } = useCurrentLocation(
-    fetchByCoords,
+    fetchCurrentLocationWeather,
     fetchForecastByCoords
   );
 
@@ -58,42 +59,14 @@ export function WeatherOutfitContainer() {
 
     setSelectedLocationLabel(`${loc.name} （${loc.state}）`);
 
-    fetchByCoords(loc.lat, loc.lon);
+    fetchWeatherByCoords(loc.lat, loc.lon);
     fetchForecastByCoords(loc.lat, loc.lon);
   };
 
   /* ====================
-        タブ・ラベル管理
+          タブ選択
     ==================== */
-  // タブ選択
   const { activeTab, setActiveTab } = useWeatherTabs();
-  // タブ切り替えのたびに現在地取得を防ぐ
-  // const hasFetchedCurrentRef = useRef(false);
-
-  // const [currentLocationLabel, setCurrentLocationLabel] =
-  //   useState<string>("現在地");
-
-  /* ====================
-      現在地点初回取得
-    ==================== */
-  // useEffect(() => {
-  //   if (activeTab !== "current") return;
-  //   if (hasFetchedCurrentRef.current) return;
-
-  //   setIsCurrentWeather(true);
-  //   getCurrentLocation();
-  //   hasFetchedCurrentRef.current = true;
-  // }, [activeTab, getCurrentLocation])
-
-  /* ====================
-        現在地タブのラベル更新
-    ==================== */
-  // useEffect(() => {
-  //   if (!weather) return;
-  //   if (!isCurrentWeather) return;
-
-  //   setCurrentLocationLabel(weather.name ?? "現在地");
-  // }, [weather, isCurrentWeather]);
 
   /* =========================
       地域検索タブオートコンプリート
