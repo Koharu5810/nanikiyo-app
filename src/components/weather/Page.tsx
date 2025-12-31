@@ -54,6 +54,7 @@ export function WeatherOutfitPage({
           onMouseEnter={() => setHoverTab("current")}
           onMouseLeave={() => setHoverTab(null)}
         >
+          <MapPinIcon />
           {currentLocationLabel}
         </button>
 

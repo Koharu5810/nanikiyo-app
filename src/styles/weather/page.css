@@ -14,6 +14,7 @@
   display: flex;
   border-bottom: 1px solid #ddd;
   margin-bottom: 16px;
+  gap: 8px;
 }
 
 .tab {
@@ -36,11 +37,6 @@
 .tab:hover {
   background: #F7F6F4;
   color: #B7B1A6;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-.tab:hover::not(.active) {
-  background: rgba(255,255,255,0.15);
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
@@ -73,6 +69,7 @@
   bottom: -1px;
   left: 0;
   width: 50%;
+  width: calc(50% - 4px);
   height: 3px;
   background: #F2B705;
   transition: transform 0.25s ease;
@@ -85,6 +82,7 @@
 }
 .tab-indicator.right {
   transform: translateX(100%);
+  transform: translateX(calc(100% + 8px));
 }
 
 /* ====================
