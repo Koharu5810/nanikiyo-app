@@ -47,23 +47,24 @@ export function buildDailyWeatherFromForecast(
     const humidity = calcAverageHumidity(items);
     const uv = estimateUvLevel(items);
 
+    const windSpeedValue = windSpeed?.value ?? 0;  // ロジック用
+    const windSpeedDisplay = windSpeed?.display;   // 表示用
+
     // その日の代表天気（12:00時点）を取得
     const noonItem =
       items.find((item) => item.dt_txt.includes("12:00:00")) ?? items[0];
     const weatherIcon = mapWeatherToIconType(
       noonItem.weather[0].main,
       noonItem.weather[0].description,
-      windSpeed
+      windSpeedValue
     );
 
     // 平均気温（体感気温補正ベース）
     const avgTemp = temps.reduce((sum, t) => sum + t, 0) / temps.length;
-    const avgWindSpeed = calcAverageWindSpeed(items) ?? 0;
-
     const feelsLike = feelsLikeForOutfit({
       temp: avgTemp,
       weatherMain: noonItem.weather[0].main,
-      windSpeed: avgWindSpeed,
+      windSpeed: windSpeedValue,
     });
 
     // 体感気温ベースで服装アイコンを決定
@@ -85,7 +86,7 @@ export function buildDailyWeatherFromForecast(
       minTemp,
       precipitationProbability,
       humidity,
-      windSpeed,
+      windSpeed: windSpeedDisplay,
       uv,
       outfit,
       feelsLikeForOutfit: feelsLike,
@@ -134,20 +135,28 @@ function calcAveragePrecipitation(
   return Math.round((total / count) * 100);
 }
 
+type WindSpeed = {
+  value: number;   // 判定用（生値）
+  display: number; // 表示用
+};
+
 // 平均風速を計算
 function calcAverageWindSpeed(
   items: ForecastApiResponse["list"]
-): number | undefined {
+): WindSpeed | undefined {
   const speeds = items
     .map((item) => item.wind?.speed)
     .filter((v): v is number => typeof v === "number");  // v is numberは型ガード
 
   if (speeds.length === 0) return undefined;
 
-  const avg =
+  const avgWindSpeed =
     speeds.reduce((sum, speed) => sum + speed, 0) / speeds.length;
 
-  return Math.round(avg * 10) / 10;
+  return {
+    value: avgWindSpeed,                // 判定用
+    display: Math.round(avgWindSpeed),  // 表示表（四捨五入）
+  };
 }
 
 // 平均湿度を計算
