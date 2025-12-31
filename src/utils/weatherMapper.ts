@@ -8,6 +8,7 @@ import type { UvLevel } from "@/types/uv";
 import { getOutfitByTemp } from "./outfit";
 import { formatMonthDay, getDayOfWeek, getDayOfWeekType, getHolidayName } from "./date";
 import { feelsLikeForOutfit } from "./feelsLikeForOutfit";
+import { getAccessories } from "./accessory";
 
 /**
  * OpenWeather の forecast API を
@@ -72,6 +73,13 @@ export function buildDailyWeatherFromForecast(
       baseTemp: feelsLike.value,
     });
 
+    const accessories = getAccessories({
+      feelsLike: feelsLike.value,
+      windSpeed: windSpeedValue,
+      uvLevel: uv?.level,
+      weatherMain: noonItem.weather[0].main,
+    });
+
     return {
       dayOffset: index,
       dateLabel: getDayLabelText(index),
@@ -89,6 +97,7 @@ export function buildDailyWeatherFromForecast(
       windSpeed: windSpeedDisplay,
       uv,
       outfit,
+      accessories,
       feelsLikeForOutfit: feelsLike,
     };
   });
