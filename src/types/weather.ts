@@ -95,4 +95,5 @@ export type DailyWeatherView = {
     level: UvLevel;          // 表示・判定用
   };
   outfit: OutfitView;
+  feelsLikeForOutfit: number;
 };
