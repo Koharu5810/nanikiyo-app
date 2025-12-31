@@ -4,12 +4,15 @@ import type { BaseWeatherDetailsProps } from "@/components/weather/Card";
 import type { FeelsLikeResult } from "@/utils/feelsLikeForOutfit";
 import { WeatherMainBlock } from "@/components/weather/parts/WeatherMainBlock";
 import { WeatherMetaBlock } from "@/components/weather/parts/WeatherMetaBlock";
+import type { UvLevel } from "@/types/uv";
 
 type TodayDetailsProps = BaseWeatherDetailsProps & {
   weatherIcon: WeatherIconType;
   humidity?: number;
   windSpeed?: number;
-  uvLabel?: string;
+  uv?: {
+    level: UvLevel;
+  }
   feelsLike?: FeelsLikeResult;
 };
 

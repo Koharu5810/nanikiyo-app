@@ -1,6 +1,5 @@
 import "@/styles/weather/card.css";
 import type { DailyWeatherView, WeatherIconType } from "@/types/weather";
-import type { UvLevel } from "@/types/uv";
 import { TodayDetails } from "./details/Today";
 import { NearDetails } from "./details/Near";
 import { FarDetails } from "./details/Far";
@@ -11,14 +10,6 @@ type WeatherCardVariant = "today" | "near" | "far";
 type Props = {
   day: DailyWeatherView;
   variant: WeatherCardVariant;
-};
-
-const uvLevelLabelMap: Record<UvLevel, string> = {
-  low: "弱い",
-  moderate: "中",
-  high: "強い",
-  very_high: "非常に強い",
-  extreme: "警戒",
 };
 
 export type BaseWeatherDetailsProps = {
@@ -40,8 +31,6 @@ export function WeatherOutfitCard({ day, variant }: Props) {
     feelsLikeForOutfit,
     outfit,
   } = day;
-
-  const uvLabel = uv ? uvLevelLabelMap[uv.level] : undefined;
 
   return (
     <div className={`weather-card weather-card-${variant}`}>
@@ -68,7 +57,7 @@ export function WeatherOutfitCard({ day, variant }: Props) {
               precipitation={precipitationProbability}
               humidity={humidity}
               windSpeed={windSpeed}
-              uvLabel={uvLabel}
+              uv={uv}
               feelsLike={feelsLikeForOutfit}
             />
           )}
@@ -82,7 +71,7 @@ export function WeatherOutfitCard({ day, variant }: Props) {
               accordionData={{
                 humidity,
                 windSpeed,
-                uvLabel,
+                uv,
                 feelsLike: feelsLikeForOutfit,
               }}
             />

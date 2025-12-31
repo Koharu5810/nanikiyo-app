@@ -1,17 +1,21 @@
 import { DropletsIcon, WindSpeedIcon, GlassIcon } from "@/components/icons/ui";
 import type { FeelsLikeResult } from "@/utils/feelsLikeForOutfit";
+import { UvIndicator } from "./UvIndicator";
+import type { UvLevel } from "@/types/uv";
 
 type WeatherMetaBlockProps = {
   humidity?: number;
   windSpeed?: number;
-  uvLabel?: string;
+  uv?: {
+    level: UvLevel;
+  }
   feelsLike?: FeelsLikeResult;
 };
 
 export function WeatherMetaBlock({
   humidity,
   windSpeed,
-  uvLabel,
+  uv,
   feelsLike,
 }: WeatherMetaBlockProps) {
   return (
@@ -36,13 +40,13 @@ export function WeatherMetaBlock({
         </li>
       )}
 
-      {uvLabel && (
+      {uv && (
         <li className="meta-item">
           <span className="label">
             UV
             <GlassIcon />
           </span>
-          <span className="content">{uvLabel}</span>
+          <UvIndicator level={uv.level} />
         </li>
       )}
 
