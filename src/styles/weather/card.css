@@ -200,6 +200,7 @@
   text-align: center;
 }
 .outfit-summary {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -212,4 +213,12 @@
 }
 .outfit-label {
   font-size: 12px;
+}
+
+.accessories {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 2px;
 }

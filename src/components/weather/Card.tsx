@@ -91,6 +91,7 @@ export function WeatherOutfitCard({ day, variant }: Props) {
         <div className="weather-details-right">
           <OutfitSummary
             icon={outfit.icon}
+            accessories={day.accessories}
             label={outfit.label}
             // description={outfit.description}
           />
