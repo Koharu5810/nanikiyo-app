@@ -1,5 +1,6 @@
 import "@/styles/weather/details.css";
 import type { BaseWeatherDetailsProps } from "@/components/weather/Card";
+import type { FeelsLikeResult } from "@/utils/feelsLikeForOutfit";
 import { WeatherMainBlock } from "@/components/weather/parts/WeatherMainBlock";
 import { WeatherMetaBlock } from "@/components/weather/parts/WeatherMetaBlock";
 
@@ -8,6 +9,7 @@ type NearDetailsProps = BaseWeatherDetailsProps & {
     humidity?: number;
     windSpeed?: number;
     uvLabel?: string;
+    feelsLike?: FeelsLikeResult;
   };
 };
 

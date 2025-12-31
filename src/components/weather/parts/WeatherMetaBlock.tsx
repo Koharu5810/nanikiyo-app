@@ -1,15 +1,18 @@
 import { DropletsIcon, WindSpeedIcon, GlassIcon } from "@/components/icons/ui";
+import type { FeelsLikeResult } from "@/utils/feelsLikeForOutfit";
 
 type WeatherMetaBlockProps = {
   humidity?: number;
   windSpeed?: number;
   uvLabel?: string;
-}
+  feelsLike?: FeelsLikeResult;
+};
 
 export function WeatherMetaBlock({
   humidity,
   windSpeed,
   uvLabel,
+  feelsLike,
 }: WeatherMetaBlockProps) {
   return (
     <ul className="weather-meta-list">
@@ -42,6 +45,12 @@ export function WeatherMetaBlock({
           <span className="content">{uvLabel}</span>
         </li>
       )}
+
+      {feelsLike?.reasons.map((r) => (
+        <li key={r} className="meta-item reason">
+          ・{r}
+        </li>
+      ))}
     </ul>
   );
 }

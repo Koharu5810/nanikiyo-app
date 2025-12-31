@@ -1,3 +1,4 @@
+import type { FeelsLikeResult } from "@/utils/feelsLikeForOutfit";
 import type { OutfitView } from "./outfit";
 import type { UvLevel } from "./uv";
 
@@ -95,5 +96,5 @@ export type DailyWeatherView = {
     level: UvLevel;          // 表示・判定用
   };
   outfit: OutfitView;
-  feelsLikeForOutfit: number;
+  feelsLikeForOutfit: FeelsLikeResult;
 };

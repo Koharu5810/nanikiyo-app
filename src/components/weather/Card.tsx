@@ -37,6 +37,7 @@ export function WeatherOutfitCard({ day, variant }: Props) {
     humidity,
     windSpeed,
     uv,
+    feelsLikeForOutfit,
     outfit,
   } = day;
 
@@ -68,6 +69,7 @@ export function WeatherOutfitCard({ day, variant }: Props) {
               humidity={humidity}
               windSpeed={windSpeed}
               uvLabel={uvLabel}
+              feelsLike={feelsLikeForOutfit}
             />
           )}
 
@@ -81,6 +83,7 @@ export function WeatherOutfitCard({ day, variant }: Props) {
                 humidity,
                 windSpeed,
                 uvLabel,
+                feelsLike: feelsLikeForOutfit,
               }}
             />
           )}

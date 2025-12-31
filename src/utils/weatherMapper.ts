@@ -56,10 +56,7 @@ export function buildDailyWeatherFromForecast(
       windSpeed
     );
 
-    const outfit = getOutfitByTemp({
-      temp: maxTemp,
-    });
-
+    // 平均気温（体感気温補正ベース）
     const avgTemp = temps.reduce((sum, t) => sum + t, 0) / temps.length;
     const avgWindSpeed = calcAverageWindSpeed(items) ?? 0;
 
@@ -67,6 +64,11 @@ export function buildDailyWeatherFromForecast(
       temp: avgTemp,
       weatherMain: noonItem.weather[0].main,
       windSpeed: avgWindSpeed,
+    });
+
+    // 体感気温ベースで服装アイコンを決定
+    const outfit = getOutfitByTemp({
+      temp: feelsLike.value,
     });
 
     return {
