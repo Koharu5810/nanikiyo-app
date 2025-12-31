@@ -1,4 +1,9 @@
 # やること
+- [ ] リロード耐性
+      デプロイ後に URL直打ち / リロードしても表示される
+      Vite + SPAなら Netlify / Vercel で SPA fallback 設定が必要。
+- [ ] README書く
+
 - [ ] タブ間の間隔追加
 
 - [ ] 雨・風の気温補正
