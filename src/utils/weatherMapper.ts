@@ -69,7 +69,7 @@ export function buildDailyWeatherFromForecast(
 
     // 体感気温ベースで服装アイコンを決定
     const outfit = getOutfitByTemp({
-      temp: feelsLike.value,
+      baseTemp: feelsLike.value,
     });
 
     return {

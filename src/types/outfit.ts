@@ -10,10 +10,19 @@ export type OutfitType =
   | "wool_coat"
   | "down_jacket";
 
+export type AccessoryType =
+  | "scarf"
+  | "mittens"
+  | "cap"
+  | "beanie"
+  | "umbrella"
+  | "sunglasses";
+
 export type OutfitView = {
   type: OutfitType;
   label: string;
   icon: string;
+  accessories?: AccessoryType[];
 };
 
 export const OUTFIT_MASTER: Record<OutfitType, { label: string; icon: string }> = {
@@ -28,3 +37,13 @@ export const OUTFIT_MASTER: Record<OutfitType, { label: string; icon: string }> 
   wool_coat: { label: "ウールコート", icon: "9_woolCoat" },
   down_jacket: { label: "ダウンジャケット", icon: "10_downJacket" },
 };
+
+export const ACCESSORY_MASTER: Record<AccessoryType, { label: string; icon: string }> =
+  {
+    scarf: { label: "マフラー", icon: "scarf" },
+    mittens: { label: "手袋", icon: "mittens" },
+    cap: { label: "帽子", icon: "cap" },
+    beanie: { label: "ニット帽", icon: "beanie" },
+    umbrella: { label: "傘", icon: "umbrella" },
+    sunglasses: { label: "サングラス", icon: "sunglasses" },
+  };

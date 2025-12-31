@@ -2,7 +2,7 @@ import type { OutfitType, OutfitView, } from "@/types/outfit";
 import { OUTFIT_MASTER } from "@/types/outfit";
 
 type UseOutfitParams = {
-  temp: number;
+  baseTemp: number;
   feelsLike?: number;
 };
 
@@ -12,12 +12,8 @@ type TempRule = {
 };
 
 export function getOutfitByTemp({
-  temp,
-  feelsLike,
+  baseTemp,
 }: UseOutfitParams): OutfitView {
-
-  // 体感気温があれば優先、なければ実気温
-  const baseTemp = feelsLike ?? temp;
 
   const type =
     TEMP_RULES.find(rule => baseTemp >= rule.min)?.type ??
