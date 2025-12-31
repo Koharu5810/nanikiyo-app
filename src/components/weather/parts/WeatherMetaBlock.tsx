@@ -41,7 +41,7 @@ export function WeatherMetaBlock({
       )}
 
       {uv && (
-        <li className="meta-item">
+        <li className="meta-item uv">
           <span className="label">
             UV
             <GlassIcon />

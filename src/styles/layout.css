@@ -13,6 +13,43 @@
   background: #fff;
   border-bottom: 1px solid #ddd;
   z-index: 100;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.header-left {
+  display: flex;
+}
+.color-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.color-block {
+  width: 8px;
+  height: 8px;
+}
+.main-color {
+  background: #B7B1A6;
+}
+.sub-color {
+  background: #F7F6F4;
+}
+.sunny {
+  background: #F2B705;
+}
+.cloud {
+  background: #9DA3A6;
+}
+.rain {
+  background: #7FAFC9;
+}
+
+.header-main {
+  display: flex;
+  flex-direction: column;
 }
 .app-logo {
   margin: 0;
@@ -47,30 +84,4 @@
   text-align: center;
   font-size: 12px;
   color: #999;
-}
-
-/* ===== debug ===== */
-.color-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  gap: 5px;
-}
-.color-sample{
-  width: 30px;
-  height: 15px;
-}
-.main-color {
-  background: #B7B1A6;
-}
-.sub-color {
-  background: #F7F6F4;
-}
-.sunny {
-  background: #F2B705;
-}
-.cloud {
-  background: #9DA3A6;
-}
-.rain {
-  background: #7FAFC9;
 }
