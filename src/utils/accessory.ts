@@ -39,9 +39,6 @@ export function getAccessories({
   }
 
   return Array.from(new Set(accessories)).map(
-    (type) => ({
-      type,
-      ...ACCESSORY_MASTER[type],
-    })
+    (type) => ACCESSORY_MASTER[type]
   );
 }

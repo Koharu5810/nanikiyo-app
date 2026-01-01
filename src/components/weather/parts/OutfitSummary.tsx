@@ -23,13 +23,22 @@ export function OutfitSummary({
 
       {accessories && accessories.length > 0 && (
         <div className="accessories">
-          {accessories.map((a) => (
-            <img
-              key={a.type}
-              src={`/icons/outfit/${a.icon}.svg`}
-              alt={a.label}
-              className="accessory-icon"
-            />
+          {accessories.slice(0, 3).map((a) => (
+            <div key={a.type} className="accessory-badge">
+              {a.icon && (
+                <img
+                  src={`/icons/outfit/${a.icon}.svg`}
+                  alt={a.label}
+                  className="accessory-icon"
+                />
+              )}
+
+              <div className="accessory-badge">
+                {a.IconComponent && (
+                  <a.IconComponent className="accessory-icon" />
+                )}
+              </div>
+            </div>
           ))}
         </div>
       )}
